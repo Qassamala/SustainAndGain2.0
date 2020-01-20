@@ -7,9 +7,7 @@ namespace SustainAndGain.Models.ModelViews
 {
     public class StocksIndexVM
     {
-      
+        // Removed prop Profile
         public string Symbol { get; set; }
-        public Profile Profile { get; set; }
-
     }
 }
