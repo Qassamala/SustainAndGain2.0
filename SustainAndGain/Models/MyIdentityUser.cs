@@ -9,7 +9,9 @@ namespace SustainAndGain.Models
     //{
     //    public string FirstName { get; set; }
     //    public string LastName { get; set; }
+
     //    public List<StockCompetition> ListOfCompetitions { get; set; }
+    //    public List<StockCompetition> PastCompetitions { get; set; }
     //}
 
 }
