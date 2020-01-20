@@ -71,13 +71,17 @@ Sida för att se tävlingar som startar snart:
 
 Sida Min Portfolio:
 	-Graf
-	-Procentuell utveckling
+	-Procentuell utveckling sedan köp
 	-Utveckling i kronor
-	-visa Saldo
-	-Visa hur det går i tävlingen (Top 10). 
-	-snitt för deltagarna i tävlignen.
+	-visa Saldo/kvar att investera
+	-Visa hur det går i tävlingen (Top 10). fixed ruta
+	-snitt för deltagarna i tävlignen, i chart.
 	-Visa investerat kapital per aktie (köp/sälj/senaste kurs)
 	-Highlighta hållbara aktier
+	-Inköpskurs/GAV (Genomsnittligt anskaffningsvärde)
+	-Intjänat kapital via hållbara aktier
+	-Procent investerat i hållbara aktier
+	
 	
 	
 	
