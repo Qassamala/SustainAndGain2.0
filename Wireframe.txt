@@ -1,0 +1,110 @@
+Login sida:
+- boxar för att skriva in anv.id och lösenord
+- knapp för att logga in
+- länk för att registrera konto
+- glömt lösenord länk
+
+Route login sida: "List över tävlingar sida/Startsida REGISTRERAD ANV:"
+
+
+Registrera konto sida:
+- Formulär med användaruppgifter som ska fyllas i
+	-formulär:
+	Email
+		confirm email
+	username - nice to have: klientvalidering mot DB	
+	password
+		confirm password
+	*Bot check
+	
+- knapp "Skapa konto"
+
+Route Registrera konto sida - "List över tävlingar sida/Startsida  EJ REGISTRERAD ANV:"
+
+
+Onboarding sida:
+	-Visa 4 närmsta kommande tävlingarna:
+		-Startar vartje vecka
+		-Startdatum/slutdatum
+		-Gå med knapp/val
+		-Antal anmälda
+		-namngivna: tävling v1, tävling v2
+	
+
+
+
+
+//	List över tävlingar sida/Startsida  EJ REGISTRERAD ANV:
+//	- visa förslag på tävlingar att gå med i
+//	- knapp för att skippa förslagen och skapa egen/söka upp tävling
+//	- knapp för att söka information.
+//	- knapp för att skapa ny tävning
+//
+//
+//	List över tävlingar sida/Startsida REGISTRERAD ANV:
+//	- visa alla pågående tävlingar du är med i.
+//	- visa status per tävling du är med i
+//	- knapp för att söka information.
+//	- knapp för att skapa ny tävning
+
+
+//Skapa ny tävling sida:
+//- Formulär; 
+//	-Tävlingsnamn, 
+//	-välj sluttid för anmälan
+//	-hur länge ska tävlingen hålla på
+//	-Nice to have: Private/public tävling
+
+
+
+
+Sök sida aktier/tävlingar:
+- Textbox för skriva in sökord
+- knapp för att söka
+- sök resultat
+
+
+Sida för att se tävlingar som startar snart:
+- Visa tävlignar i lista.
+- knapp för att gå med i tävling
+
+
+Sida Min Portfolio:
+	-Graf
+	-Procentuell utveckling
+	-Utveckling i kronor
+	-visa Saldo
+	-Visa hur det går i tävlingen (Top 10). 
+	-snitt för deltagarna i tävlignen.
+	-Visa investerat kapital per aktie (köp/sälj/senaste kurs)
+	-Highlighta hållbara aktier
+	
+	
+	
+	
+	
+	
+Info sida:
+	-hur klassar vi hållbara aktier
+	-hur fungerar tävlingen
+	
+	
+	
+Pontus:
+finns apierna 
+tillräcklingt många anrop till apierna
+hur gör man tidsbestämda kodsnuttar/hur kör man kod en viss tid
+Vad händer när tävlignen är slut
+
+
+
+
+
+
+
+
+
+
+
+
+
