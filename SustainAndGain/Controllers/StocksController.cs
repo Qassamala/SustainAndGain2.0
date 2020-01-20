@@ -9,15 +9,11 @@ namespace SustainAndGain.Controllers
 {
     public class StocksController : Controller
     {
-        
-       
         private readonly StocksService service;
-        private readonly UsersService usersService;
 
-        public StocksController(StocksService service, UsersService usersService)
+        public StocksController(StocksService service)
         {
             this.service = service;
-            this.usersService = usersService;
         }
         [Route("")]
         [Route("/Index")]
