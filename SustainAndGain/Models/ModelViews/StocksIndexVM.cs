@@ -9,7 +9,6 @@ namespace SustainAndGain.Models.ModelViews
     {
       
         public string Symbol { get; set; }
-        public Profile Profile { get; set; }
 
     }
 }
