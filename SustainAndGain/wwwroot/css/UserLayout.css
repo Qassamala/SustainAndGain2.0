@@ -1,0 +1,182 @@
+﻿html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width:100%;
+    overflow-x: hidden;
+ 
+}
+
+body {
+    
+   margin: 0;
+    padding: 0;
+    position: relative;
+    background: linear-gradient(to bottom right, #177775, #28D2BF, white);
+    background-size: cover;
+    
+    
+}
+.navbar img{
+    
+    height:70%;
+    top: -20px;
+    position:relative;
+    display: block;
+    border-radius: 50%;
+    transition: all 1s;
+}
+    .navbar img:hover {
+        top: 0;
+        
+    }
+.navbar {
+   padding-right: 4%;
+    width: 10%;
+    height: 4em;
+    position: fixed;
+    right: 0;
+    top: 0;
+    border-bottom-left-radius: 25px;
+}
+    .navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+       position:relative;
+       height:100%;
+       display:flex;
+       
+    }
+    .navbar li{
+        justify-content:center;
+        align-items:center;
+        height:100%;
+        width:100%;
+        position:relative;
+        padding:1%;
+        display:block;
+    }
+ 
+li{
+    list-style: none;
+}
+h2{
+    padding-top: 2%;
+    text-align: center;
+}
+
+.card-carousel {
+    padding-top: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  
+}
+
+    .card-carousel .my-card {
+        height: 30rem;
+        width: 22rem;
+        position: relative;
+        z-index: 1;
+        -webkit-transform: scale(0.6) translateY(-2rem);
+        transform: scale(0.6) translateY(-2rem);
+        opacity: 0;
+        cursor: pointer;
+        pointer-events: none;
+        background: #2e5266;
+        background: linear-gradient(to top, #2e5266, #6e8898);
+        transition: 1s;
+    }
+
+        .card-carousel .my-card:after {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            border-radius: 100%;
+            background-color: rgba(0,0,0,0.3);
+            bottom: -5rem;
+            -webkit-filter: blur(4px);
+            filter: blur(4px);
+        }
+
+        .card-carousel .my-card.active {
+            z-index: 3;
+            -webkit-transform: scale(1) translateY(0) translateX(0);
+            transform: scale(1) translateY(0) translateX(0);
+            opacity: 1;
+            pointer-events: auto;
+            transition: 1s;
+        }
+
+        .card-carousel .my-card.prev, .card-carousel .my-card.next {
+            z-index: 2;
+            -webkit-transform: scale(0.8) translateY(-1rem) translateX(0);
+            transform: scale(0.8) translateY(-1rem) translateX(0);
+            opacity: 0.6;
+            pointer-events: auto;
+            transition: 1s;
+        }
+
+        .card-carousel .my-card:nth-child(0):before {
+            content: '0';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 3rem;
+            font-weight: 300;
+            color: #fff;
+        }
+
+        .card-carousel .my-card:nth-child(1):before {
+            content: '1';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 3rem;
+            font-weight: 300;
+            color: #fff;
+        }
+
+        .card-carousel .my-card:nth-child(2):before {
+            content: '2';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 3rem;
+            font-weight: 300;
+            color: #fff;
+        }
+
+        .card-carousel .my-card:nth-child(3):before {
+            content: '3';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 3rem;
+            font-weight: 300;
+            color: #fff;
+        }
+
+        .card-carousel .my-card:nth-child(4):before {
+            content: '4';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+            font-size: 3rem;
+            font-weight: 300;
+            color: #fff;
+        }

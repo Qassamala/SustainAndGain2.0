@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+<link href="~/css/Index.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
+<div class="Flexbox">
+    
+    <img src="~/Img/SustainGain.svg" />
+</div>
+<div class="LoginDiv">
+
+
+
+
+
+
+    
+
+
+        <input asp-action="Index" type="text"  placeholder="Enter Username" name="uname" required>
+        
+        <input type="password" placeholder="Enter Password" name="psw" required>
+
+  
+
+   
+
+    <button type="button" name="button">Log In</button>
+</div>
