@@ -29,8 +29,7 @@ namespace SustainAndGain.Models
             MyIdentityUser user = await userManager.FindByIdAsync(userId);
             UserMemberVM vm = new UserMemberVM
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
+               
                 Email = user.Email,
                 UserName = user.UserName
             };
@@ -49,8 +48,7 @@ namespace SustainAndGain.Models
         {
             var result = await userManager.CreateAsync(new MyIdentityUser
             {
-                FirstName = vm.FirstName,
-                LastName = vm.LastName,
+                
                 UserName = vm.UserName,
                 Email = vm.Email
             }, vm.Password);

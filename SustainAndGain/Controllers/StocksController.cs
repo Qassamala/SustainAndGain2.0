@@ -12,10 +12,12 @@ namespace SustainAndGain.Controllers
         
        
         private readonly StocksService service;
+        private readonly UsersService usersService;
 
-        public StocksController(StocksService service)
+        public StocksController(StocksService service, UsersService usersService)
         {
             this.service = service;
+            this.usersService = usersService;
         }
         [Route("")]
         [Route("/Index")]
@@ -27,7 +29,7 @@ namespace SustainAndGain.Controllers
         [Route("List")]
         public IActionResult List()
         {
-           var result = service.GetResultAsync();
+            var result = service.GetResultAsync();
 
 
             return View(result);

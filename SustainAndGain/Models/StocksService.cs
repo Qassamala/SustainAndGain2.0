@@ -21,12 +21,7 @@ namespace SustainAndGain.Models
     public class StocksService
     {
 
-        private readonly IHttpClientFactory httpClientFactory;
 
-        public StocksService(IHttpClientFactory httpClientFactory)
-        {
-            this.httpClientFactory = httpClientFactory;
-        }
 
         public StocksIndexVM GetResultAsync()
         {

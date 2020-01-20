@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +28,8 @@ namespace SustainAndGain
         {
             var connString = configuration.GetConnectionString("DefaultConnection");
             services.AddControllersWithViews();
-            //services.AddDbContext<MyIdentityContext>(o => o.UseSqlServer());
+            
+            services.AddDbContext<MyIdentityContext>(o => o.UseSqlServer(connString));
             services.AddIdentity<MyIdentityUser, IdentityRole>(o =>
             {
                 o.Password.RequireNonAlphanumeric = false;
@@ -42,7 +44,11 @@ namespace SustainAndGain
 
             services.ConfigureApplicationCookie(o => o.LoginPath = "/login");
             services.AddTransient<UsersService>();
+            services.AddTransient<StocksService>();
+
             services.AddHttpContextAccessor();
+            
+
 
         }
 
@@ -54,7 +60,9 @@ namespace SustainAndGain
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseAuthentication();
             app.UseRouting();
+            app.UseAuthorization();
             app.UseStaticFiles();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
 
