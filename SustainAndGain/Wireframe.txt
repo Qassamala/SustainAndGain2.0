@@ -30,7 +30,21 @@ Onboarding sida:
 		-Antal anmälda
 		-namngivna: tävling v1, tävling v2
 	
-
+Tävlingsida: 
+	-fyra containers 
+		-när tävling startar
+		-markera vilka tävlingar du är med i (grön)
+		-markera vilka tävlingar du inte är med i men kan gå med i(röd)
+		-markera vilka tävlignar du inte kan gå med i (grå)
+	
+	
+	
+	-knapp för "ditt konto"
+		-din profil
+		-historik
+		-highscore
+		-regler
+		
 
 
 
@@ -71,25 +85,53 @@ Sida för att se tävlingar som startar snart:
 
 Sida Min Portfolio:
 	-Graf
-	-Procentuell utveckling
+	-Procentuell utveckling sedan köp
 	-Utveckling i kronor
-	-visa Saldo
-	-Visa hur det går i tävlingen (Top 10). 
-	-snitt för deltagarna i tävlignen.
+	-visa Saldo/kvar att investera
+	-Visa hur det går i tävlingen (Top 10). fixed ruta
+	-snitt för deltagarna i tävlignen, i chart.
 	-Visa investerat kapital per aktie (köp/sälj/senaste kurs)
 	-Highlighta hållbara aktier
+	-Inköpskurs/GAV (Genomsnittligt anskaffningsvärde)
+	-Intjänat kapital via hållbara aktier
+	-Procent investerat i hållbara aktier
 	
 	
+
+Aktieköp sida:
+	-Saldo att handla för
+	-Ruta för att bocka i olika kriterier ex. bransh
+	-Orderlista där ordrar läggs innan avslut (nästkommande api-hämtning)
+	-Aktielista som visar filtrerade aktier
+
+
+
+Mitt konto sida:
 	
-	
-	
-	
+
+
+
+
+
+
+
 Info sida:
 	-hur klassar vi hållbara aktier
 	-hur fungerar tävlingen
 	
 	
-	
+
+
+NÄR TÄVLINGEN ÄR SLUT:
+	-visa ställning i relation till andra tävlande 
+	-visa din ställning i den globala highscore listan
+	-mail om din position
+		-Mail: topplistade i tävlingen
+		-Mail: graf för din historiska utveckling
+		-Mail: 
+		-Mail: visa ställning
+		-Mail: visa din ställning i den globala highscore listan
+
 Pontus:
 finns apierna 
 tillräcklingt många anrop till apierna
@@ -101,6 +143,12 @@ Vad händer när tävlignen är slut
 
 
 
+
+
+	NICE TO HAVE:
+	-Sida med description
+	-Sida med profilinformation, bästa aktier, 
+	
 
 
 
