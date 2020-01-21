@@ -9,15 +9,21 @@ namespace SustainAndGain.Controllers
 {
     public class UserController : Controller
     {
-        private readonly StocksService service;
+        private readonly UsersService service;
 
-        public UserController(StocksService service)
+        public UserController(UsersService service)
         {
             this.service = service;
         }
 
-
+        [Route("")]
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        [Route("/Register")]
+        public IActionResult Register()
         {
             return View();
         }

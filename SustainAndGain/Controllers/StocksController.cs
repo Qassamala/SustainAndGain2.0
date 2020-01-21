@@ -15,12 +15,7 @@ namespace SustainAndGain.Controllers
         {
             this.service = service;
         }
-        [Route("")]
-        [Route("/Index")]
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
 
         [Route("List")]
         public IActionResult List()
