@@ -28,7 +28,8 @@ namespace SustainAndGain.Models.Entities
         public virtual DbSet<StocksInCompetition> StocksInCompetition { get; set; }
         public virtual DbSet<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
 
-     
+    
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<AspNetRoleClaims>(entity =>
@@ -123,8 +124,6 @@ namespace SustainAndGain.Models.Entities
 
             modelBuilder.Entity<Competition>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.EndTime).HasColumnType("datetime");
 
                 entity.Property(e => e.StartTime).HasColumnType("datetime");
@@ -132,8 +131,6 @@ namespace SustainAndGain.Models.Entities
 
             modelBuilder.Entity<HistDataStocks>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.CurrentPrice).HasColumnType("money");
 
                 entity.Property(e => e.DateTime).HasColumnType("datetime");
@@ -144,13 +141,11 @@ namespace SustainAndGain.Models.Entities
                     .WithMany(p => p.HistDataStocks)
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HistDataS__Stock__4BAC3F29");
+                    .HasConstraintName("FK__HistDataS__Stock__5FB337D6");
             });
 
             modelBuilder.Entity<StaticStockData>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.CompanyName)
                     .HasMaxLength(64)
                     .IsUnicode(false);
@@ -171,8 +166,6 @@ namespace SustainAndGain.Models.Entities
 
             modelBuilder.Entity<StocksInCompetition>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.UserId)
                     .IsRequired()
                     .HasMaxLength(450);
@@ -198,8 +191,6 @@ namespace SustainAndGain.Models.Entities
 
             modelBuilder.Entity<UsersHistoricalTransactions>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.BuyOrSell)
                     .IsRequired()
                     .HasMaxLength(10)
@@ -225,19 +216,19 @@ namespace SustainAndGain.Models.Entities
                     .WithMany(p => p.UsersHistoricalTransactions)
                     .HasForeignKey(d => d.CompetitionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersHist__Compe__4D94879B");
+                    .HasConstraintName("FK__UsersHist__Compe__5DCAEF64");
 
                 entity.HasOne(d => d.Stock)
                     .WithMany(p => p.UsersHistoricalTransactions)
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersHist__Stock__4E88ABD4");
+                    .HasConstraintName("FK__UsersHist__Stock__619B8048");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UsersHistoricalTransactions)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersHist__UserI__4CA06362");
+                    .HasConstraintName("FK__UsersHist__UserI__60A75C0F");
             });
 
             OnModelCreatingPartial(modelBuilder);
