@@ -64,7 +64,7 @@ namespace SustainAndGain.Models
                .Take(99)
                .Select(g => g.Symbol);
             
-
+            // Reverted back
 
         }
 
