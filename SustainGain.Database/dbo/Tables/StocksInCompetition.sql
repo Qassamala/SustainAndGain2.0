@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[StocksInCompetition]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY Identity,
     [UserId] NVARCHAR(450) NOT NULL, 
     [CompId] INT NOT NULL, 
     [StockId] INT NOT NULL, 
