@@ -20,6 +20,8 @@ namespace SustainAndGain.Controllers
         [Route("List")]
         public IActionResult List()
         {
+            service.AddStaticStockData();
+
             var result = service.GetResultAsync();
 
 

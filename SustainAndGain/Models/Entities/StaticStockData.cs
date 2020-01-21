@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 namespace SustainAndGain.Models.Entities
 {
     public partial class StaticStockData
     {
+
         public StaticStockData()
         {
             HistDataStocks = new HashSet<HistDataStocks>();

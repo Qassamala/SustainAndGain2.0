@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SustainAndGain.Models;
+using SustainAndGain.Models.Entities;
 
 namespace SustainAndGain
 {
@@ -28,7 +29,8 @@ namespace SustainAndGain
         {
             var connString = configuration.GetConnectionString("DefaultConnection");
             services.AddControllersWithViews();
-            
+
+            services.AddDbContext<SustainGainContext>(o => o.UseSqlServer(connString));
             services.AddDbContext<MyIdentityContext>(o => o.UseSqlServer(connString));
             services.AddIdentity<MyIdentityUser, IdentityRole>(o =>
             {
