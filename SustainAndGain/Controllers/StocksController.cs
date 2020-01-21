@@ -24,7 +24,7 @@ namespace SustainAndGain.Controllers
         {
             service.AddHistDataStocks();
 
-           
+           // Test reset 1
 
 
             return View();
