@@ -1,4 +1,4 @@
-﻿
+﻿@model SustainAndGain.Models.ModelViews.UserLoginVM
 @{
     ViewData["Title"] = "Index";
 }
@@ -8,14 +8,22 @@
     <img src="~/Img/SustainGain.svg" />
 </div>
 <div class="LoginDiv">
-    
 
-
-        <input asp-action="Index" type="text"  placeholder="Enter Username" name="uname" required>
-        
-        <input type="password" placeholder="Enter Password" name="psw" required>
-
-   
-
-    <button type="button" name="button">Log In</button>
+    <form asp-action="Index">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="UserName" class="control-label"></label>
+            <input id="usernameForm" asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="control-label"></label>
+            <input id="passwordForm" asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-primary" />
+            <a asp-action="Register">Register new account</a>
+        </div>
+        </form>
 </div>

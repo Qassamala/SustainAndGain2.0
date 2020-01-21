@@ -42,7 +42,7 @@ namespace SustainAndGain.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction("UserLayout", "StocksController");
+            return RedirectToAction("UserLayout", "Stocks");
         }
 
         [Route("/Register")]
