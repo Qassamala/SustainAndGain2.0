@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[UsersHistoricalTransactions]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY identity, 
     [UserId] NVARCHAR (450) not null foreign key references [AspNetUsers](Id),
     [CompetitionId] int not null foreign key references Competition(Id),
     [Quantity] NCHAR(10) not NULL,
