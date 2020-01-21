@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SustainAndGain.Models;
 using SustainAndGain.Models.ModelViews;
+using SustainAndGain.Controllers;
 
 namespace SustainAndGain.Controllers
 {
@@ -41,7 +42,7 @@ namespace SustainAndGain.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction(nameof(StocksController.UserLayout));
+            return RedirectToAction("UserLayout", "StocksController");
         }
 
         [Route("/Register")]
