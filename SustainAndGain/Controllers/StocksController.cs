@@ -8,7 +8,7 @@ using SustainAndGain.Models;
 
 namespace SustainAndGain.Controllers
 {
-   
+    [Authorize]
     public class StocksController : Controller
     {
         private readonly StocksService service;
@@ -22,12 +22,12 @@ namespace SustainAndGain.Controllers
         [Route("List")]
         public IActionResult List()
         {
-            service.AddStaticStockData();
+            service.AddHistDataStocks();
 
-            var result = service.GetResultAsync();
+           
 
 
-            return View(result);
+            return View();
         }
         [Route("/UserLayout")]
         public IActionResult UserLayout()

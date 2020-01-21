@@ -28,9 +28,49 @@ namespace SustainAndGain.Models
             this.context = context;
         }
 
+        public void AddHistDataStocks()
+        {
+            string url = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=US&lang=en&symbols=";
+            int counter = 0;
+            foreach (var item in context.StaticStockData)
+            {
+                if (counter < 100)
+                {
+                    url = $"{url}{item.Symbol}+";
+
+                }
+
+
+
+            }
+
+            var result = context.StaticStockData
+                .Take(99)
+                .Select(g => g.Symbol);
+
+            foreach (var item in result)
+            {
+                url = $"{url}{item}+";
+            }
+
+            var client = new RestClient(url);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
+            request.AddHeader("x-rapidapi-key", "f8544aa2bamshc436653380b874cp1efcc0jsn3741bd4318a2");
+            IRestResponse response = client.Execute(request);
+
+            var result2 = context.StaticStockData
+                .Skip(99)
+               .Take(99)
+               .Select(g => g.Symbol);
+            
+
+
+        }
+
         public void AddStaticStockData()
         {
-            string path = @"C:\Users\Abdi G\Desktop\LargeMidSmallSwedenYahooorg.txt";
+            string path = @"C:\Users\Martin\source\repos\SustainAndGain\SustainAndGain\Models\yahoo.txt";
 
             string[] inputFileStocks = File.ReadAllLines(path);
 
@@ -60,8 +100,10 @@ namespace SustainAndGain.Models
             //staticStockData.Sector = staticStockData.Sector;
 
             context.StaticStockData.Add(staticStockData);
+                context.SaveChanges();
+
             }
-            context.SaveChanges();
+
         }
 
 

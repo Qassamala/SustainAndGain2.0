@@ -98,8 +98,7 @@ form {
     align-items: center;
     height: 100%;
 }
-
-#usernameForm {
+/*.input-validation-error {
     width: 100%;
     background-image: url('../img/isolated-monochrome-black.svg');
     background-size: 20px;
@@ -116,7 +115,27 @@ form {
     box-sizing: border-box;
     background-position-x: 1em;
     background-position-y: center;
-}
+}*/
+
+
+/*#usernameForm {
+    width: 100%;
+    background-image: url('../img/isolated-monochrome-black.svg');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    height: 40px;
+    padding: 12px 20px 12px 40px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-family: 'Franklin Gothic Medium', arial;
+    display: inline;
+    opacity: 0.5;
+    border-radius: 30px;
+    box-sizing: border-box;
+    background-position-x: 1em;
+    background-position-y: center;
+}*/
 #passwordForm {
     background-size: 20px;
     background-image: url('../img/password-black.svg');
@@ -134,6 +153,7 @@ form {
     background-position-x: 1em;
     background-position-y: center;
 }
+
 
 input[type=submit] {
     font-family: 'Franklin Gothic Medium', arial;
