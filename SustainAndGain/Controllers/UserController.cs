@@ -17,10 +17,31 @@ namespace SustainAndGain.Controllers
             this.service = service;
         }
 
+        [HttpGet]
         [Route("")]
+        [Route("/login")]
         public IActionResult Index()
         {
             return View();
+        }
+
+       
+        [HttpPost]
+        [Route("/login")]
+        public async Task<IActionResult> Index(UserLoginVM vm)
+        {
+            if (!ModelState.IsValid)
+                return View(vm);
+
+
+            var result = await service.TryLoginUser(vm);
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "Couldn't sign in.");
+                return View(vm);
+            }
+
+            return RedirectToAction(nameof(StocksController.UserLayout));
         }
 
         [Route("/Register")]
