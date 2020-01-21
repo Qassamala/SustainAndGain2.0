@@ -30,7 +30,7 @@ namespace SustainAndGain.Models
 
         public void AddStaticStockData()
         {
-            string path = @"C:\Users\Abdi G\Desktop\LargeMidSmallSwedenYahoo.txt";
+            string path = @"C:\Users\Abdi G\Desktop\LargeMidSmallSwedenYahooorg.txt";
 
             string[] inputFileStocks = File.ReadAllLines(path);
 
@@ -53,16 +53,16 @@ namespace SustainAndGain.Models
             
 
             //Assigning values to DB model and saving to DB
-            staticStockData.Symbol = staticStockData.Symbol.ToUpper();
-            staticStockData.CompanyName = staticStockData.CompanyName;
+            //staticStockData.Symbol = staticStockData.Symbol.ToUpper();
+            //staticStockData.CompanyName = staticStockData.CompanyName;
 
             //staticStockData.Description = staticStockData.Description;
             //staticStockData.Sector = staticStockData.Sector;
 
             context.StaticStockData.Add(staticStockData);
-            context.SaveChanges();
             }
-    }
+            context.SaveChanges();
+        }
 
 
         public StocksIndexVM GetResultAsync()
@@ -79,5 +79,5 @@ namespace SustainAndGain.Models
 
     }
 
-    }
+}
 
