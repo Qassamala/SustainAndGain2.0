@@ -24,10 +24,10 @@ namespace SustainAndGain.Controllers
         {
             service.AddStaticStockData();
 
-            var result = service.GetResultAsync();
+            //var result = service.GetResultAsync();
 
 
-            return View(result);
+            return View();
         }
         [Route("/UserLayout")]
         public IActionResult UserLayout()

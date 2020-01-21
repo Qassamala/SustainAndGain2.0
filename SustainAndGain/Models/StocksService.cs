@@ -60,8 +60,8 @@ namespace SustainAndGain.Models
             //staticStockData.Sector = staticStockData.Sector;
 
             context.StaticStockData.Add(staticStockData);
-            }
             context.SaveChanges();
+            }
         }
 
 
