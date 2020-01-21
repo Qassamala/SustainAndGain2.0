@@ -15,12 +15,54 @@ using System.Web;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using SustainAndGain.Models.Entities;
 
 namespace SustainAndGain.Models
 {
     public class StocksService
     {
+        private SustainGainContext context;
 
+        public StocksService(SustainGainContext context)
+        {
+            this.context = context;
+        }
+
+        public void AddStaticStockData()
+        {
+            string path = @"C:\Users\Abdi G\Desktop\LargeMidSmallSwedenYahoo.txt";
+
+            string[] inputFileStocks = File.ReadAllLines(path);
+
+
+            foreach (var item in inputFileStocks)
+            {
+                
+                string[] lines = item.Split('\t');
+
+                string symbol = lines[0];
+                string companyName = lines[1];
+
+                StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName };
+
+
+                //int firstPositionSymbol = 0;
+                //int endPositionSymbol = item.IndexOf(".ST") + 3;
+                //string symbol = item.Substring(firstPositionSymbol, endPositionSymbol);
+
+            
+
+            //Assigning values to DB model and saving to DB
+            staticStockData.Symbol = staticStockData.Symbol.ToUpper();
+            staticStockData.CompanyName = staticStockData.CompanyName;
+
+            //staticStockData.Description = staticStockData.Description;
+            //staticStockData.Sector = staticStockData.Sector;
+
+            context.StaticStockData.Add(staticStockData);
+            context.SaveChanges();
+            }
+    }
 
 
         public StocksIndexVM GetResultAsync()
