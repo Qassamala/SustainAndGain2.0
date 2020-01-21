@@ -71,6 +71,8 @@
     <Build Include="dbo\Tables\AspNetUserTokens.sql" />
     <Build Include="dbo\Tables\Competition.sql" />
     <Build Include="dbo\Tables\StaticStockData.sql" />
+    <Build Include="dbo\Tables\HistDataStocks.sql" />
+    <Build Include="dbo\Tables\UsersHistoricalTransactions.sql" />    </ItemGroup>
     <Build Include="dbo\StocksInCompetition.sql" />
   </ItemGroup>
   <ItemGroup>
