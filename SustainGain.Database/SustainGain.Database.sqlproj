@@ -78,4 +78,7 @@
   <ItemGroup>
     <RefactorLog Include="SustainGain.Database.refactorlog" />
   </ItemGroup>
+    <Build Include="dbo\Tables\UsersHistoricalTransactions.sql" />
+    <Build Include="dbo\Tables\HistDataStock.sql" />
+  </ItemGroup>
 </Project>
