@@ -66,117 +66,31 @@ h2{
     padding-top: 2%;
     text-align: center;
 }
-
-.card-carousel {
-    padding-top: 5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.slideContainer {
     position: relative;
-  
+    display: flex;
+    width: 100%;
+    min-height: 500px;
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
 }
-
-    .card-carousel .my-card {
-        height: 30rem;
-        width: 22rem;
-        position: relative;
-        z-index: 1;
-        -webkit-transform: scale(0.6) translateY(-2rem);
-        transform: scale(0.6) translateY(-2rem);
-        opacity: 0;
-        cursor: pointer;
-        pointer-events: none;
-        background: #2e5266;
-        background: linear-gradient(to top, #2e5266, #6e8898);
-        transition: 1s;
-    }
-
-        .card-carousel .my-card:after {
-            content: '';
-            position: absolute;
-            height: 2px;
-            width: 100%;
-            border-radius: 100%;
-            background-color: rgba(0,0,0,0.3);
-            bottom: -5rem;
-            -webkit-filter: blur(4px);
-            filter: blur(4px);
-        }
-
-        .card-carousel .my-card.active {
-            z-index: 3;
-            -webkit-transform: scale(1) translateY(0) translateX(0);
-            transform: scale(1) translateY(0) translateX(0);
-            opacity: 1;
-            pointer-events: auto;
-            transition: 1s;
-        }
-
-        .card-carousel .my-card.prev, .card-carousel .my-card.next {
-            z-index: 2;
-            -webkit-transform: scale(0.8) translateY(-1rem) translateX(0);
-            transform: scale(0.8) translateY(-1rem) translateX(0);
-            opacity: 0.6;
-            pointer-events: auto;
-            transition: 1s;
-        }
-
-        .card-carousel .my-card:nth-child(0):before {
-            content: '0';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translateX(-50%) translateY(-50%);
-            transform: translateX(-50%) translateY(-50%);
-            font-size: 3rem;
-            font-weight: 300;
-            color: #fff;
-        }
-
-        .card-carousel .my-card:nth-child(1):before {
-            content: '1';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translateX(-50%) translateY(-50%);
-            transform: translateX(-50%) translateY(-50%);
-            font-size: 3rem;
-            font-weight: 300;
-            color: #fff;
-        }
-
-        .card-carousel .my-card:nth-child(2):before {
-            content: '2';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translateX(-50%) translateY(-50%);
-            transform: translateX(-50%) translateY(-50%);
-            font-size: 3rem;
-            font-weight: 300;
-            color: #fff;
-        }
-
-        .card-carousel .my-card:nth-child(3):before {
-            content: '3';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translateX(-50%) translateY(-50%);
-            transform: translateX(-50%) translateY(-50%);
-            font-size: 3rem;
-            font-weight: 300;
-            color: #fff;
-        }
-
-        .card-carousel .my-card:nth-child(4):before {
-            content: '4';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translateX(-50%) translateY(-50%);
-            transform: translateX(-50%) translateY(-50%);
-            font-size: 3rem;
-            font-weight: 300;
-            color: #fff;
-        }
+.slide {
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,.37);
+    width: 15%;
+    height: 400px;
+    border-radius: 4px;
+    position: relative;
+    background-color: rgba(255,255,255,0.8);
+    padding: 10px;
+    margin: 2%;
+    transition: z-index 0.4s ease;
+    opacity: 0.5;
+    transition: all 1s;
+   
+}
+.slide:hover{
+    opacity:1;
+    transform: scale(1.3);
+}
