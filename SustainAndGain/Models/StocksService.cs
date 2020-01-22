@@ -119,6 +119,11 @@ namespace SustainAndGain.Models
 
 		}
 
+		internal void AddStocksInComp()
+		{
+			throw new NotImplementedException();
+		}
+
 		public void AddStaticStockData()
 		{
 			string path = @"C:\Users\Daniel\source\repos\SustainAndGain\SustainAndGain\Models\yahoo.txt";
