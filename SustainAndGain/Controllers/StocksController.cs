@@ -21,14 +21,16 @@ namespace SustainAndGain.Controllers
         }
        
 
-        [Route("List/")]
+        [Route("List")]
         public IActionResult List()
         {
-            if (true)
-            {
 
-            }
-            service.AddStocksInComp();
+            competitionsService.AddCompetition();
+            service.AddHistDataStocks();
+            //service.AddStaticStockData();
+
+            // Test reset 1
+
 
             return View();
         }
