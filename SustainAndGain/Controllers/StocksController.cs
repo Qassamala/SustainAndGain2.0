@@ -26,11 +26,10 @@ namespace SustainAndGain.Controllers
         {
 
             competitionsService.AddCompetition();
-            //service.AddHistDataStocks();
-            //service.AddHistDataStocks();
+            service.AddHistDataStocks();
             //service.AddStaticStockData();
 
-           // Test reset 1
+            // Test reset 1
 
 
             return View();
