@@ -24,10 +24,9 @@ namespace SustainAndGain.Controllers
         [Route("List")]
         public IActionResult List()
         {
-            
-            //competitionsService.AddCompetition();
+
+
             service.AddHistDataStocks();
-            //service.AddHistDataStocks();
             //service.AddHistDataStocks();
             //service.AddStaticStockData();
 
@@ -39,7 +38,8 @@ namespace SustainAndGain.Controllers
         [Route("/UserLayout")]
         public IActionResult UserLayout()
         {
-            return View();
+            var result = competitionsService.DisplayCompetitions();
+            return View(result);
         }
         [Route("/{competition}/Portfolio")]
         public IActionResult Portfolio()
