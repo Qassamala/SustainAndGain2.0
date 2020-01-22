@@ -24,35 +24,47 @@
         </ul>
 
     </div>
+
 @* SLides for tävlingar *@
     <h2>Tävling</h2>
     <div class="slideContainer" >
         <div class="slide">
-            <p>@Model[0].StartTime</p>
-            <p> @Model[0].IsOngoing </p>
-            <p>@Model[0].EndTime</p>
-            <p>@Model[0].Name</p>
+            <p>Competition: @Model[0].Name</p>
 
+            <p>Starting: @Model[0].StartTime</p>
+            <p>Ends: @Model[0].EndTime</p>
+            <p>@Model[0].IsOngoing </p>
+            <input type="submit" value="Join" class="btn btn-primary" />
+
+        </div>
+        <div class="slide">
+            <p>Competition: @Model[1].Name</p>
+
+            <p>Starting: @Model[1].StartTime</p>
+            <p>Ends: @Model[1].EndTime</p>
+            <p>@Model[1].IsOngoing </p>
+            <input type="submit" value="Join" class="btn btn-primary" />
+
+        </div>
+        <div class="slide">
+            <p>Competition: @Model[2].Name</p>
+
+            <p>Starting: @Model[2].StartTime</p>
+            <p>Ends: @Model[2].EndTime</p>
+            <p>@Model[2].IsOngoing </p>
+
+            <input type="submit" value="Join" class="btn btn-primary" />
 
 
         </div>
         <div class="slide">
-            <p>@Model[1].StartTime</p>
-            <p> @Model[1].IsOngoing </p>
-            <p>@Model[1].EndTime</p>
-            <p>@Model[1].Name</p>
-        </div>
-        <div class="slide">
-            <p>@Model[2].StartTime</p>
-            <p> @Model[2].IsOngoing </p>
-            <p>@Model[2].EndTime</p>
-            <p>@Model[2].Name</p>
-        </div>
-        <div class="slide">
-            <p>@Model[3].StartTime</p>
-            <p> @Model[3].IsOngoing </p>
-            <p>@Model[3].EndTime</p>
-            <p>@Model[3].Name</p>
+            <p>Competition: @Model[3].Name</p>
+
+            <p>Starting: @Model[3].StartTime</p>
+            <p>Ends: @Model[3].EndTime</p>
+            <p>@Model[3].IsOngoing </p>
+            <input type="submit" value="Join" class="btn btn-primary" />
+
         </div>
         
         
