@@ -46,8 +46,6 @@ namespace SustainAndGain.Models
 
 		private void GetPricesForStocks(string[] stockData, int i)
 		{
-
-
 			var result = stockData
 				.Skip(i*99)
 			   .Take(99)
@@ -55,6 +53,7 @@ namespace SustainAndGain.Models
 
 			// Construct URL with max 99 stocks and performs call to Yahoo API
 			var response = ConstructURLWithStocksAndGetStockInfoFromYahoo(result);
+
 			var rootObject = JsonConvert.DeserializeObject<RootObject>(response.Content);
 
 			// Uses the Rootobject result list to find correct symbol and write to HistDataSTocks
@@ -154,7 +153,6 @@ namespace SustainAndGain.Models
 			foreach (var item in result)
 			{
 				url = url + item + ",";
-
 			}
 			var client = new RestClient(url);
 			var request = new RestRequest(Method.GET);
