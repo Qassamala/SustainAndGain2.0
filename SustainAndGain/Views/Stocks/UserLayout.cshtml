@@ -1,4 +1,4 @@
-﻿
+﻿@model SustainAndGain.Models.ModelViews.CompetitionVM[]
 @{
     ViewData["Title"] = "UserLayout";
 }
@@ -27,7 +27,7 @@
 @* SLides for tävlingar *@
     <h2>Tävling</h2>
     <div class="slideContainer">
-        <div class="slide"></div>
+        <div class="slide">@Model[0].StartTime</div>
         <div class="slide"></div>
         <div class="slide"></div>
         <div class="slide"></div>
