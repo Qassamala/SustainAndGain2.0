@@ -27,30 +27,41 @@ namespace SustainAndGain.Models
                 {
                     StartTime = new DateTime(2020, month, 23),
                     EndTime = new DateTime(2020, month + 1, 23),
-              
+                    Name = "Hello",
+                    IsOngoing = true
+                  
+                    
+
                 };
                 month++;
                 context.Competition.Add(competition);
                 context.SaveChanges();
             }
-            
         }
 
         public CompetitionVM[] DisplayCompetitions()
         {
+
+         
+
             List<CompetitionVM> competitions = new List<CompetitionVM>();
+
             foreach (var item in context.Competition)
             {
-                competitions.Add(new CompetitionVM
+                CompetitionVM competition = new CompetitionVM
                 {
                     EndTime = item.EndTime,
                     StartTime = item.StartTime
-                    
-                });
+
+                };
+                competitions.Add(competition);
+
             }
             return competitions.ToArray();
+
+
           
-           
+
         }
 
     }

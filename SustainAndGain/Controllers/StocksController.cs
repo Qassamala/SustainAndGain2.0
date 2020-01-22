@@ -24,9 +24,9 @@ namespace SustainAndGain.Controllers
         [Route("List")]
         public IActionResult List()
         {
-
-
-            service.AddHistDataStocks();
+            //competitionsService.DisplayCompetitions();
+            competitionsService.AddCompetition();
+            //service.AddHistDataStocks();
             //service.AddHistDataStocks();
             //service.AddStaticStockData();
 
