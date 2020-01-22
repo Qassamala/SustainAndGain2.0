@@ -8,7 +8,7 @@ using SustainAndGain.Models;
 
 namespace SustainAndGain.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class StocksController : Controller
     {
         private readonly StocksService service;
@@ -22,8 +22,11 @@ namespace SustainAndGain.Controllers
         [Route("List")]
         public IActionResult List()
         {
-            service.AddHistDataStocks();
+
+            service.GetCompanyDescription();
             //service.AddHistDataStocks();
+            //service.AddHistDataStocks();
+            //service.AddStaticStockData();
 
            // Test reset 1
 
