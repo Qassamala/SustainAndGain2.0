@@ -23,6 +23,7 @@ namespace SustainAndGain.Controllers
         public IActionResult List()
         {
             service.AddHistDataStocks();
+            //service.AddHistDataStocks();
 
            // Test reset 1
 
