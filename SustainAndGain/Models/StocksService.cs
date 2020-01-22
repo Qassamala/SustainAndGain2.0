@@ -55,7 +55,7 @@ namespace SustainAndGain.Models
             {
                 StaticStockData stock = context.StaticStockData.SingleOrDefault(s => s.Symbol == item.symbol);
 
-                HistDataStocks historicalDataForStock = new HistDataStocks { DateTime = DateTime.Now, CurrentPrice = item.regularMarketPrice, StockId = stock.Id  };
+                HistDataStocks historicalDataForStock = new HistDataStocks { DateTime = DateTime.Now, CurrentPrice = item.regularMarketPrice, StockId = stock.Id, Symbol = item.symbol };
 
                 context.HistDataStocks.Add(historicalDataForStock);
                 context.SaveChanges();
