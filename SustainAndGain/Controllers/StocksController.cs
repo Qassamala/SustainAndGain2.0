@@ -8,7 +8,7 @@ using SustainAndGain.Models;
 
 namespace SustainAndGain.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class StocksController : Controller
     {
         private readonly StocksService service;
