@@ -15,6 +15,7 @@ namespace SustainAndGain.Models.Entities
         public bool IsOngoing { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<StocksInCompetition> StocksInCompetition { get; set; }
         public virtual ICollection<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
