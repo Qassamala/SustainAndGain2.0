@@ -30,7 +30,7 @@ namespace SustainAndGain.Controllers
             //service.AddStaticStockData();
 
             // Test reset 1
-
+            service.AddStocksInComp();
 
             return View();
         }

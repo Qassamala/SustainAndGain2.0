@@ -61,9 +61,18 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
-		internal void AddStocksInComp()
+		internal void AddStocksInComp(Competition competition)
 		{
-			throw new NotImplementedException();
+			var user_id = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
+
+			StocksInCompetition stocks = new StocksInCompetition
+			{
+				UserId = user_id,
+				Quantity = 1000,
+				CompId = competition.Id
+
+			};
+			
 		}
 
 		public void AddStaticStockData()
@@ -98,17 +107,7 @@ namespace SustainAndGain.Models
 		}
 
 
-		public HistDataStocks GetResultAsync()
-		{
-			var client = new RestClient("https://morning-star.p.rapidapi.com/market/auto-complete?query=nasdaq");
-			var request = new RestRequest(Method.GET);
-			request.AddHeader("x-rapidapi-host", "morning-star.p.rapidapi.com");
-			request.AddHeader("x-rapidapi-key", "f8544aa2bamshc436653380b874cp1efcc0jsn3741bd4318a2");
-			IRestResponse response = client.Execute(request);
-			string result = response.Content;
-			var stocks = JsonConvert.DeserializeObject<HistDataStocks>(response.Content);
-			return stocks;
-		}
+	
 
 		public void GetCompanyDescription()
 		{
