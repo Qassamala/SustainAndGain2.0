@@ -54,14 +54,11 @@ namespace SustainAndGain.Models
             }, vm.Password);
             //if (result.Succeeded)
             //    await signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
-
             return result;
-
         }
 
         internal async Task<SignInResult> TryLoginUser(UserLoginVM vm)
         {
-
             var result = await signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
             return result;
         }

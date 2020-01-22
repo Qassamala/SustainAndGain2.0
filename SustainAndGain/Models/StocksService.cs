@@ -116,8 +116,14 @@ namespace SustainAndGain.Models
             IRestResponse response = client.Execute(request);
 
             var photos = JsonConvert.DeserializeObject<StocksIndexVM>(response.Content);
-            return photos;
+            return photos; 
         }
+
+
+
+
+
+
 
     }
 
