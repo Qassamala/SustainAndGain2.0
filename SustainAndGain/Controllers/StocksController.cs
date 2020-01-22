@@ -24,13 +24,14 @@ namespace SustainAndGain.Controllers
         [Route("List")]
         public IActionResult List()
         {
-
+            //competitionsService.DisplayCompetitions();
             competitionsService.AddCompetition();
-            service.AddHistDataStocks();
+            //service.AddHistDataStocks();
+            //service.AddHistDataStocks();
             //service.AddStaticStockData();
 
             // Test reset 1
-
+            service.AddStocksInComp();
 
             return View();
         }

@@ -26,11 +26,34 @@
     </div>
 @* SLides for tävlingar *@
     <h2>Tävling</h2>
-    <div class="slideContainer">
-        <div class="slide">@Model[0].StartTime</div>
-        <div class="slide"></div>
-        <div class="slide"></div>
-        <div class="slide"></div>
+    <div class="slideContainer" >
+        <div class="slide">
+            <p>@Model[0].StartTime</p>
+            <p> @Model[0].IsOngoing </p>
+            <p>@Model[0].EndTime</p>
+            <p>@Model[0].Name</p>
+
+
+
+        </div>
+        <div class="slide">
+            <p>@Model[1].StartTime</p>
+            <p> @Model[1].IsOngoing </p>
+            <p>@Model[1].EndTime</p>
+            <p>@Model[1].Name</p>
+        </div>
+        <div class="slide">
+            <p>@Model[2].StartTime</p>
+            <p> @Model[2].IsOngoing </p>
+            <p>@Model[2].EndTime</p>
+            <p>@Model[2].Name</p>
+        </div>
+        <div class="slide">
+            <p>@Model[3].StartTime</p>
+            <p> @Model[3].IsOngoing </p>
+            <p>@Model[3].EndTime</p>
+            <p>@Model[3].Name</p>
+        </div>
         
         
     </div>
