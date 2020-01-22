@@ -16,6 +16,7 @@ using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using SustainAndGain.Models.Entities;
+using System.Threading;
 
 namespace SustainAndGain.Models
 {
@@ -29,94 +30,49 @@ namespace SustainAndGain.Models
 		}
 
         public void AddHistDataStocks()
-        {
-            string url = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=ST&lang=en&symbols=";
+		{
+			var stockData = context.StaticStockData
+					.Select(g => g.Symbol)
+					.ToArray();
 
-            var result = context.StaticStockData
-               .Take(99)
-               .Select(g => g.Symbol)
-               .ToArray();
-
-			foreach (var item in result)
+			for (int i = 0; i < 8; i++)
 			{
-				url = url + item + ",";
+				GetPricesForStocks(stockData, i);
+				Thread.Sleep(200);
+			}
 
-            }
-            var client = new RestClient(url);
-            var request = new RestRequest(Method.GET);
-            request.AddHeader("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
-            request.AddHeader("x-rapidapi-key", "f8544aa2bamshc436653380b874cp1efcc0jsn3741bd4318a2");
-            IRestResponse response = client.Execute(request);
-            string test = response.Content;
+			context.SaveChanges();
+		}
 
-            var rootObject = JsonConvert.DeserializeObject<RootObject>(response.Content);
-
-            foreach (var item in rootObject.quoteResponse.result)
-            {
-                StaticStockData stock = context.StaticStockData.SingleOrDefault(s => s.Symbol == item.symbol);
-
-                HistDataStocks historicalDataForStock = new HistDataStocks { DateTime = DateTime.Now, CurrentPrice = item.regularMarketPrice, StockId = stock.Id, Symbol = item.symbol };
-
-                context.HistDataStocks.Add(historicalDataForStock);
-                context.SaveChanges();
-            }
+		private void GetPricesForStocks(string[] stockData, int i)
+		{
 
 
-			var result2 = context.StaticStockData
-				.Skip(99)
+			var result = stockData
+				.Skip(i*99)
 			   .Take(99)
-			   .Select(g => g.Symbol)
 			   .ToArray();
 
-			var result3 = context.StaticStockData
-				   .Skip(198)
-				   .Take(99)
-				   .Select(g => g.Symbol)
-				   .ToArray();
+			// Construct URL with max 99 stocks and performs call to Yahoo API
+			var response = ConstructURLWithStocksAndGetStockInfoFromYahoo(result);
+			var rootObject = JsonConvert.DeserializeObject<RootObject>(response.Content);
 
+			// Uses the Rootobject result list to find correct symbol and write to HistDataSTocks
+			WriteStockInfoToHistoricalDataStocks(rootObject);
+		}
 
-			var result4 = context.StaticStockData
-				  .Skip(297)
-				  .Take(99)
-				  .Select(g => g.Symbol)
-				   .ToArray();
+		internal void AddStocksInComp(Competition competition)
+		{
+			var user_id = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
 
+			StocksInCompetition stocks = new StocksInCompetition
+			{
+				UserId = user_id,
+				Quantity = 1000,
+				CompId = competition.Id
 
-			var result5 = context.StaticStockData
-				  .Skip(396)
-				  .Take(99)
-				  .Select(g => g.Symbol)
-				   .ToArray();
-
-
-			var result6 = context.StaticStockData
-				.Skip(495)
-				.Take(99)
-				.Select(g => g.Symbol)
-				   .ToArray();
-
-
-			var result7 = context.StaticStockData
-				.Skip(594)
-				.Take(99)
-				.Select(g => g.Symbol)
-				   .ToArray();
-
-
-			var result8 = context.StaticStockData
-				.Skip(693)
-				.Take(8)
-				.Select(g => g.Symbol)
-				   .ToArray();
-
-
-
-
-
-
-
-			// Reverted back
-
+			};
+			
 		}
 
 		public void AddStaticStockData()
@@ -136,13 +92,6 @@ namespace SustainAndGain.Models
 
 				StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName};
 
-
-				//int firstPositionSymbol = 0;
-				//int endPositionSymbol = item.IndexOf(".ST") + 3;
-				//string symbol = item.Substring(firstPositionSymbol, endPositionSymbol);
-
-
-
 				//Assigning values to DB model and saving to DB
 				//staticStockData.Symbol = staticStockData.Symbol.ToUpper();
 				//staticStockData.CompanyName = staticStockData.CompanyName;
@@ -158,17 +107,7 @@ namespace SustainAndGain.Models
 		}
 
 
-		public HistDataStocks GetResultAsync()
-		{
-			var client = new RestClient("https://morning-star.p.rapidapi.com/market/auto-complete?query=nasdaq");
-			var request = new RestRequest(Method.GET);
-			request.AddHeader("x-rapidapi-host", "morning-star.p.rapidapi.com");
-			request.AddHeader("x-rapidapi-key", "f8544aa2bamshc436653380b874cp1efcc0jsn3741bd4318a2");
-			IRestResponse response = client.Execute(request);
-			string result = response.Content;
-			var stocks = JsonConvert.DeserializeObject<HistDataStocks>(response.Content);
-			return stocks;
-		}
+	
 
 		public void GetCompanyDescription()
 		{
@@ -196,7 +135,34 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
+		public void WriteStockInfoToHistoricalDataStocks(RootObject rootObject)
+		{
+			foreach (var item in rootObject.quoteResponse.result)
+			{
+				StaticStockData stock = context.StaticStockData.SingleOrDefault(s => s.Symbol == item.symbol);
 
+				HistDataStocks historicalDataForStock = new HistDataStocks { DateTime = DateTime.Now, CurrentPrice = item.regularMarketPrice, StockId = stock.Id, Symbol = item.symbol };
+
+				context.HistDataStocks.Add(historicalDataForStock);
+			}
+		}
+
+		public IRestResponse ConstructURLWithStocksAndGetStockInfoFromYahoo(string[] result)
+		{
+			string url = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=ST&lang=en&symbols=";
+
+			foreach (var item in result)
+			{
+				url = url + item + ",";
+
+			}
+			var client = new RestClient(url);
+			var request = new RestRequest(Method.GET);
+			request.AddHeader("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
+			request.AddHeader("x-rapidapi-key", "f8544aa2bamshc436653380b874cp1efcc0jsn3741bd4318a2");
+			IRestResponse response = client.Execute(request);
+			return response;
+		}
 
 
 

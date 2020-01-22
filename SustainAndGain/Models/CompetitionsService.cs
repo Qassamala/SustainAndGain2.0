@@ -20,7 +20,7 @@ namespace SustainAndGain.Models
         {
             int month = 1;
             
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
                 
             {
                 Competition competition = new Competition
