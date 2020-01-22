@@ -22,8 +22,11 @@ namespace SustainAndGain.Controllers
         [Route("List")]
         public IActionResult List()
         {
-            service.AddHistDataStocks();
+
+            service.GetCompanyDescription();
             //service.AddHistDataStocks();
+            //service.AddHistDataStocks();
+            //service.AddStaticStockData();
 
            // Test reset 1
 
