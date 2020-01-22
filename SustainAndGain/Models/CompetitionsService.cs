@@ -1,4 +1,5 @@
 ﻿using SustainAndGain.Models.Entities;
+using SustainAndGain.Models.ModelViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,9 +36,21 @@ namespace SustainAndGain.Models
             
         }
 
-        public void DisplayCompetitions()
+        public CompetitionVM[] DisplayCompetitions()
         {
-
+            List<CompetitionVM> competitions = new List<CompetitionVM>();
+            foreach (var item in context.Competition)
+            {
+                competitions.Add(new CompetitionVM
+                {
+                    EndTime = item.EndTime,
+                    StartTime = item.StartTime
+                    
+                });
+            }
+            return competitions.ToArray();
+          
+           
         }
 
     }

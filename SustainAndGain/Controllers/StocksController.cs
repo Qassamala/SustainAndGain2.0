@@ -37,7 +37,8 @@ namespace SustainAndGain.Controllers
         [Route("/UserLayout")]
         public IActionResult UserLayout()
         {
-            return View();
+            var result = competitionsService.DisplayCompetitions();
+            return View(result);
         }
         [Route("/{competition}/Portfolio")]
         public IActionResult Portfolio()

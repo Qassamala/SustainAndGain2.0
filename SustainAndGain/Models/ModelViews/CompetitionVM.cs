@@ -17,5 +17,6 @@ namespace SustainAndGain.Models.ModelViews
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public bool IsOngoing { get; set; }
+        public string Name { get; set; }
     }
 }
