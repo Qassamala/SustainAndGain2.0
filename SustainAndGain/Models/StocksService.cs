@@ -28,32 +28,38 @@ namespace SustainAndGain.Models
 			this.context = context;
 		}
 
-		public void AddHistDataStocks()
-		{
-			string url = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=ST&lang=en&symbols=";
+        public void AddHistDataStocks()
+        {
+            string url = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/get-quotes?region=ST&lang=en&symbols=";
 
-
-
-
-
-
-
-
-			var result = context.StaticStockData
-			   .Take(99)
-			   .Select(g => g.Symbol)
-			   .ToArray();
+            var result = context.StaticStockData
+               .Take(99)
+               .Select(g => g.Symbol)
+               .ToArray();
 
 			foreach (var item in result)
 			{
 				url = url + item + ",";
 
-			}
-			var client = new RestClient(url);
-			var request = new RestRequest(Method.GET);
-			request.AddHeader("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
-			request.AddHeader("x-rapidapi-key", "f8544aa2bamshc436653380b874cp1efcc0jsn3741bd4318a2");
-			IRestResponse response = client.Execute(request);
+            }
+            var client = new RestClient(url);
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
+            request.AddHeader("x-rapidapi-key", "f8544aa2bamshc436653380b874cp1efcc0jsn3741bd4318a2");
+            IRestResponse response = client.Execute(request);
+            string test = response.Content;
+
+            var rootObject = JsonConvert.DeserializeObject<RootObject>(response.Content);
+
+            foreach (var item in rootObject.quoteResponse.result)
+            {
+                StaticStockData stock = context.StaticStockData.SingleOrDefault(s => s.Symbol == item.symbol);
+
+                HistDataStocks historicalDataForStock = new HistDataStocks { DateTime = DateTime.Now, CurrentPrice = item.regularMarketPrice, StockId = stock.Id  };
+
+                context.HistDataStocks.Add(historicalDataForStock);
+                context.SaveChanges();
+            }
 
 
 			var result2 = context.StaticStockData

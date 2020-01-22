@@ -12,10 +12,12 @@ namespace SustainAndGain.Controllers
     public class StocksController : Controller
     {
         private readonly StocksService service;
+        private readonly CompetitionsService competitionsService;
 
-        public StocksController(StocksService service)
+        public StocksController(StocksService service, CompetitionsService competitionsService)
         {
             this.service = service;
+            this.competitionsService = competitionsService;
         }
        
 
@@ -23,7 +25,7 @@ namespace SustainAndGain.Controllers
         public IActionResult List()
         {
 
-            service.GetCompanyDescription();
+            competitionsService.AddCompetition();
             //service.AddHistDataStocks();
             //service.AddHistDataStocks();
             //service.AddStaticStockData();

@@ -47,6 +47,8 @@ namespace SustainAndGain
             services.ConfigureApplicationCookie(o => o.LoginPath = "/login");
             services.AddTransient<UsersService>();
             services.AddTransient<StocksService>();
+            services.AddTransient<CompetitionsService>();
+
 
             services.AddHttpContextAccessor();
             

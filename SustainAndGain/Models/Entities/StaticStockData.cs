@@ -17,6 +17,7 @@ namespace SustainAndGain.Models.Entities
         public string Description { get; set; }
         public string Sector { get; set; }
         public string CompanyName { get; set; }
+        public bool? IsSustainable { get; set; }
 
         public virtual ICollection<HistDataStocks> HistDataStocks { get; set; }
         public virtual ICollection<StocksInCompetition> StocksInCompetition { get; set; }
