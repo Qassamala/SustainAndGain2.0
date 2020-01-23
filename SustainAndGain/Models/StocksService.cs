@@ -29,7 +29,7 @@ namespace SustainAndGain.Models
 			this.context = context;
 		}
 
-        public void AddHistDataStocks()
+		public void AddHistDataStocks()
 		{
 			var stockData = context.StaticStockData
 					.Select(g => g.Symbol)
@@ -47,7 +47,7 @@ namespace SustainAndGain.Models
 		private void GetPricesForStocks(string[] stockData, int i)
 		{
 			var result = stockData
-				.Skip(i*99)
+				.Skip(i * 99)
 			   .Take(99)
 			   .ToArray();
 
@@ -91,7 +91,7 @@ namespace SustainAndGain.Models
 				string symbol = lines[0];
 				string companyName = lines[1];
 
-				StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName};
+				StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName };
 
 				//staticStockData.Description = staticStockData.Description;
 				//staticStockData.Sector = staticStockData.Sector;
@@ -104,7 +104,7 @@ namespace SustainAndGain.Models
 		}
 
 
-	
+
 
 		public void GetCompanyDescription()
 		{
@@ -159,6 +159,39 @@ namespace SustainAndGain.Models
 			IRestResponse response = client.Execute(request);
 			return response;
 		}
+
+
+
+
+		public List<UsersHistoricalTransactions> GetHistoricalTransactionData(int id)
+		{
+
+			List<UsersHistoricalTransactions> historicalTransactions = new List<UsersHistoricalTransactions>();
+
+
+			foreach (var transactionData in context.UsersHistoricalTransactions)
+			{
+				if (transactionData.Id == id)
+				{
+
+					UsersHistoricalTransactions transactions = new UsersHistoricalTransactions
+					{
+						Quantity = transactionData.Quantity
+
+					};
+					historicalTransactions.Add(transactions);
+
+				}
+			}
+
+
+		
+			return historicalTransactions;
+
+		}
+
+
+
 
 
 

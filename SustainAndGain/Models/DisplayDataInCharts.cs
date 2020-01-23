@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Helpers;
+
 
 namespace SustainAndGain.Models
 {
-	public class Chart
+	public class DisplayDataInCharts
 	{
-		public string Name { get; set; }
 
-
-
-
-
-
-
+		public Chart MyProperty { get; set; }
 	}
 }

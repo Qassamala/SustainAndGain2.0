@@ -19,5 +19,7 @@ namespace SustainAndGain.Models.Entities
 
         public virtual ICollection<StocksInCompetition> StocksInCompetition { get; set; }
         public virtual ICollection<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
+
+      
     }
 }

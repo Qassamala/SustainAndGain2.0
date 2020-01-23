@@ -1,0 +1,65 @@
+﻿
+@*<br />
+<input id="movieTextBox" type="button" value="Get Html" onclick="getHtml()" />
+
+<div id="movieBox" style="background-color:green"> </div>
+<script>
+
+    function getHtml() {
+        var id = $("#movieTextBox").val();
+        console.log(`button clicked!`);
+        var url = "/kanyeQuote/" + id;
+        console.log(url);
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#movieBox").html(result);
+            }
+        });
+    }
+
+</script>*@
+
+<script>
+    function getHtml() {
+       
+        var url = "/chart/"
+        console.log(url);
+
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#myChart").html(result);
+            }
+        });
+    }
+</script>
+
+<div>
+    <canvas id="myChart"></canvas>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'July', 'July', 'July', 'July', 'July', 'July', 'July', 'July'],
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 200, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 10, 33, 66, 10, 4, 3, 5, 6, 7, 8, 4]
+                }]
+            },
+            // Configuration options go here
+            options: {}
+        });
+    </script>
+</div>
