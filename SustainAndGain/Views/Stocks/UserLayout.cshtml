@@ -26,16 +26,19 @@
     </div>
 @* SLides for tävlingar *@
     <h2>Tävling</h2>
-    <div class="slideContainer" >
-        <div class="slide">
-            <p>@Model[0].StartTime</p>
-            <p> @Model[0].IsOngoing </p>
-            <p>@Model[0].EndTime</p>
-            <p>@Model[0].Name</p>
+    <div class="slideContainer">
+        <a asp-action="Portfolio">
+            <div class="slide">
+                <p>@Model[0].StartTime</p>
+                <p> @Model[0].IsOngoing </p>
+                <p>@Model[0].EndTime</p>
+                <p>@Model[0].Name</p>
+            </div>
+        </a>
 
 
 
-        </div>
+    
         <div class="slide">
             <p>@Model[1].StartTime</p>
             <p> @Model[1].IsOngoing </p>
