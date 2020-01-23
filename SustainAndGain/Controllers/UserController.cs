@@ -59,7 +59,6 @@ namespace SustainAndGain.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
-
             var result = await service.TryCreateUser(vm);
             if (!result.Succeeded)
             {

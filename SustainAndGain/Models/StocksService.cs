@@ -93,10 +93,6 @@ namespace SustainAndGain.Models
 
 				StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName};
 
-				//Assigning values to DB model and saving to DB
-				//staticStockData.Symbol = staticStockData.Symbol.ToUpper();
-				//staticStockData.CompanyName = staticStockData.CompanyName;
-
 				//staticStockData.Description = staticStockData.Description;
 				//staticStockData.Sector = staticStockData.Sector;
 
