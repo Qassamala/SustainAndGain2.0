@@ -51,7 +51,9 @@ namespace SustainAndGain.Models
                 CompetitionVM competition = new CompetitionVM
                 {
                     EndTime = item.EndTime,
-                    StartTime = item.StartTime
+                    StartTime = item.StartTime,
+                    Name = item.Name,
+                    IsOngoing = item.IsOngoing
 
                 };
                 competitions.Add(competition);
