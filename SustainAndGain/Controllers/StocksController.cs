@@ -50,5 +50,14 @@ namespace SustainAndGain.Controllers
             return View(stocksInComp);
         }
 
+
+        [Route("/chart{id}")]
+        public IActionResult Chart(int id)
+        {
+            var viewmodel = service.GetHistoricalTransactionData(id);
+           
+            return PartialView(viewmodel);
+        }
+
     }
 }
