@@ -30,15 +30,15 @@ namespace SustainAndGain
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //// Adding Quartz services
-            //services.AddSingleton<IJobFactory, SingletonJobFactory>();
-            //services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
-            ////Adding our job
-            //services.AddSingleton<TriggerGetStockPricesJob>();
-            //services.AddSingleton(new JobSchedule(
-            //    jobType: typeof(TriggerGetStockPricesJob),
-            //    cronExpression: "0 5 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run every 5 second
-            //services.AddHostedService<QuartzHostedService>();
+        //    // Adding Quartz services
+        //    services.AddSingleton<IJobFactory, SingletonJobFactory>();
+        //    services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+        //    //Adding our job
+        //    services.AddSingleton<TriggerGetStockPricesJob>();
+        //    services.AddSingleton(new JobSchedule(
+        //        jobType: typeof(TriggerGetStockPricesJob),
+        //        cronExpression: "0 5 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run every 5 second
+        //    services.AddHostedService<QuartzHostedService>();
 
             var connString = configuration.GetConnectionString("DefaultConnection");
             services.AddControllersWithViews();

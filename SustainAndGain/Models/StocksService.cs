@@ -67,7 +67,7 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
-		internal UsersInCompetition AddStocksInComp(int id)
+		internal UsersInCompetition AddUsersInComp(int id)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 

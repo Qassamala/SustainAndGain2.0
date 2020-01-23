@@ -46,7 +46,7 @@ namespace SustainAndGain.Controllers
         public IActionResult Portfolio(int id)
         {
 
-           var stocksInComp = service.AddStocksInComp(id);
+           var stocksInComp = service.AddUsersInComp(id);
             return View(stocksInComp);
         }
 
