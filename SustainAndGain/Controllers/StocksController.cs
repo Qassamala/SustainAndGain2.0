@@ -42,7 +42,7 @@ namespace SustainAndGain.Controllers
             var result = competitionsService.DisplayCompetitions();
             return View(result);
         }
-        [Route("{id}")]
+        [Route("Portfolio/{id}")]
         public IActionResult Portfolio(int id)
         {
 

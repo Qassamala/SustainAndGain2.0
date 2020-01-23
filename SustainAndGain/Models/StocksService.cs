@@ -16,17 +16,24 @@ using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using SustainAndGain.Models.Entities;
+
 using System.Threading;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 
 namespace SustainAndGain.Models
 {
 	public class StocksService
 	{
 		private SustainGainContext context;
+		private readonly UserManager<MyIdentityUser> user;
+		private readonly IHttpContextAccessor accessor;
 
-		public StocksService(SustainGainContext context)
+		public StocksService(SustainGainContext context, UserManager<MyIdentityUser> user, IHttpContextAccessor accessor)
 		{
 			this.context = context;
+			this.user = user;
+			this.accessor = accessor;
 		}
 
 		public void AddHistDataStocks()
@@ -60,19 +67,20 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
-		internal StocksInCompetition AddStocksInComp(int id)
+		internal UsersInCompetition AddStocksInComp(int id)
 		{
-			var user_id = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
+			string userId = user.GetUserId(accessor.HttpContext.User);
 
-			StocksInCompetition stocks = new StocksInCompetition
+			UsersInCompetition stocks = new UsersInCompetition
 			{
-				UserId = user_id,
-				Quantity = 1000,
+				UserId = userId,
+				CurrentValue = 10000,
 				CompId = id
 
 
 			};
-			context.StocksInCompetition.Add(stocks);
+			context.UsersInCompetition.Add(stocks);
+			context.SaveChanges();
 			return stocks;
 		}
 
