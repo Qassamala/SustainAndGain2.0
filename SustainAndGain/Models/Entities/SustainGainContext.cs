@@ -25,8 +25,8 @@ namespace SustainAndGain.Models.Entities
         public virtual DbSet<Competition> Competition { get; set; }
         public virtual DbSet<HistDataStocks> HistDataStocks { get; set; }
         public virtual DbSet<StaticStockData> StaticStockData { get; set; }
-        public virtual DbSet<StocksInCompetition> StocksInCompetition { get; set; }
         public virtual DbSet<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
+        public virtual DbSet<UsersInCompetition> UsersInCompetition { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -152,7 +152,7 @@ namespace SustainAndGain.Models.Entities
                     .WithMany(p => p.HistDataStocks)
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HistDataS__Stock__52593CB8");
+                    .HasConstraintName("FK__HistDataS__Stock__5FB337D6");
             });
 
             modelBuilder.Entity<StaticStockData>(entity =>
@@ -173,31 +173,6 @@ namespace SustainAndGain.Models.Entities
                     .IsRequired()
                     .HasMaxLength(64)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<StocksInCompetition>(entity =>
-            {
-                entity.Property(e => e.UserId)
-                    .IsRequired()
-                    .HasMaxLength(450);
-
-                entity.HasOne(d => d.Comp)
-                    .WithMany(p => p.StocksInCompetition)
-                    .HasForeignKey(d => d.CompId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_StocksInCompetition_ToTable");
-
-                entity.HasOne(d => d.Stock)
-                    .WithMany(p => p.StocksInCompetition)
-                    .HasForeignKey(d => d.StockId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_StocksInCompetition_ToTable_1");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.StocksInCompetition)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_StocksInCompetition_ToTable_2");
             });
 
             modelBuilder.Entity<UsersHistoricalTransactions>(entity =>
@@ -227,19 +202,40 @@ namespace SustainAndGain.Models.Entities
                     .WithMany(p => p.UsersHistoricalTransactions)
                     .HasForeignKey(d => d.CompetitionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersHist__Compe__5165187F");
+                    .HasConstraintName("FK__UsersHist__Compe__5DCAEF64");
 
                 entity.HasOne(d => d.Stock)
                     .WithMany(p => p.UsersHistoricalTransactions)
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersHist__Stock__5441852A");
+                    .HasConstraintName("FK__UsersHist__Stock__619B8048");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UsersHistoricalTransactions)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersHist__UserI__5629CD9C");
+                    .HasConstraintName("FK__UsersHist__UserI__60A75C0F");
+            });
+
+            modelBuilder.Entity<UsersInCompetition>(entity =>
+            {
+                entity.Property(e => e.CurrentValue).HasColumnType("money");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.Comp)
+                    .WithMany(p => p.UsersInCompetition)
+                    .HasForeignKey(d => d.CompId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StocksInCompetition_ToTable");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.UsersInCompetition)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StocksInCompetition_ToTable_2");
             });
 
             OnModelCreatingPartial(modelBuilder);

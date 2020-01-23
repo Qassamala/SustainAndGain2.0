@@ -7,8 +7,8 @@ namespace SustainAndGain.Models.Entities
     {
         public Competition()
         {
-            StocksInCompetition = new HashSet<StocksInCompetition>();
             UsersHistoricalTransactions = new HashSet<UsersHistoricalTransactions>();
+            UsersInCompetition = new HashSet<UsersInCompetition>();
         }
 
         public int Id { get; set; }
@@ -17,7 +17,7 @@ namespace SustainAndGain.Models.Entities
         public DateTime EndTime { get; set; }
         public string Name { get; set; }
 
-        public virtual ICollection<StocksInCompetition> StocksInCompetition { get; set; }
         public virtual ICollection<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
+        public virtual ICollection<UsersInCompetition> UsersInCompetition { get; set; }
     }
 }
