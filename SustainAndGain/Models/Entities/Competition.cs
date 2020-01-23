@@ -12,7 +12,6 @@ namespace SustainAndGain.Models.Entities
         }
 
         public int Id { get; set; }
-        public bool IsOngoing { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public string Name { get; set; }

@@ -79,7 +79,7 @@ namespace SustainAndGain.Models
 
 
 			};
-			context.UsersInCompetition.Add(stocks);
+			//context.UsersInCompetition.Add(stocks);
 			context.SaveChanges();
 			return stocks;
 		}

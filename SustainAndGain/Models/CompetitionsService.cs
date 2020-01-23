@@ -29,7 +29,6 @@ namespace SustainAndGain.Models
 						StartTime = new DateTime(2020, month, 23),
 						EndTime = new DateTime(2020, month + 1, 23),
 						Name = "Hello",
-						IsOngoing = true
 					};
 
 				month++;
@@ -51,7 +50,6 @@ namespace SustainAndGain.Models
                     EndTime = item.EndTime,
                     StartTime = item.StartTime,
                     Name = item.Name,
-                    IsOngoing = item.IsOngoing,
                     Id = item.Id
 
 				};
