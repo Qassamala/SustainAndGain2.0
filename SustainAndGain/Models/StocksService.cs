@@ -75,12 +75,16 @@ namespace SustainAndGain.Models
 			{
 				UserId = userId,
 				CurrentValue = 10000,
-				CompId = id
+				CompId = id,
+
+
 
 
 			};
+
 			context.UsersInCompetition.Add(stocks);
 			context.SaveChanges();
+			
 			return stocks;
 		}
 
