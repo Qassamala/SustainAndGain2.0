@@ -29,7 +29,6 @@ namespace SustainAndGain.Models
 			for (int i = 0; i < 4; i++)
 
 			{
-
 					Competition competition = new Competition
 					{
 						StartTime = new DateTime(2020, month, 23),
@@ -44,9 +43,7 @@ namespace SustainAndGain.Models
 		}
 
 		public CompetitionVM[] DisplayCompetitions()
-		{
-			
-
+		{			
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
 			return context.Competition
@@ -59,6 +56,5 @@ namespace SustainAndGain.Models
 					HasJoined = item.UsersInCompetition.Any(o => o.UserId == userId)
 				}).ToArray();
 		}
-
 	}
 }
