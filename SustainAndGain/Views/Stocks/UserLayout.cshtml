@@ -34,9 +34,12 @@
             <p>Starting: @Model[0].StartTime</p>
             <p>Ends: @Model[0].EndTime</p>
             <p>@Model[0].IsOngoing </p>
+           
+            
+         
             <a asp-controller="Stocks"
                asp-action="Portfolio"
-               asp-route-id="@Model[0].Id">SpeakerId: @Model[0].Id</a>
+               asp-route-id="@Model[0].Id">Go to Portfolio</a>
         </div>
         <div class="slide">
             <p>
@@ -71,6 +74,17 @@
 
 
             </div>
+
+
+    <script>
+        function CheckUserInComp() {
+            if (true) {
+
+            }
+            
+        }
+
+    </script>
 
 
    
