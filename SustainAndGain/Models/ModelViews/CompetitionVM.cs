@@ -18,5 +18,6 @@ namespace SustainAndGain.Models.ModelViews
         public DateTime EndTime { get; set; }
         public bool IsOngoing { get; set; }
         public string Name { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SustainAndGain.Models;
+using SustainAndGain.Models.ModelViews;
 
 namespace SustainAndGain.Controllers
 {
@@ -41,10 +42,12 @@ namespace SustainAndGain.Controllers
             var result = competitionsService.DisplayCompetitions();
             return View(result);
         }
-        [Route("/{competition}/Portfolio")]
-        public IActionResult Portfolio()
+        [Route("{id}")]
+        public IActionResult Portfolio(int id)
         {
-            return View();
+
+           var stocksInComp = service.AddStocksInComp(id);
+            return View(stocksInComp);
         }
 
     }

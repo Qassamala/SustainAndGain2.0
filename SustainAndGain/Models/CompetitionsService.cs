@@ -53,7 +53,8 @@ namespace SustainAndGain.Models
                     EndTime = item.EndTime,
                     StartTime = item.StartTime,
                     Name = item.Name,
-                    IsOngoing = item.IsOngoing
+                    IsOngoing = item.IsOngoing,
+                    Id = item.Id
 
                 };
                 competitions.Add(competition);

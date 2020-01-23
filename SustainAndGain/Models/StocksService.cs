@@ -60,7 +60,7 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
-		internal void AddStocksInComp(Competition competition)
+		internal StocksInCompetition AddStocksInComp(int id)
 		{
 			var user_id = System.Security.Principal.WindowsIdentity.GetCurrent().User.Value;
 
@@ -68,10 +68,12 @@ namespace SustainAndGain.Models
 			{
 				UserId = user_id,
 				Quantity = 1000,
-				CompId = competition.Id
+				CompId = id
+
 
 			};
-			
+			context.StocksInCompetition.Add(stocks);
+			return stocks;
 		}
 
 		public void AddStaticStockData()
