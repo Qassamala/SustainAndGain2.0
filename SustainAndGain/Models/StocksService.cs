@@ -171,29 +171,31 @@ namespace SustainAndGain.Models
 
 
 
-		public List<UsersHistoricalTransactions> GetHistoricalTransactionData(int id)
+		public List<HistDataStocks> GetHistoricalTransactionData()
 		{
 
-			List<UsersHistoricalTransactions> historicalTransactions = new List<UsersHistoricalTransactions>();
+			List<HistDataStocks> historicalTransactions = new List<HistDataStocks>();
 
 
-			foreach (var transactionData in context.UsersHistoricalTransactions)
+			foreach (var transactionData in context.HistDataStocks)
 			{
-				if (transactionData.Id == id)
-				{
+				//if (transactionData.Id == 1 || transactionData.Id == 2)
+				//{
 
-					UsersHistoricalTransactions transactions = new UsersHistoricalTransactions
+					HistDataStocks transactions = new HistDataStocks
 					{
-						Quantity = transactionData.Quantity
-
+						CurrentPrice  =transactionData.CurrentPrice,
+						DateTime = transactionData.DateTime,
+						Id = transactionData.Id,
+						Stock = transactionData.Stock,
+						StockId = transactionData.StockId,
+						 Symbol = transactionData.Symbol
+						
 					};
 					historicalTransactions.Add(transactions);
-
-				}
+				//}
 			}
 
-
-		
 			return historicalTransactions;
 
 		}
