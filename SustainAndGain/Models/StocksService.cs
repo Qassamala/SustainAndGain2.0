@@ -171,29 +171,35 @@ namespace SustainAndGain.Models
 
 
 
-		public List<HistDataStocks> GetHistoricalTransactionData()
+		public List<UsersInCompetition> GetHistoricalTransactionData(string id)
 		{
 
-			List<HistDataStocks> historicalTransactions = new List<HistDataStocks>();
+			List<UsersInCompetition> historicalTransactions = new List<UsersInCompetition>();
 
 
-			foreach (var transactionData in context.HistDataStocks)
+			foreach (var transactionData in context.UsersInCompetition)
 			{
-				//if (transactionData.Id == 1 || transactionData.Id == 2)
-				//{
+				if (transactionData.UserId == id)
+				{
 
-					HistDataStocks transactions = new HistDataStocks
+					UsersInCompetition transactions = new UsersInCompetition
 					{
-						CurrentPrice  =transactionData.CurrentPrice,
-						DateTime = transactionData.DateTime,
-						Id = transactionData.Id,
-						Stock = transactionData.Stock,
-						StockId = transactionData.StockId,
-						 Symbol = transactionData.Symbol
+					CurrentValue = transactionData.CurrentValue,
+					LastUpdatedCurrentValue = transactionData.LastUpdatedCurrentValue,
+					AvailableForInvestment = transactionData.AvailableForInvestment,
+					Comp = transactionData.Comp,
+					CompId = transactionData.CompId,
+					Id = transactionData.Id,
+					LastUpdatedAvailableForInvestment = transactionData.LastUpdatedAvailableForInvestment,
+					User = transactionData.User,
+					UserId = transactionData.UserId
+
+
+				
 						
 					};
 					historicalTransactions.Add(transactions);
-				//}
+				}
 			}
 
 			return historicalTransactions;

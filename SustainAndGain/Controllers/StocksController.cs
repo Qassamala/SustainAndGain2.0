@@ -54,18 +54,13 @@ namespace SustainAndGain.Controllers
             
         }
 
-
-        [Route("/chart/")]
-        public IActionResult Chart()
+        [Route("/chart/{id}")]
+        public IActionResult Chart(string id)
         {
-            var viewmodel = service.GetHistoricalTransactionData();
-           
-            return PartialView(viewmodel);
+            var viewmodel = service.GetHistoricalTransactionData(id);
+
+            return PartialView("Chart", viewmodel);
         }
-
-
-     
-
 
     }
 }

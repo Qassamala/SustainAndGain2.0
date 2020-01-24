@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SustainAndGain.Models;
+using SustainAndGain.Models.ModelViews;
 
 namespace SustainAndGain.Controllers
 {
@@ -23,6 +24,26 @@ namespace SustainAndGain.Controllers
             var portfolioData = service.DisplayPortfolioData(compId);
             
             return View(portfolioData);
+        }
+
+        [Route("Portfolio/FindStocks/{compId}")]
+        [HttpGet]
+        public IActionResult FindStocks(int compId)
+        {
+            var stockData = service.FindStocks(compId);
+
+            return View(stockData);
+        }
+
+
+
+        [Route("Portfolio/Orders/{compId}")]
+        [HttpGet]
+        public IActionResult Orders(int compId)
+        {
+            var pendingOrders = service.GetPendingOrders(compId);
+
+            return PartialView("_Order", pendingOrders);
         }
     }
 }
