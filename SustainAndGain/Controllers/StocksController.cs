@@ -48,27 +48,14 @@ namespace SustainAndGain.Controllers
         {
            bool value = service.AddUsersInComp(userId, compId);
             return value;
-            
         }
 
-
-        [Route("/chart/")]
-        public IActionResult Chart()
+        [Route("/chart/{id}")]
+        public IActionResult Chart(string id)
         {
-            var viewmodel = service.GetHistoricalTransactionData();
-           
+            var viewmodel = service.GetHistoricalTransactionData(id);
             return PartialView(viewmodel);
         }
-
-
-        [Route("Portfolio/{id}")]
-        public IActionResult Portfolio(int id)
-        {
-
-            var stocksInComp = service.AddUsersInComp(id);
-            return View(stocksInComp);
-        }
-
 
     }
 }
