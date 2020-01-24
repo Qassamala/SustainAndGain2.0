@@ -26,16 +26,31 @@ namespace SustainAndGain.Models
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
-			var lastupdatedCurrentValue = context.UsersInCompetition.Where(o => ((o.CompId == compId) && (o.UserId == userId))).Max(o => o.LastUpdatedCurrentValue);
+			var lastupdatedCurrentValue = context.UsersInCompetition
+				.Where(o => ((o.CompId == compId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedCurrentValue);
 
-			var currentValue = context.UsersInCompetition.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue).Select(v => v.CurrentValue).SingleOrDefault();
+			var currentValue = context.UsersInCompetition
+				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				.Select(v => v.CurrentValue)
+				.SingleOrDefault();
 
 
-			var lastupdatedAvailableForInvestment = context.UsersInCompetition.Where(o => ((o.CompId == compId) && (o.UserId == userId))).Max(o => o.LastUpdatedAvailableForInvestment);
+			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == compId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
 
-			var availableForInvestment = context.UsersInCompetition.Where(o => o.LastUpdatedCurrentValue == lastupdatedAvailableForInvestment).Select(v => v.AvailableForInvestment).SingleOrDefault();
+			var availableForInvestment = context.UsersInCompetition
+				.Where(o => o.LastUpdatedCurrentValue == lastupdatedAvailableForInvestment)
+				.Select(v => v.AvailableForInvestment)
+				.SingleOrDefault();
 
-			PortfolioVM portfolioData = new PortfolioVM { CurrentValue = (decimal)currentValue, AvailableCapital = (decimal)availableForInvestment, InvestedCapital = (decimal)(currentValue - availableForInvestment), ListOfOrders = new List<Order>(), CompetitionId = compId };
+
+			PortfolioVM portfolioData = new PortfolioVM
+			{ CurrentValue = (decimal)currentValue,
+				AvailableCapital = (decimal)availableForInvestment,
+				InvestedCapital = (decimal)(currentValue - availableForInvestment),
+				CompetitionId = compId };
 
 			return portfolioData;
 		}
@@ -48,7 +63,7 @@ namespace SustainAndGain.Models
 				.Where(o => o.CompId == compId && o.UserId == userId)
 				.Select(o => new OrderVM
 				{ 
-					Symbol = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.Symbol).ToString(),
+					Symbol = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.Symbol).SingleOrDefault(),
 					OrderValue = o.OrderValue,
 					BuyOrSell = o.BuyOrSell,
 					TimeOfInsertion = o.TimeOfInsertion
