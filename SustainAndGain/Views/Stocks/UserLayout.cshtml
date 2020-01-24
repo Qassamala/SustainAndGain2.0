@@ -34,25 +34,9 @@
         <p>Starting: @Model[0].StartTime</p>
         <p>Ends: @Model[0].EndTime</p>
         <p>@Model[0].IsOngoing </p>
-
-
-        @if (Model[0].HasJoined)
-
-        {
-            <form>
-                <button asp-controller="Stocks"
-                        asp-action="Portfolio"
-                        asp-route-id="@Model[0].Id">
-                    Go To Portfolio
-                </button>
-            </form>
-
-        }
-        else
-        {
-            <input id="Join" type="submit" value="Join" class="btn btn-primary" />
-
-        }
+        <div id="ButtonDiv0">
+          
+        </div>
 
     </div>
     <div class="slide">
@@ -63,7 +47,9 @@
         <p>Starting: @Model[1].StartTime</p>
         <p>Ends: @Model[1].EndTime</p>
         <p>@Model[1].IsOngoing </p>
-        <input type="submit" value="Join" class="btn btn-primary" />
+        <div id="ButtonDiv1">
+
+        </div>
 
     </div>
     <div class="slide">
@@ -72,8 +58,9 @@
         <p>Starting: @Model[2].StartTime</p>
         <p>Ends: @Model[2].EndTime</p>
         <p>@Model[2].IsOngoing </p>
+        <div id="ButtonDiv2">
 
-        <input id="btnSave" type="submit" value="Join" class="btn btn-primary" />
+        </div>
 
 
 
@@ -84,7 +71,9 @@
         <p>Starting: @Model[3].StartTime</p>
         <p>Ends: @Model[3].EndTime</p>
         <p>@Model[3].IsOngoing </p>
-        <input type="submit" value="Join" class="btn btn-primary" />
+        <div id="ButtonDiv3">
+
+        </div>
 
     </div>
 
@@ -95,8 +84,54 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
 <script>
+
+
+    window.onload = function AddButton() {
+        for (var i = 0; i < 4; i++) {
+            let buttons= []
+        }
+          `<form>
+                <button id="Portfolio" asp-controller="PortFolio"
+                        asp-action="Portfolio"
+                        asp-route-id="@Model[0].Id">
+                    Go To Portfolio
+                </button>
+            </form>
+@if (Model[0].HasJoined)
+
+            {
+                <form>
+                    <button asp-controller="PortFolio"
+                            asp-action="Portfolio"
+                            asp-route-id="@Model[0].Id">
+                        Go To Portfolio
+                    </button>
+                </form>
+
+            }
+            else
+            {
+                <input id="Join" type="submit" value="Join" class="btn btn-primary" />
+
+            }
+            `
+
+
+        var string = `ButtonDiv`
+        for (var i = 0; i < 4; i++) {
+
+            var element = document.getElementById(string + `${i}`);
+
+            element.innerHTML = codeblock;
+
+
+
+        }
+    }
+
+
     $(document).ready(function () {
-        
+
         //Reading text box values using Jquery
         var obj = { "UserId":"@Model[0].UserId", "CompId":"@Model[0].Id"};
 
@@ -120,7 +155,6 @@
             );
         })
                         })
-        
 
 </script>
 

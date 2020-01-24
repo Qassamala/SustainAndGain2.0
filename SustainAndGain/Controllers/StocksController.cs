@@ -64,13 +64,7 @@ namespace SustainAndGain.Controllers
         }
 
 
-        [Route("Portfolio/{id}")]
-        public IActionResult Portfolio(int id)
-        {
-
-            var stocksInComp = service.AddUsersInComp(id);
-            return View(stocksInComp);
-        }
+     
 
 
     }

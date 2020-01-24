@@ -6,6 +6,9 @@
     overflow-x: hidden;
  
 }
+#Portfolio{
+    display:none;
+}
 
 body {
     
