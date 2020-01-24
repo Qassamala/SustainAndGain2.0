@@ -76,10 +76,6 @@ namespace SustainAndGain.Models
 				UserId = userId,
 				CurrentValue = 10000,
 				CompId = id,
-
-
-
-
 			};
 
 			context.UsersInCompetition.Add(stocks);
@@ -94,10 +90,8 @@ namespace SustainAndGain.Models
 
 			string[] inputFileStocks = File.ReadAllLines(path);
 
-
 			foreach (var item in inputFileStocks)
 			{
-
 				string[] lines = item.Split('\t');
 
 				string symbol = lines[0];
@@ -109,13 +103,9 @@ namespace SustainAndGain.Models
 				//staticStockData.Sector = staticStockData.Sector;
 
 				context.StaticStockData.Add(staticStockData);
-				context.SaveChanges();
-
 			}
-
+				context.SaveChanges();
 		}
-
-
 
 
 		public void GetCompanyDescription()
@@ -144,6 +134,7 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
+
 		public void WriteStockInfoToHistoricalDataStocks(RootObject rootObject)
 		{
 			foreach (var item in rootObject.quoteResponse.result)
@@ -155,6 +146,7 @@ namespace SustainAndGain.Models
 				context.HistDataStocks.Add(historicalDataForStock);
 			}
 		}
+
 
 		public IRestResponse ConstructURLWithStocksAndGetStockInfoFromYahoo(string[] result)
 		{
@@ -173,41 +165,23 @@ namespace SustainAndGain.Models
 		}
 
 
-
-
 		public List<UsersHistoricalTransactions> GetHistoricalTransactionData(int id)
 		{
-
 			List<UsersHistoricalTransactions> historicalTransactions = new List<UsersHistoricalTransactions>();
-
 
 			foreach (var transactionData in context.UsersHistoricalTransactions)
 			{
 				if (transactionData.Id == id)
 				{
-
 					UsersHistoricalTransactions transactions = new UsersHistoricalTransactions
 					{
 						Quantity = transactionData.Quantity
-
 					};
 					historicalTransactions.Add(transactions);
-
 				}
 			}
-
-
-		
 			return historicalTransactions;
-
 		}
-
-
-
-
-
-
 	}
-
 }
 
