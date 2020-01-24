@@ -1,4 +1,6 @@
-﻿using SustainAndGain.Models.Entities;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using SustainAndGain.Models.Entities;
 using SustainAndGain.Models.ModelViews;
 using System;
 using System.Collections.Generic;
@@ -10,10 +12,14 @@ namespace SustainAndGain.Models
 	public class CompetitionsService
 	{
 		private readonly SustainGainContext context;
+		private readonly UserManager<MyIdentityUser> user;
+		private readonly IHttpContextAccessor accessor;
 
-		public CompetitionsService(SustainGainContext context)
+		public CompetitionsService(SustainGainContext context, UserManager<MyIdentityUser> user, IHttpContextAccessor accessor)
 		{
 			this.context = context;
+			this.user = user;
+			this.accessor = accessor;
 		}
 
 		public void AddCompetition()
@@ -23,7 +29,6 @@ namespace SustainAndGain.Models
 			for (int i = 0; i < 4; i++)
 
 			{
-
 					Competition competition = new Competition
 					{
 						StartTime = new DateTime(2020, month, 23),
@@ -38,30 +43,21 @@ namespace SustainAndGain.Models
 		}
 
 		public CompetitionVM[] DisplayCompetitions()
-		{
+		{			
+			string userId = user.GetUserId(accessor.HttpContext.User);
 
-
-			List<CompetitionVM> competitions = new List<CompetitionVM>();
-
-            foreach (var item in context.Competition)
-            {
-                CompetitionVM competition = new CompetitionVM
-                {
-                    EndTime = item.EndTime,
-                    StartTime = item.StartTime,
-                    Name = item.Name,
-                    Id = item.Id
-
-				};
-				competitions.Add(competition);
-
-			}
-			return competitions.ToArray();
-
-
-
-
+			return context.Competition
+				.Select(item => new CompetitionVM
+				{
+					EndTime = item.EndTime,
+					StartTime = item.StartTime,
+					Name = item.Name,
+					Id = item.Id,
+					UserId = userId,
+					HasJoined = item.UsersInCompetition.Any(o => o.UserId == userId)
+				}).ToArray();
 		}
+	
 
 	}
 }

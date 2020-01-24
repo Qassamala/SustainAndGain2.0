@@ -24,6 +24,7 @@ namespace SustainAndGain.Models.Entities
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<Competition> Competition { get; set; }
         public virtual DbSet<HistDataStocks> HistDataStocks { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<StaticStockData> StaticStockData { get; set; }
         public virtual DbSet<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
         public virtual DbSet<UsersInCompetition> UsersInCompetition { get; set; }
@@ -146,6 +147,35 @@ namespace SustainAndGain.Models.Entities
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__HistDataS__Stock__59FA5E80");
+            });
+
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.Property(e => e.OrderValue).HasColumnType("money");
+
+                entity.Property(e => e.TimeOfInsertion).HasColumnType("datetime");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.Comp)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.CompId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Order__CompId__01142BA1");
+
+                entity.HasOne(d => d.Stock)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.StockId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Order__StockId__7F2BE32F");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Order)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Order__UserId__00200768");
             });
 
             modelBuilder.Entity<StaticStockData>(entity =>

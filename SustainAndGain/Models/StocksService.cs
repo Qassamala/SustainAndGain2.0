@@ -67,21 +67,21 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
-		internal UsersInCompetition AddUsersInComp(int id)
+		internal bool AddUsersInComp(string userId,int id)
 		{
-			string userId = user.GetUserId(accessor.HttpContext.User);
+			//string userId = user.GetUserId(accessor.HttpContext.User);
 
 			UsersInCompetition stocks = new UsersInCompetition
 			{
 				UserId = userId,
 				CurrentValue = 10000,
-				CompId = id
-
-
+				CompId = id,
 			};
-			//context.UsersInCompetition.Add(stocks);
+
+			context.UsersInCompetition.Add(stocks);
 			context.SaveChanges();
-			return stocks;
+
+			return true;
 		}
 
 		public void AddStaticStockData()
@@ -90,10 +90,8 @@ namespace SustainAndGain.Models
 
 			string[] inputFileStocks = File.ReadAllLines(path);
 
-
 			foreach (var item in inputFileStocks)
 			{
-
 				string[] lines = item.Split('\t');
 
 				string symbol = lines[0];
@@ -105,13 +103,9 @@ namespace SustainAndGain.Models
 				//staticStockData.Sector = staticStockData.Sector;
 
 				context.StaticStockData.Add(staticStockData);
-				context.SaveChanges();
-
 			}
-
+				context.SaveChanges();
 		}
-
-
 
 
 		public void GetCompanyDescription()
@@ -140,6 +134,7 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
+
 		public void WriteStockInfoToHistoricalDataStocks(RootObject rootObject)
 		{
 			foreach (var item in rootObject.quoteResponse.result)
@@ -151,6 +146,7 @@ namespace SustainAndGain.Models
 				context.HistDataStocks.Add(historicalDataForStock);
 			}
 		}
+
 
 		public IRestResponse ConstructURLWithStocksAndGetStockInfoFromYahoo(string[] result)
 		{
@@ -197,15 +193,7 @@ namespace SustainAndGain.Models
 			}
 
 			return historicalTransactions;
-
 		}
-
-
-
-
-
-
 	}
-
 }
 

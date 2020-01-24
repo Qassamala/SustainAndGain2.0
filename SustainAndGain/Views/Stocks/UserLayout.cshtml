@@ -34,12 +34,20 @@
             <p>Starting: @Model[0].StartTime</p>
             <p>Ends: @Model[0].EndTime</p>
             <p>@Model[0].IsOngoing </p>
-           
-            
-         
-            <a asp-controller="Stocks"
-               asp-action="Portfolio"
-               asp-route-id="@Model[0].Id">Go to Portfolio</a>
+
+
+            @if (Model[0].HasJoined)
+            {
+                <a asp-controller="Stocks"
+                   asp-action="Portfolio"
+                   asp-route-id="@Model[0].Id">Go to Portfolio</a>
+            }
+            else
+            {
+                <input id="btnSave" type="submit" value="Join" class="btn btn-primary" />
+
+            }
+
         </div>
         <div class="slide">
             <p>
@@ -77,12 +85,18 @@
 
 
     <script>
-        function CheckUserInComp() {
-            if (true) {
-
-            }
-            
-        }
+          $("#btnSave").click(function () {  
+            $.ajax(  
+            {  
+                type: "POST", //HTTP POST Method  
+                url: "Stocks/InsertAjax", // Controller/View   
+                data: { //Passing data  
+                     //Reading text box values using Jquery   
+                    UserId: $("@Model[0].UserId").val(),  
+                    CompId: $("@Model[0].Id").val()
+                }  
+  
+            });  
 
     </script>
 

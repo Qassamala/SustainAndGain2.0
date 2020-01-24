@@ -26,7 +26,7 @@ namespace SustainAndGain.Controllers
         public IActionResult List()
         {
             //competitionsService.DisplayCompetitions();
-            competitionsService.AddCompetition();
+            //competitionsService.AddCompetition();
             //service.AddHistDataStocks();
             //service.AddHistDataStocks();
             //service.AddStaticStockData();
@@ -42,12 +42,13 @@ namespace SustainAndGain.Controllers
             var result = competitionsService.DisplayCompetitions();
             return View(result);
         }
-        [Route("Portfolio/{id}")]
-        public IActionResult Portfolio(int id)
-        {
 
-           var stocksInComp = service.AddUsersInComp(id);
-            return View(stocksInComp);
+        [HttpPost]
+        public bool InsertAjax(string userId, int compId)
+        {
+           bool value = service.AddUsersInComp(userId, compId);
+            return value;
+            
         }
 
 
@@ -58,6 +59,16 @@ namespace SustainAndGain.Controllers
            
             return PartialView(viewmodel);
         }
+
+
+        [Route("Portfolio/{id}")]
+        public IActionResult Portfolio(int id)
+        {
+
+            var stocksInComp = service.AddUsersInComp(id);
+            return View(stocksInComp);
+        }
+
 
     }
 }

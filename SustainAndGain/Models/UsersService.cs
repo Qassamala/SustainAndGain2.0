@@ -28,8 +28,7 @@ namespace SustainAndGain.Models
             string userId = userManager.GetUserId(httpContextAccessor.HttpContext.User);
             MyIdentityUser user = await userManager.FindByIdAsync(userId);
             UserMemberVM vm = new UserMemberVM
-            {
-               
+            {               
                 Email = user.Email,
                 UserName = user.UserName
             };
