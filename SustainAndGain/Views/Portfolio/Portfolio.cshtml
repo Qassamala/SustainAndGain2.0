@@ -28,15 +28,33 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.InvestedCapital)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ListOfOrders)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ListOfOrders)
-        </dd>
     </dl>
 </div>
+
+<div id="divResult"></div>
+
+
+
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="UserLayout">Back to List of Competitions</a>
 </div>
+
+<script>
+    window.load = function getPendingOrders() {
+        console.log("running")
+        //Get ID from competition
+        var id = @Model.CompetitionId;
+        console.log(id);
+        // Make AJAX call
+        var url = "/portfolio/orders/" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divResult").html(result);
+            }
+        });
+    }
+
+</script>
