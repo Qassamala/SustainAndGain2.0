@@ -55,11 +55,12 @@ namespace SustainAndGain.Models
 					EndTime = item.EndTime,
 					StartTime = item.StartTime,
 					Name = item.Name,
-					IsOngoing = item.IsOngoing,
 					Id = item.Id,
+					UserId = userId,
 					HasJoined = item.UsersInCompetition.Any(o => o.UserId == userId)
 				}).ToArray();
 		}
+	
 
 	}
 }

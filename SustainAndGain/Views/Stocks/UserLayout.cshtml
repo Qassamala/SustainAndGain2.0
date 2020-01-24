@@ -44,7 +44,7 @@
             }
             else
             {
-                <input type="submit" value="Join" class="btn btn-primary" />
+                <input id="btnSave" type="submit" value="Join" class="btn btn-primary" />
 
             }
 
@@ -85,13 +85,18 @@
 
 
     <script>
-        function CheckUserInComp() {
-            if (!@Model[0].IsRegistered) {
-
-
-            }
-            
-        }
+          $("#btnSave").click(function () {  
+            $.ajax(  
+            {  
+                type: "POST", //HTTP POST Method  
+                url: "Stocks/InsertAjax", // Controller/View   
+                data: { //Passing data  
+                     //Reading text box values using Jquery   
+                    UserId: $("@Model[0].UserId").val(),  
+                    CompId: $("@Model[0].Id").val()
+                }  
+  
+            });  
 
     </script>
 

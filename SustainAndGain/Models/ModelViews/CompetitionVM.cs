@@ -9,6 +9,8 @@ namespace SustainAndGain.Models.ModelViews
     {
         public CompetitionVM()
         {
+            
+
             if (StartTime < DateTime.Now)
             {
                 IsOngoing = true;
@@ -21,5 +23,6 @@ namespace SustainAndGain.Models.ModelViews
         public string Name { get; set; }
         public int Id { get; set; }
         public bool HasJoined { get; set; }
+        public string UserId { get; set; }
     }
 }

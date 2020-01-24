@@ -46,9 +46,17 @@ namespace SustainAndGain.Controllers
         public IActionResult Portfolio(int id)
         {
 
-           var stocksInComp = service.AddUsersInComp(id);
-            return View(stocksInComp);
+           
+            return View();
         }
+        [HttpPost]
+        public bool InsertAjax(string userId, int compId)
+        {
+           bool value = service.AddUsersInComp(userId, compId);
+            return value;
+            
+        }
+
 
 
         [Route("/chart{id}")]

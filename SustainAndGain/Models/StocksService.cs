@@ -67,9 +67,9 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
-		internal UsersInCompetition AddUsersInComp(int id)
+		internal bool AddUsersInComp(string userId,int id)
 		{
-			string userId = user.GetUserId(accessor.HttpContext.User);
+			//string userId = user.GetUserId(accessor.HttpContext.User);
 
 			UsersInCompetition stocks = new UsersInCompetition
 			{
@@ -84,8 +84,8 @@ namespace SustainAndGain.Models
 
 			context.UsersInCompetition.Add(stocks);
 			context.SaveChanges();
-			
-			return stocks;
+
+			return true;
 		}
 
 		public void AddStaticStockData()
