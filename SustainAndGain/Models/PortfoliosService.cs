@@ -34,8 +34,8 @@ namespace SustainAndGain.Models
 			var lastupdatedAvailableForInvestment = context.UsersInCompetition.Where(o => ((o.CompId == compId) && (o.UserId == userId))).Max(o => o.LastUpdatedAvailableForInvestment);
 
 			var availableForInvestment = context.UsersInCompetition.Where(o => o.LastUpdatedCurrentValue == lastupdatedAvailableForInvestment).Select(v => v.AvailableForInvestment).SingleOrDefault();
-			
-			PortfolioVM portfolioData = new PortfolioVM { CurrentValue = (decimal)currentValue, AvailableCapital = (decimal)availableForInvestment, InvestedCapital = (decimal)(currentValue - availableForInvestment) };
+
+			PortfolioVM portfolioData = new PortfolioVM { CurrentValue = (decimal)currentValue, AvailableCapital = (decimal)availableForInvestment, InvestedCapital = (decimal)(currentValue - availableForInvestment), ListOfOrders = new List<Order>() };
 
 			return portfolioData;
 		}
