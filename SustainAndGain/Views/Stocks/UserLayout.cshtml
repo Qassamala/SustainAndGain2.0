@@ -2,103 +2,126 @@
 @{
     ViewData["Title"] = "UserLayout";
 }
-    <link href="~/css/UserLayout.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
+<link href="~/css/UserLayout.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
 
-    <div class="navbar">
+<div class="navbar">
 
-        <ul>
-        
-            <li>
-                <img src="~/Img/profile.png" />
+    <ul>
 
-            </li>
-            <li>
-                <img src="~/Img/Plusprofile.png" />
-                
-            </li>
-            <li>
+        <li>
+            <img src="~/Img/profile.png" />
 
-                <img src="~/Img/Userprofile.png" />
-                
-            </li>
-        </ul>
+        </li>
+        <li>
+            <img src="~/Img/Plusprofile.png" />
+
+        </li>
+        <li>
+
+            <img src="~/Img/Userprofile.png" />
+
+        </li>
+    </ul>
+
+</div>
+
+@* SLides for tävlingar *@
+<h2>Tävling</h2>
+<div class="slideContainer">
+    <div id="slide1" class="slide">
+        <p>Competition: @Model[0].Name</p>
+
+        <p>Starting: @Model[0].StartTime</p>
+        <p>Ends: @Model[0].EndTime</p>
+        <p>@Model[0].IsOngoing </p>
+
+
+        @if (Model[0].HasJoined)
+
+        {
+            <form>
+                <button asp-controller="Stocks"
+                        asp-action="Portfolio"
+                        asp-route-id="@Model[0].Id">
+                    Go To Portfolio
+                </button>
+            </form>
+
+        }
+        else
+        {
+            <input id="Join" type="submit" value="Join" class="btn btn-primary" />
+
+        }
+
+    </div>
+    <div class="slide">
+        <p>
+            Competition: @Model[1].Name
+        </p>
+
+        <p>Starting: @Model[1].StartTime</p>
+        <p>Ends: @Model[1].EndTime</p>
+        <p>@Model[1].IsOngoing </p>
+        <input type="submit" value="Join" class="btn btn-primary" />
+
+    </div>
+    <div class="slide">
+        <p>Competition: @Model[2].Name</p>
+
+        <p>Starting: @Model[2].StartTime</p>
+        <p>Ends: @Model[2].EndTime</p>
+        <p>@Model[2].IsOngoing </p>
+
+        <input id="btnSave" type="submit" value="Join" class="btn btn-primary" />
+
+
+
+    </div>
+    <div class="slide">
+        <p>Competition: @Model[3].Name</p>
+
+        <p>Starting: @Model[3].StartTime</p>
+        <p>Ends: @Model[3].EndTime</p>
+        <p>@Model[3].IsOngoing </p>
+        <input type="submit" value="Join" class="btn btn-primary" />
 
     </div>
 
-@* SLides for tävlingar *@
-    <h2>Tävling</h2>
-    <div class="slideContainer" >
-        <div id="slide1" class="slide">
-            <p>Competition: @Model[0].Name</p>
 
-            <p>Starting: @Model[0].StartTime</p>
-            <p>Ends: @Model[0].EndTime</p>
-            <p>@Model[0].IsOngoing </p>
+</div>
 
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    $(document).ready(function () {
+        
+        //Reading text box values using Jquery
+        var obj = { "UserId":"@Model[0].UserId", "CompId":"@Model[0].Id"};
 
-            @if (Model[0].HasJoined)
-            {
-                <a asp-controller="Stocks"
-                   asp-action="Portfolio"
-                   asp-route-id="@Model[0].Id">Go to Portfolio</a>
-            }
-            else
-            {
-                <input id="btnSave" type="submit" value="Join" class="btn btn-primary" />
+        $("#Join").click(function () {
+            $.ajax(
+                {
+                    type: "POST", //HTTP POST Method
+                    url: "Stocks/InsertAjax",
+                     contentType: 'application/json',
+                    data: JSON.stringify(obj),
+                    success: function () {
+                        $("#Join").css("display", "none");
+                        $("#Portfolio").css("display", "block");
 
-            }
+                    },
+                    error: function () {
+                        $("#messageDiv").html();
+                    }
+                }
 
-        </div>
-        <div class="slide">
-            <p>
-            Competition: @Model[1].Name</p>
-            
-            <p>Starting: @Model[1].StartTime</p>
-            <p>Ends: @Model[1].EndTime</p>
-            <p>@Model[1].IsOngoing </p>
-            <input type="submit" value="Join" class="btn btn-primary" />
+            );
+        })
+                        })
+        
 
-                </div>
-                <div class="slide">
-                    <p>Competition: @Model[2].Name</p>
-
-                    <p>Starting: @Model[2].StartTime</p>
-                    <p>Ends: @Model[2].EndTime</p>
-                    <p>@Model[2].IsOngoing </p>
-
-                    <input type="submit" value="Join" class="btn btn-primary" />
+</script>
 
 
-                </div>
-                <div class="slide">
-                    <p>Competition: @Model[3].Name</p>
-
-                    <p>Starting: @Model[3].StartTime</p>
-                    <p>Ends: @Model[3].EndTime</p>
-                    <p>@Model[3].IsOngoing </p>
-                    <input type="submit" value="Join" class="btn btn-primary" />
-
-                </div>
-
-
-            </div>
-
-
-    <script>
-          $("#btnSave").click(function () {  
-            $.ajax(  
-            {  
-                type: "POST", //HTTP POST Method  
-                url: "Stocks/InsertAjax", // Controller/View   
-                data: { //Passing data  
-                     //Reading text box values using Jquery   
-                    UserId: $("@Model[0].UserId").val(),  
-                    CompId: $("@Model[0].Id").val()
-                }  
-  
-            });  
-
-    </script>
-
-
-   
