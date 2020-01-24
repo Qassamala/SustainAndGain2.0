@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SustainAndGain.Models;
+using SustainAndGain.Models.Entities;
 using SustainAndGain.Models.ModelViews;
 
 namespace SustainAndGain.Controllers
@@ -39,25 +40,24 @@ namespace SustainAndGain.Controllers
         [Route("/UserLayout")]
         public IActionResult UserLayout()
         {
+
             var result = competitionsService.DisplayCompetitions();
             return View(result);
         }
 
         [HttpPost]
-        public bool InsertAjax(string userId, int compId)
+        [Route("Stocks/InsertAjax")]
+        public IActionResult InsertAjax([FromBody]CompetitionVM obj)
         {
-           bool value = service.AddUsersInComp(userId, compId);
-            return value;
+            service.AddUsersInComp(obj);
+            return Ok();
             
         }
 
-
-
-        [Route("/chart{id}")]
-        public IActionResult Chart(int id)
+        [Route("/chart/{id}")]
+        public IActionResult Chart(string id)
         {
             var viewmodel = service.GetHistoricalTransactionData(id);
-           
             return PartialView(viewmodel);
         }
 

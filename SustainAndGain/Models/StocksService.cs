@@ -67,15 +67,19 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
-		internal bool AddUsersInComp(string userId,int id)
+		internal bool AddUsersInComp(CompetitionVM data)
 		{
-			//string userId = user.GetUserId(accessor.HttpContext.User);
+
+
 
 			UsersInCompetition stocks = new UsersInCompetition
 			{
-				UserId = userId,
+				UserId = data.UserId,
 				CurrentValue = 10000,
-				CompId = id,
+				AvailableForInvestment = 10000,
+				LastUpdatedAvailableForInvestment = DateTime.Now,
+				LastUpdatedCurrentValue = DateTime.Now,
+				CompId = int.Parse(data.CompId),
 			};
 
 			context.UsersInCompetition.Add(stocks);
@@ -165,21 +169,39 @@ namespace SustainAndGain.Models
 		}
 
 
-		public List<UsersHistoricalTransactions> GetHistoricalTransactionData(int id)
-		{
-			List<UsersHistoricalTransactions> historicalTransactions = new List<UsersHistoricalTransactions>();
 
-			foreach (var transactionData in context.UsersHistoricalTransactions)
+
+		public List<UsersInCompetition> GetHistoricalTransactionData(string id)
+		{
+
+			List<UsersInCompetition> historicalTransactions = new List<UsersInCompetition>();
+
+
+			foreach (var transactionData in context.UsersInCompetition)
 			{
-				if (transactionData.Id == id)
+				if (transactionData.UserId == id)
 				{
-					UsersHistoricalTransactions transactions = new UsersHistoricalTransactions
+
+					UsersInCompetition transactions = new UsersInCompetition
 					{
-						Quantity = transactionData.Quantity
+					CurrentValue = transactionData.CurrentValue,
+					LastUpdatedCurrentValue = transactionData.LastUpdatedCurrentValue,
+					AvailableForInvestment = transactionData.AvailableForInvestment,
+					Comp = transactionData.Comp,
+					CompId = transactionData.CompId,
+					Id = transactionData.Id,
+					LastUpdatedAvailableForInvestment = transactionData.LastUpdatedAvailableForInvestment,
+					User = transactionData.User,
+					UserId = transactionData.UserId
+
+
+				
+						
 					};
 					historicalTransactions.Add(transactions);
 				}
 			}
+
 			return historicalTransactions;
 		}
 	}
