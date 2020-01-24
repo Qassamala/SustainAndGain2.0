@@ -44,13 +44,7 @@ namespace SustainAndGain.Controllers
             var result = competitionsService.DisplayCompetitions();
             return View(result);
         }
-        [Route("Portfolio/{id}")]
-        public IActionResult Portfolio(int id)
-        {
 
-           
-            return View();
-        }
         [HttpPost]
         [Route("Stocks/InsertAjax")]
         public IActionResult InsertAjax([FromBody]CompetitionVM obj)
@@ -61,14 +55,23 @@ namespace SustainAndGain.Controllers
         }
 
 
-
-        [Route("/chart{id}")]
-        public IActionResult Chart(int id)
+        [Route("/chart/")]
+        public IActionResult Chart()
         {
-            var viewmodel = service.GetHistoricalTransactionData(id);
+            var viewmodel = service.GetHistoricalTransactionData();
            
             return PartialView(viewmodel);
         }
+
+
+        [Route("Portfolio/{id}")]
+        public IActionResult Portfolio(int id)
+        {
+
+            var stocksInComp = service.AddUsersInComp(id);
+            return View(stocksInComp);
+        }
+
 
     }
 }

@@ -22,17 +22,24 @@ namespace SustainAndGain.Models
 			this.accessor = accessor;
 		}
 
-		//public PortfolioVM DisplayPortfolioData()
-		//{
-			//string userId = user.GetUserId(accessor.HttpContext.User);
+		public PortfolioVM DisplayPortfolioData(int compId)
+		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
 
-			//decimal currentValue = context.UsersInCompetition.(v => v.LastUpdatedCurrentValue)
+			var lastupdatedCurrentValue = context.UsersInCompetition.Where(o => ((o.CompId == compId) && (o.UserId == userId))).Max(o => o.LastUpdatedCurrentValue);
 
-			//PortfolioVM viewModel = new PortfolioVM {CurrentValue = , AvailableCapital, InvestedCapital };
+			var currentValue = context.UsersInCompetition.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue).Select(v => v.CurrentValue).SingleOrDefault();
 
-			//return viewModel;
-		//}
-		
+
+			var lastupdatedAvailableForInvestment = context.UsersInCompetition.Where(o => ((o.CompId == compId) && (o.UserId == userId))).Max(o => o.LastUpdatedAvailableForInvestment);
+
+			var availableForInvestment = context.UsersInCompetition.Where(o => o.LastUpdatedCurrentValue == lastupdatedAvailableForInvestment).Select(v => v.AvailableForInvestment).SingleOrDefault();
+
+			PortfolioVM portfolioData = new PortfolioVM { CurrentValue = (decimal)currentValue, AvailableCapital = (decimal)availableForInvestment, InvestedCapital = (decimal)(currentValue - availableForInvestment), ListOfOrders = new List<Order>() };
+
+			return portfolioData;
+		}
+
 		//public decimal GetCurrentValue()
 		//{
 		//	AvailableCapital

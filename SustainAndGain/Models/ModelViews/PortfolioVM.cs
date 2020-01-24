@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SustainAndGain.Models.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace SustainAndGain.Models.ModelViews
         [Display(Name = "Invested capital")]
         public decimal InvestedCapital { get; set; }
 
-        //[Display(Name = "List of pending orders")]
-        //public List<Order> ListOfOrders { get; set; }
+        [Display(Name = "List of pending orders")]
+        public List<Order> ListOfOrders { get; set; }
     }
 }
