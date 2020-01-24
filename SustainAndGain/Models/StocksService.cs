@@ -67,15 +67,19 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
-		internal bool AddUsersInComp(string userId,int id)
+		internal bool AddUsersInComp(CompetitionVM data)
 		{
-			//string userId = user.GetUserId(accessor.HttpContext.User);
+
+
 
 			UsersInCompetition stocks = new UsersInCompetition
 			{
-				UserId = userId,
+				UserId = data.UserId,
 				CurrentValue = 10000,
-				CompId = id,
+				AvailableForInvestment = 10000,
+				LastUpdatedAvailableForInvestment = DateTime.Now,
+				LastUpdatedCurrentValue = DateTime.Now,
+				CompId = int.Parse(data.CompId),
 			};
 
 			context.UsersInCompetition.Add(stocks);

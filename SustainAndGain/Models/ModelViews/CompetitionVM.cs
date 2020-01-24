@@ -24,5 +24,6 @@ namespace SustainAndGain.Models.ModelViews
         public int Id { get; set; }
         public bool HasJoined { get; set; }
         public string UserId { get; set; }
+        public string CompId { get; set; }
     }
 }
