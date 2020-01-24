@@ -55,6 +55,31 @@ namespace SustainAndGain.Models
 			return portfolioData;
 		}
 
+		internal StockInfoVM[] FindStocks(int compId)
+		{
+
+			var stocks = context.StaticStockData
+				.Select(s => new StockInfoVM
+				{					
+					CompanyName = s.CompanyName,
+					IsSustainable = s.IsSustainable,
+					Symbol = s.Symbol,
+					LastUpdated = context.HistDataStocks
+						.Where(o => ((o.Symbol == s.Symbol))).Max(o => o.DateTime),
+					Description = s.Description
+				})
+				.ToArray();
+
+			foreach (var item in stocks)
+			{
+				item.LastPrice = (decimal)context.HistDataStocks
+						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == item.LastUpdated)))
+						.Select(o => o.CurrentPrice)
+						.SingleOrDefault();
+			}
+			return stocks;
+		}
+
 		internal IEnumerable<OrderVM> GetPendingOrders(int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
