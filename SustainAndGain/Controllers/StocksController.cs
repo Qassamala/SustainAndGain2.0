@@ -58,7 +58,8 @@ namespace SustainAndGain.Controllers
         public IActionResult Chart(string id)
         {
             var viewmodel = service.GetHistoricalTransactionData(id);
-            return PartialView(viewmodel);
+
+            return PartialView("Chart", viewmodel);
         }
 
     }
