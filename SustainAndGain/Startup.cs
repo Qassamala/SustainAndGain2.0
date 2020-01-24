@@ -60,6 +60,7 @@ namespace SustainAndGain
             services.ConfigureApplicationCookie(o => o.LoginPath = "/login");
             services.AddTransient<UsersService>();
             services.AddTransient<StocksService>();
+            services.AddTransient<PortfoliosService>();
             services.AddTransient<CompetitionsService>();
 
 
