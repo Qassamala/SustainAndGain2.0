@@ -8,6 +8,7 @@ namespace SustainAndGain.Models.Entities
         public StaticStockData()
         {
             HistDataStocks = new HashSet<HistDataStocks>();
+            Order = new HashSet<Order>();
             UsersHistoricalTransactions = new HashSet<UsersHistoricalTransactions>();
         }
 
@@ -19,6 +20,7 @@ namespace SustainAndGain.Models.Entities
         public bool? IsSustainable { get; set; }
 
         public virtual ICollection<HistDataStocks> HistDataStocks { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
     }
 }
