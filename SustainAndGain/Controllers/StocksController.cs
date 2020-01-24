@@ -42,13 +42,7 @@ namespace SustainAndGain.Controllers
             var result = competitionsService.DisplayCompetitions();
             return View(result);
         }
-        [Route("Portfolio/{id}")]
-        public IActionResult Portfolio(int id)
-        {
 
-           
-            return View();
-        }
         [HttpPost]
         public bool InsertAjax(string userId, int compId)
         {
