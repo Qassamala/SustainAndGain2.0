@@ -35,14 +35,26 @@ namespace SustainAndGain.Models
 
 			var availableForInvestment = context.UsersInCompetition.Where(o => o.LastUpdatedCurrentValue == lastupdatedAvailableForInvestment).Select(v => v.AvailableForInvestment).SingleOrDefault();
 
-			PortfolioVM portfolioData = new PortfolioVM { CurrentValue = (decimal)currentValue, AvailableCapital = (decimal)availableForInvestment, InvestedCapital = (decimal)(currentValue - availableForInvestment), ListOfOrders = new List<Order>() };
+			PortfolioVM portfolioData = new PortfolioVM { CurrentValue = (decimal)currentValue, AvailableCapital = (decimal)availableForInvestment, InvestedCapital = (decimal)(currentValue - availableForInvestment), ListOfOrders = new List<Order>(), CompetitionId = compId };
 
 			return portfolioData;
 		}
 
-		//public decimal GetCurrentValue()
-		//{
-		//	AvailableCapital
-		//}
+		internal IEnumerable<OrderVM> GetPendingOrders(int compId)
+		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			var orders = context.Order
+				.Where(o => o.CompId == compId && o.UserId == userId)
+				.Select(o => new OrderVM
+				{ 
+					Symbol = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.Symbol).ToString(),
+					OrderValue = o.OrderValue,
+					BuyOrSell = o.BuyOrSell,
+					TimeOfInsertion = o.TimeOfInsertion
+				});
+
+			return orders;
+		}
 	}
 }

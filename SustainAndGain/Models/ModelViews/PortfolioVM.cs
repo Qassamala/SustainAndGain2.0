@@ -20,5 +20,7 @@ namespace SustainAndGain.Models.ModelViews
 
         [Display(Name = "List of pending orders")]
         public List<Order> ListOfOrders { get; set; }
+
+        public int CompetitionId { get; set; }
     }
 }
