@@ -34,9 +34,20 @@
         <p>Starting: @Model[0].StartTime</p>
         <p>Ends: @Model[0].EndTime</p>
         <p>@Model[0].IsOngoing </p>
-        <div id="ButtonDiv0">
-          
-        </div>
+        <div id="ButtonJavaDiv0"></div>
+       
+
+        @if (Model[0].HasJoined)
+
+        {
+            <div id="ButtonDiv0"></div>
+
+        }
+        else
+        {
+            <input id="Join0" type="submit" value="Join" class="btn btn-primary" />
+
+        }
 
     </div>
     <div class="slide">
@@ -47,9 +58,19 @@
         <p>Starting: @Model[1].StartTime</p>
         <p>Ends: @Model[1].EndTime</p>
         <p>@Model[1].IsOngoing </p>
-        <div id="ButtonDiv1">
+        <div id="ButtonJavaDiv1"></div>
+      
+        @if (Model[1].HasJoined)
 
-        </div>
+        {
+            <div id="ButtonDiv1"></div>
+
+        }
+        else
+        {
+            <input id="Join1" type="submit" value="Join" class="btn btn-primary" />
+
+        }
 
     </div>
     <div class="slide">
@@ -58,9 +79,23 @@
         <p>Starting: @Model[2].StartTime</p>
         <p>Ends: @Model[2].EndTime</p>
         <p>@Model[2].IsOngoing </p>
-        <div id="ButtonDiv2">
 
-        </div>
+        <div id="ButtonJavaDiv2"></div>
+       
+
+
+        @if (Model[2].HasJoined)
+
+        {
+            <div id="ButtonDiv2"></div>
+
+        }
+        else
+        {
+            <input id="Join2" type="submit" value="Join" class="btn btn-primary" />
+
+        }
+
 
 
 
@@ -71,9 +106,20 @@
         <p>Starting: @Model[3].StartTime</p>
         <p>Ends: @Model[3].EndTime</p>
         <p>@Model[3].IsOngoing </p>
-        <div id="ButtonDiv3">
+        <div id="ButtonJavaDiv3"></div>
+     
 
-        </div>
+        @if (Model[3].HasJoined)
+
+        {
+            <div id="ButtonDiv3"></div>
+
+        }
+        else
+        {
+            <input id="Join3" type="submit" value="Join" class="btn btn-primary" />
+
+        }
 
     </div>
     @*@{ 
@@ -87,63 +133,83 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
 <script>
+      let codeblocks = []
+
+        @foreach (var item in Model)
+        {
+            @:codeblocks.push([@item.Id])
+        }
+
 
 
     window.onload = function AddButton() {
-        for (var i = 0; i < 4; i++) {
-            let buttons= []
-        }
-       
-        @for (int i = 0; i < 4; i++)
-        {
-           
-        }
-          `for<form>
-                <button id="Portfolio" asp-controller="PortFolio"
-                        asp-action="Portfolio"
-                        asp-route-id="@Model[0].Id">
-                    Go To Portfolio
-                </button>
-            </form>
-@if (Model[0].HasJoined)
-
-            {
-                <form>
-                    <button asp-controller="PortFolio"
-                            asp-action="Portfolio"
-                            asp-route-id="@Model[0].Id">
-                        Go To Portfolio
-                    </button>
-                </form>
-
-            }
-            else
-            {
-                <input id="Join" type="submit" value="Join" class="btn btn-primary" />
-
-            }
-            `
+      
 
 
+
+        var stringForJava = `ButtonJavaDiv` 
         var string = `ButtonDiv`
         for (var i = 0; i < 4; i++) {
 
             var element = document.getElementById(string + `${i}`);
+            var element2 = document.getElementById(stringForJava + `${i}`);
+            if (element == null) {
+                
+            }
+            else {
+                   element.innerHTML = `  <form>
+                <button asp-controller="PortFolio"
+                        asp-action="Portfolio"
+                        asp-route-id="${codeblocks[i]}">
+                    Go To Portfolio
+                </button>
+                </form>`;
+            }
+           
+            if (element2 == null) {
+                
+            }
+            else {
+                 element2.innerHTML = `  <form>
+                <button asp-controller="PortFolio"
+                        asp-action="Portfolio"
+                        asp-route-id="${codeblocks[i]}">
+                    Go To Portfolio
+                </button>
+                </form>`;
+            }
+           
 
-            element.innerHTML = codeblock;
+           
 
-
-
+              
         }
     }
+    
 
+
+
+
+
+  
 
     $(document).ready(function () {
+          $("#Join0").click(function () {
+            Join(0);
+        })
+         $("#Join1").click(function () {
+            Join(1);
+         })
+         $("#Join2").click(function () {
+            Join(2);
+         })
+         $("#Join3").click(function () {
+            Join(3);
+        })
 
         //Reading text box values using Jquery
-        var obj = { "UserId":"@Model[0].UserId", "CompId":"@Model[0].Id"};
-
-        $("#Join").click(function () {
+        function Join(number) {
+            var obj = { "UserId": "@Model[0].UserId", "CompId": String(codeblocks[number]) };
             $.ajax(
                 {
                     type: "POST", //HTTP POST Method
@@ -151,8 +217,9 @@
                      contentType: 'application/json',
                     data: JSON.stringify(obj),
                     success: function () {
-                        $("#Join").css("display", "none");
-                        $("#Portfolio").css("display", "block");
+                        $(`#Join${number}`).css("display", "none");
+                        $(`#ButtonJavaDiv${number}`).css("display", "block");
+                        AddButton();
 
                     },
                     error: function () {
@@ -161,7 +228,11 @@
                 }
 
             );
-        })
+
+    }
+   
+        
+       
                         })
 
 </script>
