@@ -4,10 +4,16 @@
     ViewData["Title"] = "Portfolio";
 }
 
-<h1>Portfolio</h1>
+<h1>My Portfolio</h1>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 
 <div>
-    <h4>PortfolioVM</h4>
+
+
 
 
     <hr />
@@ -33,15 +39,15 @@
     </dl>
 </div>
 
-<div id="divResult"></div>
+<div id="divChart"></div>
 
+<div id="divPendingOrders"></div>
+<div id="divHoldings"></div>
 
 
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="UserLayout">Back to List of Competitions</a>
     <a asp-action="FindStocks">Find stocks to buy</a>
-
 </div>
 
 <script>
@@ -56,10 +62,51 @@
             url: url,
             type: "GET",
             success: function (result) {
-                $("#divResult").html(result);
+                $("#divPendingOrders").html(result);
                 console.log("finished");
-            }        
+            }
+        });
+    }
 
+</script>
+
+
+<script>
+    window.onload = function getPendingOrders1() {
+        console.log("running")
+        //Get ID from competition
+        var id = @Model.CompetitionId
+        console.log(id);
+        // Make AJAX call
+        var url = "/chart/" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divChart").html(result);
+                console.log("finished");
+            }
+
+        });
+    }
+
+</script>
+
+<script>
+    window.onload = function getHoldings() {
+        console.log("running")
+        //Get ID from competition
+        var id = @Model.CompetitionId;
+        console.log(id);
+        // Make AJAX call
+        var url = "/portfolio/holdings/" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divHoldings").html(result);
+                console.log("finished");
+            }
         });
     }
 

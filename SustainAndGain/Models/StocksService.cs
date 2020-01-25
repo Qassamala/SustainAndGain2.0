@@ -171,15 +171,16 @@ namespace SustainAndGain.Models
 
 
 
-		public List<UsersInCompetition> GetHistoricalTransactionData(string id)
+		public List<UsersInCompetition> GetHistoricalTransactionData(int compId)
 		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
 
 			List<UsersInCompetition> historicalTransactions = new List<UsersInCompetition>();
 
 
 			foreach (var transactionData in context.UsersInCompetition)
 			{
-				if (transactionData.UserId == id)
+				if (transactionData.UserId == userId && transactionData.CompId == compId)
 				{
 
 					UsersInCompetition transactions = new UsersInCompetition

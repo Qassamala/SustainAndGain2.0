@@ -9,6 +9,7 @@ namespace SustainAndGain.Models.Entities
         {
             HistDataStocks = new HashSet<HistDataStocks>();
             Order = new HashSet<Order>();
+            StocksInCompetition = new HashSet<StocksInCompetition>();
             UsersHistoricalTransactions = new HashSet<UsersHistoricalTransactions>();
         }
 
@@ -21,6 +22,7 @@ namespace SustainAndGain.Models.Entities
 
         public virtual ICollection<HistDataStocks> HistDataStocks { get; set; }
         public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<StocksInCompetition> StocksInCompetition { get; set; }
         public virtual ICollection<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
     }
 }

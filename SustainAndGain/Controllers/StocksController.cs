@@ -55,7 +55,7 @@ namespace SustainAndGain.Controllers
         }
 
         [Route("/chart/{id}")]
-        public IActionResult Chart(string id)
+        public IActionResult Chart(int id)
         {
             var viewmodel = service.GetHistoricalTransactionData(id);
 

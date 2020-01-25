@@ -41,9 +41,9 @@ namespace SustainAndGain.Models
 				.Max(o => o.LastUpdatedAvailableForInvestment);
 
 			var availableForInvestment = context.UsersInCompetition
-				.Where(o => o.LastUpdatedCurrentValue == lastupdatedAvailableForInvestment)
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
 				.Select(v => v.AvailableForInvestment)
-				.SingleOrDefault();
+				.FirstOrDefault();
 
 
 			PortfolioVM portfolioData = new PortfolioVM
@@ -53,6 +53,35 @@ namespace SustainAndGain.Models
 				CompetitionId = compId };
 
 			return portfolioData;
+		}
+
+		internal List<HoldingsVM> GetHoldings(int compId)
+		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			var holdings = context.UsersHistoricalTransactions
+				.Where(o => o.CompetitionId == compId && o.UserId == userId)
+				.Select(o => new HoldingsVM
+				{
+					Symbol = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.Symbol).SingleOrDefault(),
+					CompanyName = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.CompanyName).SingleOrDefault(),
+					IsSustainable = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.IsSustainable).SingleOrDefault(),
+					BuyOrSell = o.BuyOrSell,
+					TotalQuantity = o.CurrentHoldingsAfterTransaction
+				}).ToList();
+
+			foreach (var item in holdings)
+			{
+				var latestPrice = context.HistDataStocks
+						.Where(o => ((o.Symbol == item.Symbol))).Max(o => o.DateTime);
+
+				item.CurrentPrice = (decimal)context.HistDataStocks
+						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == latestPrice)))
+						.Select(o => o.CurrentPrice)
+						.SingleOrDefault();
+			}
+
+			return holdings;
 		}
 
 		internal StockInfoVM[] FindStocks(int compId)

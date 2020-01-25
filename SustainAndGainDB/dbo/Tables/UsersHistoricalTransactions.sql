@@ -7,6 +7,7 @@
     [TransactionPrice]                MONEY          NOT NULL,
     [DateTimeOfTransaction]           DATETIME       NOT NULL,
     [CurrentHoldingsAfterTransaction] INT            NOT NULL,
+    [BuyOrSell] NVARCHAR(4) NOT NULL, 
     PRIMARY KEY CLUSTERED ([Id] ASC),
     FOREIGN KEY ([CompetitionId]) REFERENCES [dbo].[Competition] ([Id]),
     FOREIGN KEY ([StockId]) REFERENCES [dbo].[StaticStockData] ([Id]),

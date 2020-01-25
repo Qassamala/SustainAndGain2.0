@@ -10,6 +10,6 @@ namespace SustainAndGain.Models.ModelViews
         public string Symbol { get; set; }
         public decimal OrderValue { get; set; }
         public DateTime TimeOfInsertion { get; set; }
-        public bool BuyOrSell { get; set; }
+        public string BuyOrSell { get; set; }
     }
 }
