@@ -35,7 +35,7 @@
 </div>
 
 <div id="divPendingOrders"></div>
-
+<div id="divHoldings"></div>
 
 
 <div>
@@ -80,6 +80,26 @@
                 console.log("finished");
             }
 
+        });
+    }
+
+</script>
+
+<script>
+    window.onload = function getHoldings() {
+        console.log("running")
+        //Get ID from competition
+        var id = @Model.CompetitionId;
+        console.log(id);
+        // Make AJAX call
+        var url = "/portfolio/holdings/" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divHoldings").html(result);
+                console.log("finished");
+            }
         });
     }
 

@@ -204,6 +204,10 @@ namespace SustainAndGain.Models.Entities
 
             modelBuilder.Entity<UsersHistoricalTransactions>(entity =>
             {
+                entity.Property(e => e.BuyOrSell)
+                    .IsRequired()
+                    .HasMaxLength(4);
+
                 entity.Property(e => e.DateTimeOfTransaction).HasColumnType("datetime");
 
                 entity.Property(e => e.TransactionPrice).HasColumnType("money");

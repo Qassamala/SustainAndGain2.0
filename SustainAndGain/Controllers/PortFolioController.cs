@@ -45,5 +45,14 @@ namespace SustainAndGain.Controllers
 
             return PartialView("_Order", pendingOrders);
         }
+
+        [Route("Portfolio/Holdings/{compId}")]
+        [HttpGet]
+        public IActionResult Holdings(int compId)
+        {
+            var holdings = service.GetHoldings(compId);
+
+            return PartialView("_Holdings", holdings);
+        }
     }
 }
