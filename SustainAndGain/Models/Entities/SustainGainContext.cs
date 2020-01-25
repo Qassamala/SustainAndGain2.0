@@ -26,8 +26,18 @@ namespace SustainAndGain.Models.Entities
         public virtual DbSet<HistDataStocks> HistDataStocks { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<StaticStockData> StaticStockData { get; set; }
+        public virtual DbSet<StocksInCompetition> StocksInCompetition { get; set; }
         public virtual DbSet<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
         public virtual DbSet<UsersInCompetition> UsersInCompetition { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
+                optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=SustainGain;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -146,7 +156,7 @@ namespace SustainAndGain.Models.Entities
                     .WithMany(p => p.HistDataStocks)
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HistDataS__Stock__59FA5E80");
+                    .HasConstraintName("FK__HistDataS__Stock__52593CB8");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -167,19 +177,19 @@ namespace SustainAndGain.Models.Entities
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.CompId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__CompId__01142BA1");
+                    .HasConstraintName("FK__Order__CompId__619B8048");
 
                 entity.HasOne(d => d.Stock)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__StockId__7F2BE32F");
+                    .HasConstraintName("FK__Order__StockId__5FB337D6");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__UserId__00200768");
+                    .HasConstraintName("FK__Order__UserId__60A75C0F");
             });
 
             modelBuilder.Entity<StaticStockData>(entity =>
@@ -202,6 +212,31 @@ namespace SustainAndGain.Models.Entities
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<StocksInCompetition>(entity =>
+            {
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.Comp)
+                    .WithMany(p => p.StocksInCompetition)
+                    .HasForeignKey(d => d.CompId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StocksInCompetition_ToTable");
+
+                entity.HasOne(d => d.Stock)
+                    .WithMany(p => p.StocksInCompetition)
+                    .HasForeignKey(d => d.StockId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StocksInCompetition_ToTable_1");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.StocksInCompetition)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StocksInCompetition_ToTable_2");
+            });
+
             modelBuilder.Entity<UsersHistoricalTransactions>(entity =>
             {
                 entity.Property(e => e.BuyOrSell)
@@ -220,25 +255,23 @@ namespace SustainAndGain.Models.Entities
                     .WithMany(p => p.UsersHistoricalTransactions)
                     .HasForeignKey(d => d.CompetitionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersHist__Compe__7B5B524B");
+                    .HasConstraintName("FK__UsersHist__Compe__5CD6CB2B");
 
                 entity.HasOne(d => d.Stock)
                     .WithMany(p => p.UsersHistoricalTransactions)
                     .HasForeignKey(d => d.StockId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersHist__Stock__6EF57B66");
+                    .HasConstraintName("FK__UsersHist__Stock__5DCAEF64");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UsersHistoricalTransactions)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersHist__UserI__6FE99F9F");
+                    .HasConstraintName("FK__UsersHist__UserI__5EBF139D");
             });
 
             modelBuilder.Entity<UsersInCompetition>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.AvailableForInvestment).HasColumnType("money");
 
                 entity.Property(e => e.CurrentValue).HasColumnType("money");
@@ -255,13 +288,13 @@ namespace SustainAndGain.Models.Entities
                     .WithMany(p => p.UsersInCompetition)
                     .HasForeignKey(d => d.CompId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersInCo__CompI__7C4F7684");
+                    .HasConstraintName("FK__UsersInCo__CompI__66603565");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UsersInCompetition)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__UsersInCo__UserI__787EE5A0");
+                    .HasConstraintName("FK__UsersInCo__UserI__6754599E");
             });
 
             OnModelCreatingPartial(modelBuilder);

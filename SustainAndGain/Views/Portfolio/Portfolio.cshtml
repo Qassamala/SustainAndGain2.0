@@ -6,10 +6,15 @@
 
 <h1>My Portfolio</h1>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
 <div>
 
 
-    <div id="divChart"></div>
+
 
     <hr />
     <dl class="row">
@@ -34,6 +39,8 @@
     </dl>
 </div>
 
+<div id="divChart"></div>
+
 <div id="divPendingOrders"></div>
 <div id="divHoldings"></div>
 
@@ -57,7 +64,7 @@
             success: function (result) {
                 $("#divPendingOrders").html(result);
                 console.log("finished");
-            }        
+            }
         });
     }
 
@@ -65,13 +72,13 @@
 
 
 <script>
-    window.onload = function getPendingOrders() {
+    window.onload = function getPendingOrders1() {
         console.log("running")
         //Get ID from competition
-        var id = @Model.;
+        var id = @Model.CompetitionId
         console.log(id);
         // Make AJAX call
-        var url = "/chart" + id;
+        var url = "/chart/" + id;
         $.ajax({
             url: url,
             type: "GET",

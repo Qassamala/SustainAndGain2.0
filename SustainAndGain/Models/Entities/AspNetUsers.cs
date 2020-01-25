@@ -12,6 +12,7 @@ namespace SustainAndGain.Models.Entities
             AspNetUserRoles = new HashSet<AspNetUserRoles>();
             AspNetUserTokens = new HashSet<AspNetUserTokens>();
             Order = new HashSet<Order>();
+            StocksInCompetition = new HashSet<StocksInCompetition>();
             UsersHistoricalTransactions = new HashSet<UsersHistoricalTransactions>();
             UsersInCompetition = new HashSet<UsersInCompetition>();
         }
@@ -37,6 +38,7 @@ namespace SustainAndGain.Models.Entities
         public virtual ICollection<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual ICollection<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual ICollection<Order> Order { get; set; }
+        public virtual ICollection<StocksInCompetition> StocksInCompetition { get; set; }
         public virtual ICollection<UsersHistoricalTransactions> UsersHistoricalTransactions { get; set; }
         public virtual ICollection<UsersInCompetition> UsersInCompetition { get; set; }
     }
