@@ -4,23 +4,17 @@
     var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.CurrentValue).ToList());
     ViewData["Title"] = "Line Chart";
 }
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Line</title>
-</head>
 <body>
     <div class="box-body">
 
         <div class="chart-container">
-            <canvas id="chart" style="width:100%; height:500px"></canvas>
+            <canvas id="chart" style="height:500px; width:200px; "></canvas>
         </div>
     </div>
  
 </body>
-</html>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
@@ -28,7 +22,9 @@
 
             $(function () {
         var chartName = "chart";
-            var ctx = document.getElementById(chartName).getContext('2d');
+                var ctx = document.getElementById(chartName).getContext('2d');
+               
+
             var data = {
                     labels: @Html.Raw(XLabels),
                     datasets: [{
@@ -97,7 +93,8 @@
            var myChart = new Chart(ctx, {
                     options: options,
                     data: data,
-                    type:'line'
+               type: 'line'
+
 
                 });
             });

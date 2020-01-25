@@ -55,5 +55,19 @@ namespace SustainAndGain.Controllers
 
             return PartialView("_Holdings", holdings);
         }
+
+
+
+        [Route("highscore")]
+        [HttpGet]
+        public IActionResult Highscore(int compId)
+        {
+            var holdings = service.GetHoldings(compId);
+
+            return PartialView("_highscore", holdings);
+        }
+
+
+
     }
 }
