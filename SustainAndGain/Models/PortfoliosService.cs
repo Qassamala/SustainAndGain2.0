@@ -41,9 +41,9 @@ namespace SustainAndGain.Models
 				.Max(o => o.LastUpdatedAvailableForInvestment);
 
 			var availableForInvestment = context.UsersInCompetition
-				.Where(o => o.LastUpdatedCurrentValue == lastupdatedAvailableForInvestment)
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
 				.Select(v => v.AvailableForInvestment)
-				.SingleOrDefault();
+				.FirstOrDefault();
 
 
 			PortfolioVM portfolioData = new PortfolioVM
