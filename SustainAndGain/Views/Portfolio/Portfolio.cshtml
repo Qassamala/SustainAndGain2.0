@@ -40,10 +40,12 @@
 <div>
     @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="UserLayout">Back to List of Competitions</a>
+    <a asp-action="FindStocks">Find stocks to buy</a>
+
 </div>
 
 <script>
-    window.load = function getPendingOrders() {
+    window.onload = function getPendingOrders() {
         console.log("running")
         //Get ID from competition
         var id = @Model.CompetitionId;
@@ -55,7 +57,9 @@
             type: "GET",
             success: function (result) {
                 $("#divResult").html(result);
-            }
+                console.log("finished");
+            }        
+
         });
     }
 

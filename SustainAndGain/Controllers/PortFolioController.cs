@@ -26,6 +26,17 @@ namespace SustainAndGain.Controllers
             return View(portfolioData);
         }
 
+        [Route("Portfolio/FindStocks/{compId}")]
+        [HttpGet]
+        public IActionResult FindStocks(int compId)
+        {
+            var stockData = service.FindStocks(compId);
+
+            return View(stockData);
+        }
+
+
+
         [Route("Portfolio/Orders/{compId}")]
         [HttpGet]
         public IActionResult Orders(int compId)
