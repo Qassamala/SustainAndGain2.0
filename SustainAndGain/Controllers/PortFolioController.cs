@@ -19,9 +19,10 @@ namespace SustainAndGain.Controllers
 
         [Route("/Portfolio/{compId}")]
         [HttpGet]
-        public IActionResult Portfolio(int compId)
+        public IActionResult Portfolio(string id)
         {
-            var portfolioData = service.DisplayPortfolioData(compId);
+            var number = int.Parse(id);
+            var portfolioData = service.DisplayPortfolioData(number);
             
             return View(portfolioData);
         }
@@ -53,6 +54,20 @@ namespace SustainAndGain.Controllers
 
             return PartialView("_Holdings", holdings);
         }
+
+
+
+        [Route("highscore")]
+        [HttpGet]
+        public IActionResult Highscore(int compId)
+        {
+            var holdings = service.GetHoldings(compId);
+
+            return PartialView("_highscore", holdings);
+        }
+
+
+
 
         [Route("Portfolio/OrderEntry/{symbol}/{compId}")]
         [HttpGet]

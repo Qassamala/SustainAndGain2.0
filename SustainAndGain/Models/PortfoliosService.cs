@@ -72,7 +72,7 @@ namespace SustainAndGain.Models
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
-			var holdings = context.UsersHistoricalTransactions
+			var holdings =	 context.UsersHistoricalTransactions
 				.Where(o => o.CompetitionId == compId && o.UserId == userId)
 				.Select(o => new HoldingsVM
 				{
