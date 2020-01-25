@@ -9,7 +9,7 @@ namespace SustainAndGain.Models.Entities
         public int StockId { get; set; }
         public decimal OrderValue { get; set; }
         public DateTime TimeOfInsertion { get; set; }
-        public bool BuyOrSell { get; set; }
+        public string BuyOrSell { get; set; }
         public string UserId { get; set; }
         public int CompId { get; set; }
 
