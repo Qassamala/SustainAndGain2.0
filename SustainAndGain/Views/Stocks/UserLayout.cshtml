@@ -153,15 +153,23 @@
 
             var element = document.getElementById(string + `${i}`);
             var element2 = document.getElementById(stringForJava + `${i}`);
-
-            element.innerHTML = `  <form>
+            if (element == null) {
+                
+            }
+            else {
+                   element.innerHTML = `  <form>
                 <button asp-controller="PortFolio"
                         asp-action="Portfolio"
                         asp-route-id="${codeblocks[i]}">
                     Go To Portfolio
                 </button>
                 </form>`;
-            if (!element2 === null) {
+            }
+           
+            if (element2 == null) {
+                
+            }
+            else {
                  element2.innerHTML = `  <form>
                 <button asp-controller="PortFolio"
                         asp-action="Portfolio"
@@ -211,6 +219,7 @@
                     success: function () {
                         $(`#Join${number}`).css("display", "none");
                         $(`#ButtonJavaDiv${number}`).css("display", "block");
+                        AddButton();
 
                     },
                     error: function () {
