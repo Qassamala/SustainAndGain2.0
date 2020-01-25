@@ -4,10 +4,10 @@
     ViewData["Title"] = "Portfolio";
 }
 
-<h1>Portfolio</h1>
+<h1>My Portfolio</h1>
 
 <div>
-    <h4>PortfolioVM</h4>
+
 
     <div id="divChart"></div>
 
@@ -34,16 +34,13 @@
     </dl>
 </div>
 
-<div id="divResult"></div>
+<div id="divPendingOrders"></div>
 
 
 
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="UserLayout">Back to List of Competitions</a>
     <a asp-action="FindStocks">Find stocks to buy</a>
-
-
 </div>
 
 <script>
@@ -58,10 +55,9 @@
             url: url,
             type: "GET",
             success: function (result) {
-                $("#divResult").html(result);
+                $("#divPendingOrders").html(result);
                 console.log("finished");
             }        
-
         });
     }
 
