@@ -17,7 +17,7 @@ namespace SustainAndGain.Controllers
             this.service = service;
         }
 
-        [Route("Portfolio/{compId}")]
+        [Route("/Portfolio/{compId}")]
         [HttpGet]
         public IActionResult Portfolio(int compId)
         {
@@ -26,8 +26,7 @@ namespace SustainAndGain.Controllers
             return View(portfolioData);
         }
 
-        [Route("Portfolio/FindStocks/{compId}")]
-        [HttpGet]
+        [Route("/Portfolio/FindStocks/{compId}")]
         public IActionResult FindStocks(int compId)
         {
             var stockData = service.FindStocks(compId);
@@ -53,6 +52,15 @@ namespace SustainAndGain.Controllers
             var holdings = service.GetHoldings(compId);
 
             return PartialView("_Holdings", holdings);
+        }
+
+        [Route("Portfolio/OrderEntry/{symbol}/{compId}")]
+        [HttpGet]
+        public IActionResult OrderEntry(string symbol, int compId)
+        {
+            var orderEntry = service.GetOrderEntry(symbol, compId);
+
+            return PartialView("_OrderEntry", orderEntry);
         }
     }
 }

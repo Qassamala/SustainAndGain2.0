@@ -157,6 +157,8 @@
                 
             }
             else {
+                this.console.log("running")
+
                    element.innerHTML = `  <form>
                 <button asp-controller="PortFolio"
                         asp-action="Portfolio"
@@ -164,6 +166,7 @@
                     Go To Portfolio
                 </button>
                 </form>`;
+                this.console.log("finished")
             }
            
             if (element2 == null) {

@@ -188,16 +188,11 @@ namespace SustainAndGain.Models
 					CurrentValue = transactionData.CurrentValue,
 					LastUpdatedCurrentValue = transactionData.LastUpdatedCurrentValue,
 					AvailableForInvestment = transactionData.AvailableForInvestment,
-					Comp = transactionData.Comp,
 					CompId = transactionData.CompId,
 					Id = transactionData.Id,
 					LastUpdatedAvailableForInvestment = transactionData.LastUpdatedAvailableForInvestment,
-					User = transactionData.User,
 					UserId = transactionData.UserId
 
-
-				
-						
 					};
 					historicalTransactions.Add(transactions);
 				}

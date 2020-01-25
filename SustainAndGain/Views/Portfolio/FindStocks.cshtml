@@ -6,9 +6,9 @@
 
 <h1>FindStocks</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+<div id="divOrderEntry"></div>
+
 <table class="table">
     <thead>
         <tr>
@@ -69,9 +69,28 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <button onclick="OrderEntry(@item.Symbol, @item.CompetitionId)">Buy</button> |
             </td>
         </tr>
 }
     </tbody>
 </table>
+<script>
+    function OrderEntry(symbol, competitionId) {
+        console.log("runningOrderEntry")
+        //Get ID from competition
+        var competitionId = competition;
+        console.log(id);
+        // Make AJAX call
+        var url = `/portfolio/OrderEntry/${symbol}/${competitionId}`;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divOrderEntry").html(result);
+                console.log("finishedOrderEntry");
+            }
+        });
+    }
+
+</script>

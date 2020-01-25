@@ -15,5 +15,6 @@ namespace SustainAndGain.Models.ModelViews
         public decimal ReturnThisYear { get; set; }
         public string Description { get; set; }
         public string Sector { get; set; }
+        public int CompetitionId { get; set; }
     }
 }
