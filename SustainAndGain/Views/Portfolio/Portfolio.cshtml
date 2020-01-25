@@ -9,6 +9,7 @@
 <div>
     <h4>PortfolioVM</h4>
 
+    <div id="divChart"></div>
 
     <hr />
     <dl class="row">
@@ -59,6 +60,28 @@
                 $("#divResult").html(result);
                 console.log("finished");
             }        
+
+        });
+    }
+
+</script>
+
+
+<script>
+    window.onload = function getPendingOrders() {
+        console.log("running")
+        //Get ID from competition
+        var id = @Model.;
+        console.log(id);
+        // Make AJAX call
+        var url = "/chart" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divChart").html(result);
+                console.log("finished");
+            }
 
         });
     }
