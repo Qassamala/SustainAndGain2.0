@@ -76,10 +76,10 @@
         </div>
 
     </div>
-    @{ 
+    @*@{ 
         Html.RenderPartial("Chart");
 
-    }
+    }*@
 
 </div>
 
@@ -93,7 +93,12 @@
         for (var i = 0; i < 4; i++) {
             let buttons= []
         }
-          `<form>
+       
+        @for (int i = 0; i < 4; i++)
+        {
+           
+        }
+          `for<form>
                 <button id="Portfolio" asp-controller="PortFolio"
                         asp-action="Portfolio"
                         asp-route-id="@Model[0].Id">
