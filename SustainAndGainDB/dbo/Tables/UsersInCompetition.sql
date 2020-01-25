@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[UsersInCompetition] (
-    [Id]                                INT            NOT NULL,
+    [Id]                                INT            NOT NULL IDENTITY,
     [UserId]                            NVARCHAR (450) NOT NULL,
     [CompId]                            INT            NOT NULL,
     [CurrentValue]                      MONEY          NULL,
