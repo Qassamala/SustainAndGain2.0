@@ -62,5 +62,15 @@ namespace SustainAndGain.Controllers
             return PartialView("Chart", viewmodel);
         }
 
+        [Route("/financial/{id}")]
+        public IActionResult FinancialChart(int id)
+        {
+            var viewmodel = service.GetHistoricalTransactionData(id);
+
+            return PartialView("FinancialChart", viewmodel);
+        }
+
+
+
     }
 }

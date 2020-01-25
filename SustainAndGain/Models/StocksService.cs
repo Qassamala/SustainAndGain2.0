@@ -193,6 +193,7 @@ namespace SustainAndGain.Models
 					Id = transactionData.Id,
 					LastUpdatedAvailableForInvestment = transactionData.LastUpdatedAvailableForInvestment,
 					User = transactionData.User,
+
 					UserId = transactionData.UserId
 
 
