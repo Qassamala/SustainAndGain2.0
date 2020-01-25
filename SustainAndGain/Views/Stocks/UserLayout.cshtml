@@ -59,7 +59,7 @@
         <p>Ends: @Model[1].EndTime</p>
         <p>@Model[1].IsOngoing </p>
         <div id="ButtonJavaDiv1"></div>
-      
+
         @if (Model[1].HasJoined)
 
         {
@@ -71,6 +71,9 @@
             <input id="Join1" type="submit" value="Join" class="btn btn-primary" />
 
         }
+    
+        
+      
 
     </div>
     <div class="slide">
@@ -81,7 +84,7 @@
         <p>@Model[2].IsOngoing </p>
 
         <div id="ButtonJavaDiv2"></div>
-       
+
 
 
         @if (Model[2].HasJoined)
@@ -95,8 +98,14 @@
             <input id="Join2" type="submit" value="Join" class="btn btn-primary" />
 
         }
-
-
+        <form>
+            <button asp-controller="PortFolio"
+                    asp-action="Portfolio"
+                    asp-route-id="@Model[1].Id">
+                Go To Portfolio
+            </button>
+        </form>;
+        <a asp-controller="PortFolio" asp-action="Portfolio" asp-route-id="@Model[0].Id">dfdfgdg</a>
 
 
     </div>
