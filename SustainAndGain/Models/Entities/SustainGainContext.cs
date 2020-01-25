@@ -151,6 +151,10 @@ namespace SustainAndGain.Models.Entities
 
             modelBuilder.Entity<Order>(entity =>
             {
+                entity.Property(e => e.BuyOrSell)
+                    .IsRequired()
+                    .HasMaxLength(4);
+
                 entity.Property(e => e.OrderValue).HasColumnType("money");
 
                 entity.Property(e => e.TimeOfInsertion).HasColumnType("datetime");

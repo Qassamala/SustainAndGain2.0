@@ -34,14 +34,7 @@
                 @Html.DisplayFor(modelItem => item.TimeOfInsertion)
             </td>
             <td>
-                @if (item.BuyOrSell == true)
-                {
-                    @Html.DisplayText("Buy")
-                }
-                else
-                {
-                    @Html.DisplayText("Sell")
-                }
+                @Html.DisplayFor(modelItem => item.BuyOrSell)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
