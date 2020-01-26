@@ -61,11 +61,11 @@ namespace SustainAndGain.Controllers
         [HttpGet]
         public IActionResult Highscore(int compId)
         {
-            var holdings = service.GetHighScoreForCompetition(compId);
+            var highscores = service.GetHighScoreForCompetition(compId);
              
             //där current value är högst i nuvarande tävling
 
-            return PartialView("_highscore", holdings);
+            return PartialView("_highscore", highscores);
         }
 
 
