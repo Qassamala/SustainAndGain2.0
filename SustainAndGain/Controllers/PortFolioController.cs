@@ -17,7 +17,7 @@ namespace SustainAndGain.Controllers
             this.service = service;
         }
 
-        [Route("Portfolio/{id}")]
+        [Route("/Portfolio/{compId}")]
         [HttpGet]
         public IActionResult Portfolio(string id)
         {
@@ -27,8 +27,7 @@ namespace SustainAndGain.Controllers
             return View(portfolioData);
         }
 
-        [Route("Portfolio/FindStocks/{compId}")]
-        [HttpGet]
+        [Route("/Portfolio/FindStocks/{compId}")]
         public IActionResult FindStocks(int compId)
         {
             var stockData = service.FindStocks(compId);
@@ -58,16 +57,27 @@ namespace SustainAndGain.Controllers
 
 
 
-        [Route("highscore")]
+        [Route("/highscore/{compId}")]
         [HttpGet]
         public IActionResult Highscore(int compId)
         {
-            var holdings = service.GetHoldings(compId);
+            var highscores = service.GetHighScoreForCompetition(compId);
+             
+            //där current value är högst i nuvarande tävling
 
-            return PartialView("_highscore", holdings);
+            return PartialView("_highscore", highscores);
         }
 
 
 
+
+        [Route("Portfolio/OrderEntry/{symbol}/{compId}")]
+        [HttpGet]
+        public IActionResult OrderEntry(string symbol, int compId)
+        {
+            var orderEntry = service.GetOrderEntry(symbol, compId);
+
+            return PartialView("_OrderEntry", orderEntry);
+        }
     }
 }

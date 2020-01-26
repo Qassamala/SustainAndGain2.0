@@ -6,9 +6,9 @@
 
 <h1>FindStocks</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+<div id="divOrderEntry"></div>
+
 <table class="table">
     <thead>
         <tr>
@@ -40,38 +40,61 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsSustainable)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Symbol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastUpdated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReturnThisYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sector)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsSustainable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Symbol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastUpdated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReturnThisYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sector)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Sector)
+                </td>
+                <td>
+                    <button onclick="OrderEntry(@item.Symbol, @item.CompetitionId)">Buy</button>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                    |
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<script>
+    function OrderEntry(symbol, competitionId) {
+        console.log("runningOrderEntry")
+        // Make AJAX call
+        var url = `/portfolio/OrderEntry/${symbol}/${competitionId}`;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divOrderEntry").html(result);
+                console.log("finishedOrderEntry");
+            }
+        });
+    }
+
+</script>

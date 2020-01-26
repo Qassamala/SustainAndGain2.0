@@ -1,0 +1,39 @@
+﻿@model SustainAndGain.Models.ModelViews.OrderEntryVM
+
+<h4>OrderEntryVM</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="_OrderEntry">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Symbol" class="control-label"></label>
+                <input asp-for="Symbol" class="form-control" />
+                <span asp-validation-for="Symbol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderValue" class="control-label"></label>
+                <input asp-for="OrderValue" class="form-control" />
+                <span asp-validation-for="OrderValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastPrice" class="control-label"></label>
+                <input asp-for="LastPrice" class="form-control" />
+                <span asp-validation-for="LastPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

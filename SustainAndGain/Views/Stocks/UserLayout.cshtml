@@ -132,10 +132,6 @@
         }
 
     </div>
-    @*@{
-            Html.RenderPartial("Chart");
-
-        }*@
 
 </div>
 
@@ -167,14 +163,16 @@
 
             }
             else {
-                element.innerHTML = `  <form>
+                this.console.log("running")
 
-             <button asp-controller="PortFolio"
+                   element.innerHTML = `  <form>
+                <button asp-controller="PortFolio"
                         asp-action="Portfolio"
                         asp-route-id="${codeblocks[i]}">
                     Go To Portfolio
                 </button>
                 </form>`;
+                this.console.log("finished")
             }
 
             if (element2 == null) {

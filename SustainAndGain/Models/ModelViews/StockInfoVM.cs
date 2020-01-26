@@ -23,5 +23,6 @@ namespace SustainAndGain.Models.ModelViews
 
         public string Description { get; set; }
         public string Sector { get; set; }
+        public int CompetitionId { get; set; }
     }
 }

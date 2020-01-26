@@ -55,6 +55,41 @@ namespace SustainAndGain.Models
 			return portfolioData;
 		}
 
+		internal object GetHighScoreForCompetition(int compId)
+		{
+
+			var MaxHighScore = context.UsersInCompetition
+				.Where(a => a.CurrentValue > 0 && a.CompId == compId)
+				.Select(n => new UsersInCompetition
+				{
+					AvailableForInvestment = n.AvailableForInvestment,
+					CompId = n.CompId,
+					CurrentValue = n.CurrentValue,
+					LastUpdatedAvailableForInvestment = n.LastUpdatedAvailableForInvestment,
+					LastUpdatedCurrentValue = n.LastUpdatedCurrentValue,
+					UserId = n.UserId,
+					User = n.User
+
+				})
+				.Take(10).OrderByDescending(s => s.CurrentValue);
+
+			return MaxHighScore;
+
+		}
+
+		internal OrderEntryVM GetOrderEntry(string symbol, int compId)
+		{
+			return new OrderEntryVM
+			{ 
+				CompanyName = context.StaticStockData
+					.Where(s => s.Symbol == symbol)
+					.Select(s => s.CompanyName)
+					.SingleOrDefault(),
+				Symbol = symbol,
+				OrderValue = 0
+			};
+		}
+
 		internal List<HoldingsVM> GetHoldings(int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
@@ -95,7 +130,8 @@ namespace SustainAndGain.Models
 					Symbol = s.Symbol,
 					LastUpdated = context.HistDataStocks
 						.Where(o => ((o.Symbol == s.Symbol))).Max(o => o.DateTime),
-					Description = s.Description
+					Description = s.Description,
+					CompetitionId = compId
 				})
 				.ToArray();
 
