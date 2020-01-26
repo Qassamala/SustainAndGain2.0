@@ -77,6 +77,19 @@ namespace SustainAndGain.Models
 
 		}
 
+		internal OrderEntryVM GetOrderEntry(string symbol, int compId)
+		{
+			return new OrderEntryVM
+			{ 
+				CompanyName = context.StaticStockData
+					.Where(s => s.Symbol == symbol)
+					.Select(s => s.CompanyName)
+					.SingleOrDefault(),
+				Symbol = symbol,
+				OrderValue = 0
+			};
+		}
+
 		internal List<HoldingsVM> GetHoldings(int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
@@ -117,7 +130,8 @@ namespace SustainAndGain.Models
 					Symbol = s.Symbol,
 					LastUpdated = context.HistDataStocks
 						.Where(o => ((o.Symbol == s.Symbol))).Max(o => o.DateTime),
-					Description = s.Description
+					Description = s.Description,
+					CompetitionId = compId
 				})
 				.ToArray();
 

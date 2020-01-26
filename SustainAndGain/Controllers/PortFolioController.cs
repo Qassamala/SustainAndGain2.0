@@ -17,17 +17,17 @@ namespace SustainAndGain.Controllers
             this.service = service;
         }
 
-        [Route("Portfolio/{compId}")]
+        [Route("/Portfolio/{compId}")]
         [HttpGet]
-        public IActionResult Portfolio(int compId)
+        public IActionResult Portfolio(string id)
         {
-            var portfolioData = service.DisplayPortfolioData(compId);
+            var number = int.Parse(id);
+            var portfolioData = service.DisplayPortfolioData(number);
             
             return View(portfolioData);
         }
 
-        [Route("Portfolio/FindStocks/{compId}")]
-        [HttpGet]
+        [Route("/Portfolio/FindStocks/{compId}")]
         public IActionResult FindStocks(int compId)
         {
             var stockData = service.FindStocks(compId);
@@ -70,5 +70,14 @@ namespace SustainAndGain.Controllers
 
 
 
+
+        [Route("Portfolio/OrderEntry/{symbol}/{compId}")]
+        [HttpGet]
+        public IActionResult OrderEntry(string symbol, int compId)
+        {
+            var orderEntry = service.GetOrderEntry(symbol, compId);
+
+            return PartialView("_OrderEntry", orderEntry);
+        }
     }
 }
