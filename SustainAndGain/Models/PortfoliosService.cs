@@ -55,6 +55,28 @@ namespace SustainAndGain.Models
 			return portfolioData;
 		}
 
+		internal object GetHighScoreForCompetition(int compId)
+		{
+
+			var MaxHighScore = context.UsersInCompetition
+				.Where(a => a.CurrentValue > 0 && a.CompId == compId)
+				.Select(n => new UsersInCompetition
+				{
+					AvailableForInvestment = n.AvailableForInvestment,
+					CompId = n.CompId,
+					CurrentValue = n.CurrentValue,
+					LastUpdatedAvailableForInvestment = n.LastUpdatedAvailableForInvestment,
+					LastUpdatedCurrentValue = n.LastUpdatedCurrentValue,
+					UserId = n.UserId,
+					User = n.User
+
+				})
+				.Take(10).OrderByDescending(s => s.CurrentValue);
+
+			return MaxHighScore;
+
+		}
+
 		internal List<HoldingsVM> GetHoldings(int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);

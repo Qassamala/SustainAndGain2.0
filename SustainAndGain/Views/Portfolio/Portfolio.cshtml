@@ -12,6 +12,59 @@
 
 
 <div>
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+        <button onclick="getMyHighscore()" class="w3-bar-item w3-large">Close &times;</button>
+        
+        <a href="#" class="w3-bar-item w3-button">Link 1</a>
+        <a href="#" class="w3-bar-item w3-button">Link 2</a>
+        <a href="#" class="w3-bar-item w3-button">Link 3</a>
+
+        <div>
+            <script>
+
+            function getMyHighscore() {
+                console.log("running highscores")
+            //Get ID from competition
+            var id = @Model.CompetitionId
+            console.log(id);
+            // Make AJAX call
+            var url = "/highscore/" + id;
+            $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+            $("#mySidebar").html(result);
+            console.log("Finished HighScores");
+            }
+
+        });
+            </script>
+
+        </div>
+
+
+    </div>
+
+    <!-- Page Content -->
+    <div class="w3-teal">
+        <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+        <div class="w3-container">
+            <h1>My Page</h1>
+            <script>
+                function w3_open() {
+                    document.getElementById("mySidebar").style.display = "block";
+                }
+
+                function w3_close() {
+                    document.getElementById("mySidebar").style.display = "none";
+                }
+            </script>
+        </div>
+    </div>
+</div>
+
+<div>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -35,9 +88,11 @@
     </dl>
 </div>
 
+
 <div id="divChart"></div>
 
 <div id="divPendingOrders"></div>
+
 <div id="divHoldings"></div>
 
 

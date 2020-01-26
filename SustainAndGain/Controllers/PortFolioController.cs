@@ -57,11 +57,13 @@ namespace SustainAndGain.Controllers
 
 
 
-        [Route("highscore")]
+        [Route("/highscore/{compId}")]
         [HttpGet]
         public IActionResult Highscore(int compId)
         {
-            var holdings = service.GetHoldings(compId);
+            var holdings = service.GetHighScoreForCompetition(compId);
+             
+            //där current value är högst i nuvarande tävling
 
             return PartialView("_highscore", holdings);
         }
