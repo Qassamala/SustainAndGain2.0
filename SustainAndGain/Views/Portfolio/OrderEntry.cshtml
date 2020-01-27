@@ -1,6 +1,16 @@
-﻿@model SustainAndGain.Models.ModelViews.OrderEntryVM
+﻿@model SustainAndGain.Models.ModelViews.OrderVM
 
-<h4>OrderEntryVM</h4>
+<h4>OrderVM</h4>
+
+<label asp-for="AvailableToInvest" class="control-label"></label>
+@Html.DisplayFor(modelItem => Model.AvailableToInvest)
+
+<label asp-for="LastPrice" class="control-label"></label>
+@Html.DisplayFor(modelItem => Model.LastPrice)
+
+
+
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -22,18 +32,14 @@
                 <span asp-validation-for="OrderValue" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LastPrice" class="control-label"></label>
-                <input asp-for="LastPrice" class="form-control" />
-                <span asp-validation-for="LastPrice" class="text-danger"></span>
+                <label asp-for="BuyOrSell" class="control-label"></label>
+                <input asp-for="BuyOrSell" class="form-control" />
+                <span asp-validation-for="BuyOrSell" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Add" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

@@ -44,7 +44,7 @@ namespace SustainAndGain.Controllers
         {
             var pendingOrders = service.GetPendingOrders(compId);
 
-            return PartialView("_Order", pendingOrders);
+            return PartialView("_PendingOrder", pendingOrders);
         }
 
         [Route("Portfolio/Holdings/{compId}")]
@@ -78,13 +78,16 @@ namespace SustainAndGain.Controllers
         {
             var orderEntry = service.GetOrderEntry(symbol, compId);
 
-            return PartialView("_OrderEntry", orderEntry);
+            return PartialView("OrderEntry", orderEntry);
         }
 
         [Route("Portfolio/OrderEntry/{symbol}/{compId}")]
         [HttpPost]
         public IActionResult OrderEntry(OrderVM order)
         {
+            if (!ModelState.IsValid)
+                return View(order);
+
             service.AddBuyOrder(order);
 
             return RedirectToAction(nameof(FindStocks));
