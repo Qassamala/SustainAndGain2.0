@@ -33,7 +33,7 @@ namespace SustainAndGain.Models
 			var currentValue = context.UsersInCompetition
 				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
 				.Select(v => v.CurrentValue)
-				.SingleOrDefault();
+				.FirstOrDefault();
 
 
 			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
@@ -47,10 +47,12 @@ namespace SustainAndGain.Models
 
 
 			PortfolioVM portfolioData = new PortfolioVM
-			{ CurrentValue = (decimal)currentValue,
+			{   
+				CurrentValue = (decimal)currentValue,
 				AvailableCapital = (decimal)availableForInvestment,
 				InvestedCapital = (decimal)(currentValue - availableForInvestment),
-				CompetitionId = compId };
+				CompetitionId = compId
+			};
 
 			return portfolioData;
 		}
@@ -252,7 +254,7 @@ namespace SustainAndGain.Models
 
 				context.UsersHistoricalTransactions.Add(order);
 
-				// add non executed order amount to usersincompetition availableForInvestment
+				// add non executed order amount to usersInCompetition availableForInvestment
 
 				var excessOrderAmount = item.OrderValue - (quantity * transactionPrice);
 
@@ -272,7 +274,7 @@ namespace SustainAndGain.Models
 				var currentValue = context.UsersInCompetition
 				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
 				.Select(v => v.CurrentValue)
-				.SingleOrDefault();
+				.FirstOrDefault();
 
 				UsersInCompetition usersInCompetitionAvailableForInvestment = new UsersInCompetition
 				{
