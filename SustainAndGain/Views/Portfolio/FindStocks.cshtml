@@ -71,7 +71,7 @@
                     @Html.DisplayFor(modelItem => item.Sector)
                 </td>
                 <td>
-                    <button id="btnBuy">Buy</button>
+                    <button id="@item.Symbol" onclick="OrderEntry('@item.Symbol', '@item.CompetitionId')">Buy</button>
                     @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })  
                     @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 </td>
@@ -81,7 +81,7 @@
 </table>
 
 <script>
-    document.getElementById("btnBuy").addEventListener("click", OrderEntry(this.symbol, this.competitionId));
+  
     function OrderEntry(symbol, competitionId) {
         console.log("runningOrderEntry")
         // Make AJAX call

@@ -42,6 +42,7 @@ namespace SustainAndGain.Controllers
         {
 
             var result = competitionsService.DisplayCompetitions();
+          
             return View(result);
         }
 

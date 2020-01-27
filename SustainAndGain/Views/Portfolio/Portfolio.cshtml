@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Portfolio";
 }
-    <link href="~/css/Portfolio.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
+<link href="~/css/Portfolio.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
 <h1>My Portfolio</h1>
 <img id="PortPro" src="~/Img/PortfolioProfile.png" />
 <a href='@Url.Action("Userlayout","Stocks")'>
@@ -22,55 +22,24 @@
         <a href="#" class="w3-bar-item w3-button">Link 1</a>
         <a href="#" class="w3-bar-item w3-button">Link 2</a>
         <a href="#" class="w3-bar-item w3-button">Link 3</a>
-      
+
 
 
     </div>
 
     <!-- Page Content -->
     <div class="w3-teal">
-        <button class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+        <button id="Sidebar" class="w3-button w3-teal w3-xlarge">☰</button>
         <div class="w3-container">
-            <h1>My Page</h1>
-            <script>
-                function w3_open() {
-                    document.getElementById("mySidebar").style.display = "block";
-                }
-
-                function w3_close() {
-                    document.getElementById("mySidebar").style.display = "none";
-                }
-
-
-                
-            function getMyHighscore() {
-                console.log("running highscores")
-            //Get ID from competition
-            var id = @Model.CompetitionId
-            console.log(id);
-            // Make AJAX call
-            var url = "/highscore/" + id;
-            $.ajax({
-            url: url,
-            type: "GET",
-            success: function (result) {
-            $("#mySidebar").html(result);
-            console.log("Finished HighScores");
-            }
-        });
            
-
-
-
-
-            </script>
+           
         </div>
     </div>
 </div>
 
-<div>
+<div id="Chart_Overv">
     <hr />
-    
+
     <dl id="CurrentValue" class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CurrentValue):
@@ -165,5 +134,42 @@
             }
         });
     }
+
+</script>
+<script>
+    $(document).ready(function () {
+            $("#Sidebar").click(function () {
+            Join(0);
+        })
+                function w3_open() {
+                    document.getElementById("mySidebar").style.display = "block";
+
+                }
+
+                function w3_close() {
+                    document.getElementById("mySidebar").style.display = "none";
+                }
+
+
+
+            function getMyHighscore() {
+                console.log("running highscores")
+            //Get ID from competition
+            var id = @Model.CompetitionId
+            console.log(id);
+            // Make AJAX call
+            var url = "/highscore/" + id;
+            $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+            $("#mySidebar").html(result);
+            console.log("Finished HighScores");
+            }
+        });
+
+
+
+
 
 </script>
