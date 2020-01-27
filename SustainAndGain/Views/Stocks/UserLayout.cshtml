@@ -102,7 +102,7 @@
         <form>
             <button asp-controller="PortFolio"
                     asp-action="Portfolio"
-                    asp-route-id="@Model[1].Id">
+                    asp-route-compId="@Model[1].Id">
                 Go To Portfolio
             </button>
         </form>
@@ -168,7 +168,7 @@
                    element.innerHTML = `  <form>
                 <button asp-controller="PortFolio"
                         asp-action="Portfolio"
-                        asp-route-id="@Model[0].Id">
+                        asp-route-compId="@Model[0].Id">
                     Go To Portfolio
                 </button>
                 </form>`;
@@ -182,7 +182,7 @@
                  element2.innerHTML = `  <form>
                 <button asp-controller="PortFolio"
                         asp-action="Portfolio"
-                        asp-route-id="${string(codeblocks[i])}">
+                        asp-route-compId="${string(codeblocks[i])}">
                     Go To Portfolio
                 </button>
                 </form>`;

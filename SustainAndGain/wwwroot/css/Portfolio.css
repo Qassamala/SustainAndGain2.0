@@ -1,9 +1,14 @@
-﻿body {
+﻿html {
+    height: 100%;
+}
+body {
     background: linear-gradient(to bottom, rgba(23, 119, 117,0.7), rgba(40, 210, 191,1)), url('../img/stockimg.jpg');
     margin: 0;
     padding-left: 10%;
-    padding-right: 10%;
+    padding-right: 15%;
     font-family: Quicksand;
+    zoom: 0.7;
+    height:100%;
 }
 h1 {
     text-align: left;
@@ -81,7 +86,7 @@ h1 {
 #Highscore {
 
     padding-right: 4%;
-    width: 10%;
+    width: 5%;
     height: 4em;
     position: fixed;
     right: 15px;
@@ -99,6 +104,16 @@ h1 {
 
 #mySidebar{
     background-color:lightcyan;
-    width: 120%;
-    padding:5%;
+    width: 100%;
+  padding-left: 5%;
+  padding-right: 20%;
+    font-size:70%;
 }
+
+
+/*#divChart {
+    position: relative;
+    width: 70%;
+    background: rgba(255,255,255,0.8);
+    border-radius: 4px;
+}*/
