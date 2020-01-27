@@ -28,12 +28,12 @@ namespace SustainAndGain.Models
 
 			for (int i = 0; i < 4; i++)
 
-			{
+			{ 
 					Competition competition = new Competition
 					{
 						StartTime = new DateTime(2020, month, 23),
 						EndTime = new DateTime(2020, month + 1, 23),
-						Name = "Hello",
+						Name = $"Nr {month}",
 					};
 
 				month++;
@@ -45,12 +45,12 @@ namespace SustainAndGain.Models
 		public CompetitionVM[] DisplayCompetitions()
 		{			
 			string userId = user.GetUserId(accessor.HttpContext.User);
-
+			DateTime now = DateTime.Now;
 			return context.Competition
 				.Select(item => new CompetitionVM
 				{
 					EndTime = item.EndTime,
-					StartTime = item.StartTime,
+					DaysLeft =item.StartTime.Subtract(now).TotalDays,
 					Name = item.Name,
 					Id = item.Id,
 					UserId = userId,

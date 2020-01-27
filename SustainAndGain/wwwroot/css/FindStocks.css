@@ -1,0 +1,76 @@
+﻿html{
+    height:100%;
+}
+
+body {
+    background: linear-gradient(to bottom, rgba(23, 119, 117,0.7), rgba(40, 210, 191,1)), url('../img/stockimg.jpg');
+    margin: 0;
+    padding-left: 10%;
+    padding-right: 15%;
+    font-family: Quicksand;
+    zoom: 0.7;
+    height: 100%;
+}
+h1 {
+    text-align: left;
+    margin-left: 1.5em;
+    color: white;
+    font-family: Quicksand;
+}
+
+#StockPro {
+    border-radius: 50%;
+    height: 15em;
+    position: absolute;
+    top: -30px;
+    display: block;
+    transition: all 1s;
+    left: -30px;
+}
+table {
+    background: rgba(255,255,255,0.8);
+    border-radius: 4px;
+    padding: 2%;
+}
+button, input[type=submit] {
+    border-radius: 4px;
+    transition: all 1s;
+    background-color: white;
+   
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+
+}
+    button:hover, input[type=submit]:hover {
+        background-color: #28D2BF;
+        box-shadow: 5px 5px 2px #2D8068;
+    }
+#PersInfo {
+   
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.8);
+    font-size: 3em;
+    border-radius: 4px;
+   
+}
+.PersDivs{
+    padding: 4%;
+    margin-right:5%;
+}
+#OrderForm {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.8);
+    
+    border-radius: 4px;
+}
+.form-group {
+    padding: 1%;
+}

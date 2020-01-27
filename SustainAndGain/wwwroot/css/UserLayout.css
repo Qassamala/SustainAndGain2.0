@@ -6,6 +6,13 @@
     overflow-x: hidden;
     font-family: Quicksand;
 }
+h4{
+    font-family:Quicksand;
+}
+@font-face {
+    font-family: 'quicksand-regular';
+    src: url('../img/quicksand-regular.otf') format('opentype');
+}
 #CompPro {
     border-radius: 50%;
     height: 15em;

@@ -3,11 +3,13 @@
 @{
     ViewData["Title"] = "FindStocks";
 }
-
-<h1>FindStocks</h1>
-
+    <link href="~/css/FindStocks.css" rel="stylesheet" />
+<h1>Stock List</h1>
+<img id="StockPro" src="~/Img/StockProfile.png" />
 
 <div id="divOrderEntry"></div>
+
+<div id="divPendingOrders"></div>
 
 <table class="table">
     <thead>
@@ -72,8 +74,7 @@
                 </td>
                 <td>
                     <button id="@item.Symbol" onclick="OrderEntry('@item.Symbol', '@item.CompetitionId')">Buy</button>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })  
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                   
                 </td>
             </tr>
         }
@@ -81,6 +82,7 @@
 </table>
 
 <script>
+
   
     function OrderEntry(symbol, competitionId) {
         console.log("runningOrderEntry")
@@ -90,10 +92,29 @@
             url: url,
             type: "GET",
             success: function (result) {
-                $("#divOrderEntry").html(result);
+                $("#divOrderEntry").html(result),
+                    window.onlocation
                 console.log("finishedOrderEntry");
             }
         });
     }
 
 </script>
+@*<script>
+    window.onload = function getPendingOrders() {
+        console.log("runningorders")
+        //Get ID from competition
+        var id = @Model.Select(i => i.CompetitionId);
+        console.log(id);
+        // Make AJAX call
+        var url = "/portfolio/orders/" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divPendingOrders").html(result);
+                console.log("finishedorders");
+            }
+        });
+    }
+</script>*@

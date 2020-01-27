@@ -33,7 +33,7 @@ namespace SustainAndGain.Models
 			var currentValue = context.UsersInCompetition
 				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
 				.Select(v => v.CurrentValue)
-				.SingleOrDefault();
+				.FirstOrDefault();
 
 
 			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
@@ -45,12 +45,16 @@ namespace SustainAndGain.Models
 				.Select(v => v.AvailableForInvestment)
 				.FirstOrDefault();
 
+			// Calculate current invested capital by getting the holdings market cap
+			var holdings = GetHoldings(compId);
+
+			var investedCapital = holdings.Select(h => h.MarketValue).Sum();
 
 			PortfolioVM portfolioData = new PortfolioVM
 			{
 				CurrentValue = (decimal)currentValue,
 				AvailableCapital = (decimal)availableForInvestment,
-				InvestedCapital = (decimal)(currentValue - availableForInvestment),
+				InvestedCapital = investedCapital,
 				CompetitionId = compId
 			};
 
@@ -59,21 +63,28 @@ namespace SustainAndGain.Models
 
 		internal object GetHighScoreForCompetition(int compId)
 		{
-
+			
 			var MaxHighScore = context.UsersInCompetition
 				.Where(a => a.CurrentValue > 0 && a.CompId == compId)
-				.Select(n => new UsersInCompetition
+				.Select(n => new HighscoreVM
 				{
-					AvailableForInvestment = n.AvailableForInvestment,
-					CompId = n.CompId,
+
 					CurrentValue = n.CurrentValue,
-					LastUpdatedAvailableForInvestment = n.LastUpdatedAvailableForInvestment,
-					LastUpdatedCurrentValue = n.LastUpdatedCurrentValue,
-					UserId = n.UserId,
-					User = n.User
+
+					User = n.User,
+
+
 
 				})
-				.Take(10).OrderByDescending(s => s.CurrentValue);
+				.OrderByDescending(s => s.CurrentValue).Take(10).ToArray();
+
+			int counter = 1;
+			for (int i = 0; i < MaxHighScore.Length; i++)
+			{
+				MaxHighScore[i].Nr = counter++;
+			}
+
+
 
 			return MaxHighScore;
 
@@ -107,7 +118,7 @@ namespace SustainAndGain.Models
 				StockId = context.StaticStockData
 					.Where(s => s.Symbol == order.Symbol)
 					.Select(i => i.Id)
-					.SingleOrDefault(),
+					.FirstOrDefault(),
 				OrderValue = order.OrderValue,
 				TimeOfInsertion = DateTime.Now,
 				BuyOrSell = "Sell",
@@ -120,12 +131,29 @@ namespace SustainAndGain.Models
 
 		internal OrderVM GetOrderEntry(string symbol, int compId)
 		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+
+			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == compId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
+
+			var availableForInvestment = context.UsersInCompetition
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				.Select(v => v.AvailableForInvestment)
+				.FirstOrDefault();
+
+			var latestPriceTime = context.HistDataStocks.Where(s => s.Symbol == symbol).Max(d => d.DateTime);
+			var lastPrice = (decimal)context.HistDataStocks.Where(o => ((o.Symbol == symbol) && (o.DateTime == latestPriceTime)))
+						.Select(o => o.CurrentPrice)
+						.FirstOrDefault();
+
 			return new OrderVM
 			{
 				CompanyName = context.StaticStockData
 					.Where(s => s.Symbol == symbol)
 					.Select(s => s.CompanyName)
-					.SingleOrDefault(),
+					.FirstOrDefault(),
 				Symbol = symbol,
 				OrderValue = 0,
 				CompetitionId = compId
@@ -226,7 +254,7 @@ namespace SustainAndGain.Models
 				item.CurrentPrice = (decimal)context.HistDataStocks
 						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == latestPrice)))
 						.Select(o => o.CurrentPrice)
-						.SingleOrDefault();
+						.FirstOrDefault();
 			}
 
 			return holdings;
@@ -253,7 +281,7 @@ namespace SustainAndGain.Models
 				item.LastPrice = (decimal)context.HistDataStocks
 						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == item.LastUpdated)))
 						.Select(o => o.CurrentPrice)
-						.SingleOrDefault();
+						.FirstOrDefault();
 			}
 			return stocks;
 		}
@@ -269,10 +297,103 @@ namespace SustainAndGain.Models
 					Symbol = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.Symbol).SingleOrDefault(),
 					OrderValue = o.OrderValue,
 					BuyOrSell = o.BuyOrSell,
-					TimeOfInsertion = o.TimeOfInsertion
+					TimeOfInsertion = o.TimeOfInsertion,
+					CompetitionId = compId
 				});
 
 			return orders;
+		}
+
+		internal void ExecuteOrders()
+		{
+			List<Order> pendingOrders = context.Order.ToList();
+
+			foreach (var item in pendingOrders)
+			{
+				// get latest date
+				var lastUpdated = context.HistDataStocks
+						.Where(p => p.StockId == item.StockId)
+						.Max(d => d.DateTime);
+
+				// get last price
+				var transactionPrice = (decimal)context.HistDataStocks
+						.Where(p => ((p.StockId == item.StockId) && (p.DateTime == lastUpdated)))
+						.Select(p => p.CurrentPrice)
+						.FirstOrDefault();
+				
+				// get the current total holdings in security for user in competition
+				var currentHoldings = context.UsersHistoricalTransactions
+				.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId)
+				.Select(o => o.Quantity)
+				.Sum();
+
+				// calculate order quantity based on ordervalue
+				var quantity = (int)Math.Round(item.OrderValue / transactionPrice);
+
+				// Increase total quantity depending on if Buy or Sell
+				if (item.BuyOrSell == "Buy")
+					currentHoldings += quantity;
+				else if (item.BuyOrSell == "Sell")
+					currentHoldings -= quantity;
+
+
+				// Create execution to be stored in table
+				var order = new UsersHistoricalTransactions
+				{
+					UserId = item.UserId,
+					CompetitionId = item.CompId,
+					StockId = item.StockId,
+					TransactionPrice = transactionPrice,
+					DateTimeOfTransaction = DateTime.Now,
+					BuyOrSell = item.BuyOrSell,
+					Quantity = quantity,
+					CurrentHoldingsAfterTransaction = currentHoldings												
+				};
+
+				context.UsersHistoricalTransactions.Add(order);
+
+				// add non executed order amount to usersInCompetition availableForInvestment
+
+				var excessOrderAmount = item.OrderValue - (quantity * transactionPrice);
+
+				var lastupdatedCurrentValue = context.UsersInCompetition
+				.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+				.Max(o => o.LastUpdatedCurrentValue);
+
+				var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
+
+				var availableForInvestment = context.UsersInCompetition
+					.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+					.Select(v => v.AvailableForInvestment)
+					.FirstOrDefault();
+
+				var currentValue = context.UsersInCompetition
+				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				.Select(v => v.CurrentValue)
+				.FirstOrDefault();
+
+				UsersInCompetition usersInCompetitionAvailableForInvestment = new UsersInCompetition
+				{
+					UserId = item.UserId,
+					CurrentValue = currentValue,
+					AvailableForInvestment = availableForInvestment + excessOrderAmount,
+					LastUpdatedAvailableForInvestment = DateTime.Now,
+					LastUpdatedCurrentValue = lastupdatedCurrentValue,
+					CompId = item.CompId,
+				};
+
+				context.UsersInCompetition.Add(usersInCompetitionAvailableForInvestment);				
+
+			}
+			context.SaveChanges();
+
+			foreach (var item in pendingOrders)
+			{
+				context.Order.Remove(item);
+			}
+			context.SaveChanges();
 		}
 	}
 }

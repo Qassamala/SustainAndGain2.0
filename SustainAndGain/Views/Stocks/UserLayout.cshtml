@@ -3,141 +3,53 @@
     ViewData["Title"] = "UserLayout";
 }
 <link href="~/css/UserLayout.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
-
-<div class="navbar">
-
-    <ul>
-
-        <li>
-            <img src="~/Img/profile.png" />
-
-        </li>
-        <li>
-            <img src="~/Img/Plusprofile.png" />
-
-        </li>
-        <li>
-
-            <img src="~/Img/Userprofile.png" />
-
-        </li>
-    </ul>
-
-</div>
-
-@* SLides for tävlingar *@
-<h1>Tävling</h1>
-<img id="CompPro" src="~/Img/CompProfile.png" />
-<div class="slideContainer">
-    <div id="slide1" class="slide">
-        <h2>Competition: @Model[0].Name</h2>
-
-        <h4>Starting: @Model[0].StartTime</h4>
-        <h4>Ends: @Model[0].EndTime</h4>
-
-        <div id="ButtonJavaDiv0"></div>
-
-
-        @if (Model[0].HasJoined)
-
-        {
-            <div id="ButtonDiv0"></div>
-
-        }
-        else
-        {
-            <input id="Join0" type="submit" value="Join" class="btn btn-primary" />
-
-        }
-
-    </div>
-    <div class="slide">
-        <h2>
-            Competition: @Model[1].Name
-        </h2>
-
-        <h4>Starting: @Model[1].StartTime</h4>
-        <h4>Ends: @Model[1].EndTime</h4>
-
-        <div id="ButtonJavaDiv1"></div>
-
-        @if (Model[1].HasJoined)
-
-        {
-            <div id="ButtonDiv1"></div>
-
-        }
-        else
-        {
-            <input id="Join1" type="submit" value="Join" class="btn btn-primary" />
-
-        }
-
-
-
-
-    </div>
-    <div class="slide">
-        <h2>Competition: @Model[2].Name</h2>
-
-        <h4>Starting: @Model[2].StartTime</h4>
-        <h4>Ends: @Model[2].EndTime</h4>
-
-
-        <div id="ButtonJavaDiv2"></div>
-
-
-
-        @if (Model[2].HasJoined)
-
-        {
-            <div id="ButtonDiv2"></div>
-
-        }
-        else
-        {
-            <input id="Join2" type="submit" value="Join" class="btn btn-primary" />
-
-        }
-        <form>
-            <button asp-controller="PortFolio"
-                    asp-action="Portfolio"
-                    asp-route-compId="@Model[1].Id">
-                Go To Portfolio
-            </button>
-        </form>
-       
-
-
-    </div>
-    <div class="slide">
-        <h2>Competition: @Model[3].Name</h2>
-
-        <h4>Starting: @Model[3].StartTime</h4>
-        <h4>Ends: @Model[3].EndTime</h4>
-        <p>@Model[3].IsOngoing </p>
-        <div id="ButtonJavaDiv3"></div>
-
-
-        @if (Model[3].HasJoined)
-
-        {
-            <div id="ButtonDiv3"></div>
-
-        }
-        else
-        {
-            <input id="Join3" type="submit" value="Join" class="btn btn-primary" />
-
-        }
-
-    </div>
-
-</div>
-
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+
+
+@* SLides for tävlingar *@
+<h1>Competitions</h1>
+<img id="CompPro" src="~/Img/CompProfile.png" />
+<div class="slideContainer">
+    @for (int i = 0; i < 4; i++)
+    {
+        <div id="slide" class="slide">
+
+            <h2>Competition: @Model[i].Name</h2>
+
+            <h4>Days left: @Model[i].DaysLeft.ToString("0")</h4>
+            <h4>Ends: @Model[i].EndTime.Date</h4>
+
+
+            <form><button id="portfolio@(i)" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model[i].Id" style="display:none;">Go to portfolio</button></form>
+            <input id="join@(i)" onclick="Join(@(i))" type="submit" value="Join" class="btn btn-primary" style="display:none;" />
+           
+            @if (Model[i].HasJoined)
+            {
+                <script>
+                    $(document).ready(function() {
+  $("#portfolio@(i)").css("display", "block");
+});
+                    
+                </script>
+            }
+            else
+            {
+                <script>
+                       $(document).ready(function() {
+                           $("#join@(i)").css("display", "block");
+                           });
+                </script>
+            }
+
+        </div>
+    }
+
+
+</div>
+
+
 <script>
       let codeblocks = []
 
@@ -148,102 +60,30 @@
 
 
 
-    window.onload = function AddButton() {
 
+            //Reading text box values using Jquery
+    function Join(number) {
+        console.log(number);
 
-
-
-        var stringForJava = `ButtonJavaDiv`
-        var string = `ButtonDiv`
-        for (var i = 0; i < 4; i++) {
-
-            var element = document.getElementById(string + `${i}`);
-            var element2 = document.getElementById(stringForJava + `${i}`);
-            if (element == null) {
-
-            }
-            else {
-                
-
-                   element.innerHTML = `  <form>
-                <button asp-controller="PortFolio"
-                        asp-action="Portfolio"
-                        asp-route-compId="@Model[0].Id">
-                    Go To Portfolio
-                </button>
-                </form>`;
-                this.console.log("finished")
-            }
-
-            if (element2 == null) {
-
-            }
-            else {
-                 element2.innerHTML = `  <form>
-                <button asp-controller="PortFolio"
-                        asp-action="Portfolio"
-                        asp-route-compId="${string(codeblocks[i])}">
-                    Go To Portfolio
-                </button>
-                </form>`;
-            }
-
-
-
-
-
-        }
-    }
-
-
-
-
-
-
-
-
-    $(document).ready(function () {
-          $("#Join0").click(function () {
-            Join(0);
-        })
-         $("#Join1").click(function () {
-            Join(1);
-         })
-         $("#Join2").click(function () {
-            Join(2);
-         })
-         $("#Join3").click(function () {
-            Join(3);
-        })
-
-        //Reading text box values using Jquery
-        function Join(number) {
             var obj = { "UserId": "@Model[0].UserId", "CompId": String(codeblocks[number]) };
             $.ajax(
                 {
                     type: "POST", //HTTP POST Method
                     url: "Stocks/InsertAjax",
-                     contentType: 'application/json',
+                    contentType: 'application/json',
                     data: JSON.stringify(obj),
                     success: function () {
-                        $(`#Join${number}`).css("display", "none");
-                        $(`#ButtonJavaDiv${number}`).css("display", "block");
-                        AddButton();
+                        $(`#join${number}`).css("display", "none");
+                        $(`#portfolio${number}`).css("display", "block");
 
                     },
                     error: function () {
                         $("#messageDiv").html();
                     }
-                }
+                })
 
-            );
 
     }
-
-
-
-                        })
-
 </script>
 
 

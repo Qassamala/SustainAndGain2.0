@@ -18,15 +18,15 @@ namespace SustainAndGain.Controllers
 			this.service = service;
 		}
 
-		[Route("/Portfolio/{compId}")]
-		[HttpGet]
-		public IActionResult Portfolio(int compId)
-		{
-			//var number = int.Parse(id);
-			var portfolioData = service.DisplayPortfolioData(compId);
-
-			return View(portfolioData);
-		}
+        [Route("/Portfolio/{compId}")]
+        [HttpGet]
+        public IActionResult Portfolio(int compId)
+        {
+            
+            var portfolioData = service.DisplayPortfolioData(compId);
+            
+            return View(portfolioData);
+        }
 
 		[Route("/Portfolio/FindStocks/{compId}")]
 		public IActionResult FindStocks(int compId)
@@ -44,10 +44,12 @@ namespace SustainAndGain.Controllers
 			return PartialView("_PendingOrder", pendingOrders);
 		}
 
-		[Route("Portfolio/Holdings/{compId}")]
-		[HttpGet]
-		public IActionResult Holdings(int compId)
-		{
+        [Route("Portfolio/Holdings/{compId}")]
+        [HttpGet]
+        public IActionResult Holdings(int compId)
+        {
+           
+            var holdings = service.GetHoldings(compId);
 
 
 			var gav = service.GetPurchasePrice(compId);
@@ -82,9 +84,11 @@ namespace SustainAndGain.Controllers
 			if (!ModelState.IsValid)
 				return View(order);
 
-			service.AddBuyOrder(order);
+            service.AddBuyOrder(order);
 
-			return RedirectToAction("FindStocks", new { compId = order.CompetitionId });
-		}
-	}
+            service.ExecuteOrders();    //Testing
+
+            return RedirectToAction("FindStocks", new { compId = order.CompetitionId });
+        }
+    }
 }
