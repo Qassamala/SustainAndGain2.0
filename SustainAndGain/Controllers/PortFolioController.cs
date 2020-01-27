@@ -90,7 +90,7 @@ namespace SustainAndGain.Controllers
 
             service.AddBuyOrder(order);
 
-            return RedirectToAction(nameof(FindStocks));
+            return RedirectToAction("FindStocks", new { compId = order.CompetitionId });
         }
     }
 }
