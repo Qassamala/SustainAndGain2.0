@@ -116,10 +116,10 @@ namespace SustainAndGain.Models
 		}
 
 
-		internal OrderEntryVM GetOrderEntry(string symbol, int compId)
+		internal OrderVM GetOrderEntry(string symbol, int compId)
 		{
-			return new OrderEntryVM
-			{ 
+			return new OrderVM
+			{
 				CompanyName = context.StaticStockData
 					.Where(s => s.Symbol == symbol)
 					.Select(s => s.CompanyName)
