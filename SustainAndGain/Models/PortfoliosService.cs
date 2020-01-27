@@ -125,7 +125,9 @@ namespace SustainAndGain.Models
 					.Select(s => s.CompanyName)
 					.SingleOrDefault(),
 				Symbol = symbol,
-				OrderValue = 0
+				OrderValue = 0,
+				CompetitionId = compId
+				
 			};
 		}
 
