@@ -18,7 +18,7 @@ namespace SustainAndGain.Controllers
             this.service = service;
         }
 
-        [Route("/Portfolio/{id}")]
+        [Route("/Portfolio/{compId}")]
         [HttpGet]
         public IActionResult Portfolio(int compId)
         {
@@ -89,6 +89,8 @@ namespace SustainAndGain.Controllers
                 return View(order);
 
             service.AddBuyOrder(order);
+
+            service.ExecuteOrders();    //Testing
 
             return RedirectToAction("FindStocks", new { compId = order.CompetitionId });
         }

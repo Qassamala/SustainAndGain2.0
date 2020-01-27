@@ -193,14 +193,73 @@ namespace SustainAndGain.Models
 			var orders = context.Order
 				.Where(o => o.CompId == compId && o.UserId == userId)
 				.Select(o => new OrderVM
-				{ 
+				{
 					Symbol = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.Symbol).SingleOrDefault(),
 					OrderValue = o.OrderValue,
 					BuyOrSell = o.BuyOrSell,
-					TimeOfInsertion = o.TimeOfInsertion
+					TimeOfInsertion = o.TimeOfInsertion,
+					CompetitionId = compId
 				});
 
 			return orders;
+		}
+
+		internal void ExecuteOrders()
+		{
+			List<Order> pendingOrders = context.Order.ToList();
+
+			foreach (var item in pendingOrders)
+			{
+				// get latest date
+				var lastUpdated = context.HistDataStocks
+						.Where(p => p.StockId == item.StockId)
+						.Max(d => d.DateTime);
+
+				// get last price
+				var transactionPrice = (decimal)context.HistDataStocks
+						.Where(p => ((p.StockId == item.StockId) && (p.DateTime == lastUpdated)))
+						.Select(p => p.CurrentPrice)
+						.SingleOrDefault();
+				
+				// get the current total holdings in security for user in competition
+				var currentHoldings = context.UsersHistoricalTransactions
+				.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId)
+				.Select(o => o.Quantity)
+				.Sum();
+
+				// calculate order quantity based on ordervalue
+				var quantity = (int)Math.Round(item.OrderValue / transactionPrice);
+
+				// Increase total quantity depending on if Buy or Sell
+				if (item.BuyOrSell == "Buy")
+					currentHoldings += quantity;
+				else if (item.BuyOrSell == "Sell")
+					currentHoldings -= quantity;
+
+
+				// Create execution to be stored in table
+				var order = new UsersHistoricalTransactions
+				{
+					UserId = item.UserId,
+					CompetitionId = item.CompId,
+					StockId = item.StockId,
+					TransactionPrice = transactionPrice,
+					DateTimeOfTransaction = DateTime.Now,
+					BuyOrSell = item.BuyOrSell,
+					Quantity = quantity,
+					CurrentHoldingsAfterTransaction = currentHoldings												
+				};
+
+				context.UsersHistoricalTransactions.Add(order);
+				
+			}			
+			context.SaveChanges();
+
+			foreach (var item in pendingOrders)
+			{
+				context.Order.Remove(item);
+			}
+			context.SaveChanges();
 		}
 	}
 }

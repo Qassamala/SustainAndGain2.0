@@ -9,6 +9,8 @@
 
 <div id="divOrderEntry"></div>
 
+<div id="divPendingOrders"></div>
+
 <table class="table">
     <thead>
         <tr>
@@ -81,6 +83,7 @@
 </table>
 
 <script>
+
   
     function OrderEntry(symbol, competitionId) {
         console.log("runningOrderEntry")
@@ -97,3 +100,21 @@
     }
 
 </script>
+@*<script>
+    window.onload = function getPendingOrders() {
+        console.log("runningorders")
+        //Get ID from competition
+        var id = @Model.Select(i => i.CompetitionId);
+        console.log(id);
+        // Make AJAX call
+        var url = "/portfolio/orders/" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divPendingOrders").html(result);
+                console.log("finishedorders");
+            }
+        });
+    }
+</script>*@
