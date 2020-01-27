@@ -45,12 +45,16 @@ namespace SustainAndGain.Models
 				.Select(v => v.AvailableForInvestment)
 				.FirstOrDefault();
 
+			// Calculate current invested capital by getting the holdings market cap
+			var holdings = GetHoldings(compId);
+
+			var investedCapital = holdings.Select(h => h.MarketValue).Sum();
 
 			PortfolioVM portfolioData = new PortfolioVM
 			{
 				CurrentValue = (decimal)currentValue,
 				AvailableCapital = (decimal)availableForInvestment,
-				InvestedCapital = (decimal)(currentValue - availableForInvestment),
+				InvestedCapital = investedCapital,
 				CompetitionId = compId
 			};
 
@@ -127,6 +131,23 @@ namespace SustainAndGain.Models
 
 		internal OrderVM GetOrderEntry(string symbol, int compId)
 		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+
+			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == compId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
+
+			var availableForInvestment = context.UsersInCompetition
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				.Select(v => v.AvailableForInvestment)
+				.FirstOrDefault();
+
+			var latestPriceTime = context.HistDataStocks.Where(s => s.Symbol == symbol).Max(d => d.DateTime);
+			var lastPrice = (decimal)context.HistDataStocks.Where(o => ((o.Symbol == symbol) && (o.DateTime == latestPriceTime)))
+						.Select(o => o.CurrentPrice)
+						.FirstOrDefault();
+
 			return new OrderVM
 			{
 				CompanyName = context.StaticStockData
@@ -135,7 +156,9 @@ namespace SustainAndGain.Models
 					.FirstOrDefault(),
 				Symbol = symbol,
 				OrderValue = 0,
-				CompetitionId = compId
+				CompetitionId = compId,
+				LastPrice =  lastPrice,
+				AvailableToInvest = (decimal)availableForInvestment
 				
 			};
 		}
