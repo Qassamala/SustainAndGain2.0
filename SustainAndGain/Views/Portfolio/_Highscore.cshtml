@@ -1,9 +1,12 @@
-﻿@model IEnumerable<SustainAndGain.Models.Entities.UsersInCompetition>
+﻿@model IEnumerable<SustainAndGain.Models.ModelViews.HighscoreVM>
 
 
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Nr:
+            </th>
             <th>
                 Username:
                 @*@Html.DisplayNameFor(model => model.User.UserName)*@
@@ -14,11 +17,7 @@
                 @*@Html.DisplayNameFor(model => model.CurrentValue)*@
             </th>
 
-            <th>
-                Last updated:
-                @*@Html.DisplayNameFor(model => model.LastUpdatedCurrentValue)*@
-            </th>
-
+          
 
             <th></th>
         </tr>
@@ -27,15 +26,17 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Nr)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.User.UserName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CurrentValue)
             </td>
+            
 
-            <td>
-                @Html.DisplayFor(modelItem => item.LastUpdatedCurrentValue)
-            </td>
+
         </tr>
 }
     </tbody>

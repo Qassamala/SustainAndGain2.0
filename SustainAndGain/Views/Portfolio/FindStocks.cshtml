@@ -3,9 +3,9 @@
 @{
     ViewData["Title"] = "FindStocks";
 }
-
-<h1>FindStocks</h1>
-
+    <link href="~/css/FindStocks.css" rel="stylesheet" />
+<h1>Stock List</h1>
+<img id="StockPro" src="~/Img/StockProfile.png" />
 
 <div id="divOrderEntry"></div>
 
@@ -72,8 +72,7 @@
                 </td>
                 <td>
                     <button id="@item.Symbol" onclick="OrderEntry('@item.Symbol', '@item.CompetitionId')">Buy</button>
-                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })  
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                   
                 </td>
             </tr>
         }
@@ -90,7 +89,8 @@
             url: url,
             type: "GET",
             success: function (result) {
-                $("#divOrderEntry").html(result);
+                $("#divOrderEntry").html(result),
+                    window.onlocation
                 console.log("finishedOrderEntry");
             }
         });

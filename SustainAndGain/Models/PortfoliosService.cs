@@ -57,21 +57,28 @@ namespace SustainAndGain.Models
 
 		internal object GetHighScoreForCompetition(int compId)
 		{
-
+			
 			var MaxHighScore = context.UsersInCompetition
 				.Where(a => a.CurrentValue > 0 && a.CompId == compId)
-				.Select(n => new UsersInCompetition
+				.Select(n => new HighscoreVM
 				{
-					AvailableForInvestment = n.AvailableForInvestment,
-					CompId = n.CompId,
+
 					CurrentValue = n.CurrentValue,
-					LastUpdatedAvailableForInvestment = n.LastUpdatedAvailableForInvestment,
-					LastUpdatedCurrentValue = n.LastUpdatedCurrentValue,
-					UserId = n.UserId,
-					User = n.User
+
+					User = n.User,
+
+
 
 				})
-				.Take(10).OrderByDescending(s => s.CurrentValue);
+				.OrderByDescending(s => s.CurrentValue).Take(10).ToArray();
+
+			int counter = 1;
+			for (int i = 0; i < MaxHighScore.Length; i++)
+			{
+				MaxHighScore[i].Nr = counter++;
+			}
+
+
 
 			return MaxHighScore;
 

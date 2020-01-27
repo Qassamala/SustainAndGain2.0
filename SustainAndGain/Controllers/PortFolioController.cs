@@ -22,7 +22,7 @@ namespace SustainAndGain.Controllers
         [HttpGet]
         public IActionResult Portfolio(int compId)
         {
-            //var number = int.Parse(id);
+            
             var portfolioData = service.DisplayPortfolioData(compId);
             
             return View(portfolioData);
@@ -51,6 +51,7 @@ namespace SustainAndGain.Controllers
         [HttpGet]
         public IActionResult Holdings(int compId)
         {
+           
             var holdings = service.GetHoldings(compId);
 
             return PartialView("_Holdings", holdings);

@@ -11,6 +11,7 @@ namespace SustainAndGain.Models.ModelViews
         public int StockId { get; set; }
         public int CompetitionId { get; set; }
 
+        [Display(Name ="Company Name")]
         public string CompanyName { get; set; }
 
         [Display(Name = "Symbol")]
@@ -22,7 +23,7 @@ namespace SustainAndGain.Models.ModelViews
         public decimal OrderValue { get; set; }
 
         public DateTime TimeOfInsertion { get; set; }
-        //[Display(Name = "Buy Or Sell")]
+        [Display(Name = "Buy Or Sell")]
         public string BuyOrSell { get; set; }
 
         [Display(Name = "Available to Invest")]
