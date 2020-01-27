@@ -2,23 +2,62 @@
     margin: 0;
     padding: 0;
     height: 100%;
-    width:100%;
+    width: 100%;
     overflow-x: hidden;
- 
+    font-family: Quicksand;
 }
+#CompPro {
+    border-radius: 50%;
+    height: 15em;
+    position: absolute;
+    top: -30px;
+    display: block;
+    transition: all 1s;
+    left: -30px;
+}
+h1 {
+    text-align: left;
+    margin-left: 4em;
+    color: white;
+    font-family: Quicksand;
+}
+
+button, input[type=submit] {
+    font-family: 'Franklin Gothic Medium', arial;
+    width: 100%;
+    padding-bottom: 2em;
+    position: relative;
+    bottom:0;
+    border-radius: 30px;
+    transition: all 1s;
+    background-color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+   button:hover, input[type=submit]:hover {
+        background-color: #28D2BF;
+        box-shadow: 5px 5px 2px #2D8068;
+    }
+
+
 #ButtonJavaDiv0,
 #ButtonJavaDiv1,
 #ButtonJavaDiv2,
-#ButtonJavaDiv3{
+#ButtonJavaDiv3 {
     display: none;
 }
 body {
     margin: 0;
     padding: 0;
     position: relative;
-    background: linear-gradient(to bottom right, #177775, #28D2BF, white);
-    background-size: cover;
+  background-image: url('../img/natureedit (2).png'),linear-gradient(to bottom right, #177775, #28D2BF, white);
+    background-repeat: no-repeat;
+    background-size: contain;
 }
+
 .navbar img{
     
     height:70%;
@@ -94,5 +133,5 @@ h2{
 }
 .slide:hover{
     opacity:1;
-    transform: scale(1.2);
+    transform: scale(1.1);
 }

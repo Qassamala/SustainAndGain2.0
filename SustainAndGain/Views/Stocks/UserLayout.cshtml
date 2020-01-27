@@ -26,16 +26,17 @@
 </div>
 
 @* SLides for tävlingar *@
-<h2>Tävling</h2>
+<h1>Tävling</h1>
+<img id="CompPro" src="~/Img/CompProfile.png" />
 <div class="slideContainer">
     <div id="slide1" class="slide">
-        <p>Competition: @Model[0].Name</p>
+        <h2>Competition: @Model[0].Name</h2>
 
-        <p>Starting: @Model[0].StartTime</p>
-        <p>Ends: @Model[0].EndTime</p>
-        <p>@Model[0].IsOngoing </p>
+        <h4>Starting: @Model[0].StartTime</h4>
+        <h4>Ends: @Model[0].EndTime</h4>
+
         <div id="ButtonJavaDiv0"></div>
-       
+
 
         @if (Model[0].HasJoined)
 
@@ -51,13 +52,13 @@
 
     </div>
     <div class="slide">
-        <p>
+        <h2>
             Competition: @Model[1].Name
-        </p>
+        </h2>
 
-        <p>Starting: @Model[1].StartTime</p>
-        <p>Ends: @Model[1].EndTime</p>
-        <p>@Model[1].IsOngoing </p>
+        <h4>Starting: @Model[1].StartTime</h4>
+        <h4>Ends: @Model[1].EndTime</h4>
+
         <div id="ButtonJavaDiv1"></div>
 
         @if (Model[1].HasJoined)
@@ -71,17 +72,17 @@
             <input id="Join1" type="submit" value="Join" class="btn btn-primary" />
 
         }
-    
-        
-      
+
+
+
 
     </div>
     <div class="slide">
-        <p>Competition: @Model[2].Name</p>
+        <h2>Competition: @Model[2].Name</h2>
 
-        <p>Starting: @Model[2].StartTime</p>
-        <p>Ends: @Model[2].EndTime</p>
-        <p>@Model[2].IsOngoing </p>
+        <h4>Starting: @Model[2].StartTime</h4>
+        <h4>Ends: @Model[2].EndTime</h4>
+
 
         <div id="ButtonJavaDiv2"></div>
 
@@ -110,13 +111,13 @@
 
     </div>
     <div class="slide">
-        <p>Competition: @Model[3].Name</p>
+        <h2>Competition: @Model[3].Name</h2>
 
-        <p>Starting: @Model[3].StartTime</p>
-        <p>Ends: @Model[3].EndTime</p>
+        <h4>Starting: @Model[3].StartTime</h4>
+        <h4>Ends: @Model[3].EndTime</h4>
         <p>@Model[3].IsOngoing </p>
         <div id="ButtonJavaDiv3"></div>
-     
+
 
         @if (Model[3].HasJoined)
 
@@ -148,18 +149,18 @@
 
 
     window.onload = function AddButton() {
-      
 
 
 
-        var stringForJava = `ButtonJavaDiv` 
+
+        var stringForJava = `ButtonJavaDiv`
         var string = `ButtonDiv`
         for (var i = 0; i < 4; i++) {
 
             var element = document.getElementById(string + `${i}`);
             var element2 = document.getElementById(stringForJava + `${i}`);
             if (element == null) {
-                
+
             }
             else {
                 this.console.log("running")
@@ -173,9 +174,9 @@
                 </form>`;
                 this.console.log("finished")
             }
-           
+
             if (element2 == null) {
-                
+
             }
             else {
                  element2.innerHTML = `  <form>
@@ -186,20 +187,20 @@
                 </button>
                 </form>`;
             }
-           
 
-           
 
-              
+
+
+
         }
     }
-    
 
 
 
 
 
-  
+
+
 
     $(document).ready(function () {
           $("#Join0").click(function () {
@@ -238,9 +239,9 @@
             );
 
     }
-   
-        
-       
+
+
+
                         })
 
 </script>
