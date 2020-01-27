@@ -16,6 +16,7 @@ namespace SustainAndGain.Models.ModelViews
                 IsOngoing = true;
             }
         }
+        public double DaysLeft { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public bool IsOngoing { get; set; }

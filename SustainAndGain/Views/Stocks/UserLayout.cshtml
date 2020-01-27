@@ -6,26 +6,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
-<div class="navbar">
 
-    <ul>
-
-        <li>
-            <img src="~/Img/profile.png" />
-
-        </li>
-        <li>
-            <img src="~/Img/Plusprofile.png" />
-
-        </li>
-        <li>
-
-            <img src="~/Img/Userprofile.png" />
-
-        </li>
-    </ul>
-
-</div>
 
 @* SLides for tävlingar *@
 <h1>Competitions</h1>
@@ -37,8 +18,8 @@
 
             <h2>Competition: @Model[i].Name</h2>
 
-            <h4>Starting: @Model[i].StartTime</h4>
-            <h4>Ends: @Model[i].EndTime</h4>
+            <h4>Days left: @Model[i].DaysLeft.ToString("0")</h4>
+            <h4>Ends: @Model[i].EndTime.Date</h4>
 
 
             <form><button id="portfolio@(i)" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model[i].Id" style="display:none;">Go to portfolio</button></form>
