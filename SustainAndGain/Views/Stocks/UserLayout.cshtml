@@ -105,8 +105,8 @@
                     asp-route-id="@Model[1].Id">
                 Go To Portfolio
             </button>
-        </form>;
-        <a asp-controller="PortFolio" asp-action="Portfolio" asp-route-id="@Model[0].Id">dfdfgdg</a>
+        </form>
+       
 
 
     </div>
@@ -168,7 +168,7 @@
                    element.innerHTML = `  <form>
                 <button asp-controller="PortFolio"
                         asp-action="Portfolio"
-                        asp-route-id="${this.parseInt(codeblocks[i])}">
+                        asp-route-id="@Model[0].Id">
                     Go To Portfolio
                 </button>
                 </form>`;
@@ -182,7 +182,7 @@
                  element2.innerHTML = `  <form>
                 <button asp-controller="PortFolio"
                         asp-action="Portfolio"
-                        asp-route-id="${codeblocks[i]}">
+                        asp-route-id="${string(codeblocks[i])}">
                     Go To Portfolio
                 </button>
                 </form>`;

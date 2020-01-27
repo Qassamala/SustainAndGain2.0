@@ -18,12 +18,12 @@ namespace SustainAndGain.Controllers
             this.service = service;
         }
 
-        [Route("/Portfolio/{compId}")]
+        [Route("/Portfolio/{id}")]
         [HttpGet]
-        public IActionResult Portfolio(int id)
+        public IActionResult Portfolio(int compId)
         {
             //var number = int.Parse(id);
-            var portfolioData = service.DisplayPortfolioData(id);
+            var portfolioData = service.DisplayPortfolioData(compId);
             
             return View(portfolioData);
         }

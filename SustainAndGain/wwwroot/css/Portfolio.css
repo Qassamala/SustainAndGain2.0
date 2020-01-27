@@ -71,26 +71,34 @@ h1 {
 
 
 #closeButton{
-
+    background-color:lightcyan; 
     display:none;   
-    position: fixed;
-    right:100px;
-
+    right:0;
+    /*right:0px;*/
 
 }
 
-#mySidebar{
-    position:fixed;
-    right: 100px;
-    background-color:grey;
+#Highscore {
+
+    padding-right: 4%;
+    width: 10%;
+    height: 4em;
+    position: fixed;
+    right: 15px;
+    top: 100px;
+    border-bottom-left-radius: 25px;
     
 }
 
-#openButton{
-
-    position:fixed;
-    right: 100px;
-
-
+#openButton {
+    right: 10px;
+    background-color:lightcyan;
+    
 }
 
+
+#mySidebar{
+    background-color:lightcyan;
+    width: 120%;
+    padding:5%;
+}
