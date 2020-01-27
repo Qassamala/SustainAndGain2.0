@@ -47,7 +47,7 @@ namespace SustainAndGain.Models
 
 
 			PortfolioVM portfolioData = new PortfolioVM
-			{   
+			{
 				CurrentValue = (decimal)currentValue,
 				AvailableCapital = (decimal)availableForInvestment,
 				InvestedCapital = (decimal)(currentValue - availableForInvestment),
@@ -114,7 +114,7 @@ namespace SustainAndGain.Models
 				StockId = context.StaticStockData
 					.Where(s => s.Symbol == order.Symbol)
 					.Select(i => i.Id)
-					.SingleOrDefault(),
+					.FirstOrDefault(),
 				OrderValue = order.OrderValue,
 				TimeOfInsertion = DateTime.Now,
 				BuyOrSell = "Sell",
@@ -132,7 +132,7 @@ namespace SustainAndGain.Models
 				CompanyName = context.StaticStockData
 					.Where(s => s.Symbol == symbol)
 					.Select(s => s.CompanyName)
-					.SingleOrDefault(),
+					.FirstOrDefault(),
 				Symbol = symbol,
 				OrderValue = 0,
 				CompetitionId = compId
@@ -163,7 +163,7 @@ namespace SustainAndGain.Models
 				item.CurrentPrice = (decimal)context.HistDataStocks
 						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == latestPrice)))
 						.Select(o => o.CurrentPrice)
-						.SingleOrDefault();
+						.FirstOrDefault();
 			}
 
 			return holdings;
@@ -190,7 +190,7 @@ namespace SustainAndGain.Models
 				item.LastPrice = (decimal)context.HistDataStocks
 						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == item.LastUpdated)))
 						.Select(o => o.CurrentPrice)
-						.SingleOrDefault();
+						.FirstOrDefault();
 			}
 			return stocks;
 		}
@@ -228,7 +228,7 @@ namespace SustainAndGain.Models
 				var transactionPrice = (decimal)context.HistDataStocks
 						.Where(p => ((p.StockId == item.StockId) && (p.DateTime == lastUpdated)))
 						.Select(p => p.CurrentPrice)
-						.SingleOrDefault();
+						.FirstOrDefault();
 				
 				// get the current total holdings in security for user in competition
 				var currentHoldings = context.UsersHistoricalTransactions
