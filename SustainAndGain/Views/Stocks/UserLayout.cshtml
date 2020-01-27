@@ -163,12 +163,12 @@
 
             }
             else {
-                this.console.log("running")
+                
 
                    element.innerHTML = `  <form>
                 <button asp-controller="PortFolio"
                         asp-action="Portfolio"
-                        asp-route-id="${codeblocks[i]}">
+                        asp-route-id="${this.parseInt(codeblocks[i])}">
                     Go To Portfolio
                 </button>
                 </form>`;
