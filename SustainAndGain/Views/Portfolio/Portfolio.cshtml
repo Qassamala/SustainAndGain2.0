@@ -14,38 +14,29 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 
-<div>
-
+<div id="Highscore">
+    <button id="openButton"  onclick="w3_open()">Highscore</button>
+    <button id="closeButton" onclick="w3_close()">Close &times;</button>
     <!-- Sidebar -->
-    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
-
-        <a href="#" class="w3-bar-item w3-button"><div id="getHighscore"></div></a>
+    <div  style="display:none" id="mySidebar">
+       
+        @*<a href="#" class="w3-bar-item w3-button"><div id="getHighscore"></div></a>*@
     </div>
 
     @*☰*@
-
     <!-- Page Content -->
-    <div class="w3-teal">
-        <button id="openButton" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">Highscore</button>
-        <button id="closeButton" onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
-
-        <div class="w3-container">
             <script>
                 function w3_open() {
                     document.getElementById("mySidebar").style.display = "block";
                     document.getElementById("openButton").style.display = "none";
                     document.getElementById("closeButton").style.display = "block";
                 }
-
                 function w3_close() {
                     document.getElementById("mySidebar").style.display = "none";
                     document.getElementById("openButton").style.display = "block";
                     document.getElementById("closeButton").style.display = "none";
                 }
-
             </script>
-        </div>
-    </div>
 </div>
 
 <div>
