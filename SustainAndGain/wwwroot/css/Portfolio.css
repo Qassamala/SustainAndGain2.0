@@ -67,3 +67,30 @@ h1 {
     border-radius: 4px;
     
 }
+
+
+
+#closeButton{
+
+    display:none;   
+    position: fixed;
+    right:100px;
+
+
+}
+
+#mySidebar{
+    position:fixed;
+    right: 100px;
+    background-color:grey;
+    
+}
+
+#openButton{
+
+    position:fixed;
+    right: 100px;
+
+
+}
+
