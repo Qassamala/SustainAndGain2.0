@@ -15,28 +15,28 @@
 
 
 <div id="Highscore">
-    <button id="openButton"  onclick="w3_open()">Highscore</button>
+    <button id="openButton" onclick="w3_open()">Highscore</button>
     <button id="closeButton" onclick="w3_close()">Close &times;</button>
     <!-- Sidebar -->
-    <div  style="display:none" id="mySidebar">
-       
+    <div style="display:none" id="mySidebar">
+
         @*<a href="#" class="w3-bar-item w3-button"><div id="getHighscore"></div></a>*@
     </div>
 
     @*☰*@
     <!-- Page Content -->
-            <script>
-                function w3_open() {
-                    document.getElementById("mySidebar").style.display = "block";
-                    document.getElementById("openButton").style.display = "none";
-                    document.getElementById("closeButton").style.display = "block";
-                }
-                function w3_close() {
-                    document.getElementById("mySidebar").style.display = "none";
-                    document.getElementById("openButton").style.display = "block";
-                    document.getElementById("closeButton").style.display = "none";
-                }
-            </script>
+    <script>
+        function w3_open() {
+            document.getElementById("mySidebar").style.display = "block";
+            document.getElementById("openButton").style.display = "none";
+            document.getElementById("closeButton").style.display = "block";
+        }
+        function w3_close() {
+            document.getElementById("mySidebar").style.display = "none";
+            document.getElementById("openButton").style.display = "block";
+            document.getElementById("closeButton").style.display = "none";
+        }
+    </script>
 </div>
 
 <div id="Chart_Overv">
@@ -61,9 +61,11 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.InvestedCapital) kr
         </dd>
+
     </dl>
     <div id="divChart"></div>
 </div>
+
 
 
 
