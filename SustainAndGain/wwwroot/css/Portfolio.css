@@ -86,7 +86,7 @@ h1 {
 #Highscore {
 
     padding-right: 4%;
-    width: 10%;
+    width: 5%;
     height: 4em;
     position: fixed;
     right: 15px;
@@ -109,3 +109,11 @@ h1 {
   padding-right: 20%;
     font-size:70%;
 }
+
+
+/*#divChart {
+    position: relative;
+    width: 70%;
+    background: rgba(255,255,255,0.8);
+    border-radius: 4px;
+}*/

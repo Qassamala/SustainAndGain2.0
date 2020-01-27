@@ -91,6 +91,8 @@ namespace SustainAndGain.Controllers
 
             service.AddBuyOrder(order);
 
+            service.ExecuteOrders();    //Testing
+
             return RedirectToAction("FindStocks", new { compId = order.CompetitionId });
         }
     }
