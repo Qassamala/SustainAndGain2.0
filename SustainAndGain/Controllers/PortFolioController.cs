@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SustainAndGain.Models;
+using SustainAndGain.Models.Entities;
 using SustainAndGain.Models.ModelViews;
 
 namespace SustainAndGain.Controllers
@@ -19,13 +20,11 @@ namespace SustainAndGain.Controllers
 
         [Route("/Portfolio/{compId}")]
         [HttpGet]
-        public IActionResult Portfolio(int compId)
+        public IActionResult Portfolio(int id)
         {
             //var number = int.Parse(id);
-            //var portfolioData = service.DisplayPortfolioData(number);
-            var portfolioData = service.DisplayPortfolioData(compId);
-
-
+            var portfolioData = service.DisplayPortfolioData(id);
+            
             return View(portfolioData);
         }
 
@@ -80,6 +79,15 @@ namespace SustainAndGain.Controllers
             var orderEntry = service.GetOrderEntry(symbol, compId);
 
             return PartialView("_OrderEntry", orderEntry);
+        }
+
+        [Route("Portfolio/OrderEntry/{symbol}/{compId}")]
+        [HttpPost]
+        public IActionResult OrderEntry(OrderVM order)
+        {
+            service.AddBuyOrder(order);
+
+            return RedirectToAction(nameof(FindStocks));
         }
     }
 }
