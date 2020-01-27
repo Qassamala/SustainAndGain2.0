@@ -251,8 +251,42 @@ namespace SustainAndGain.Models
 				};
 
 				context.UsersHistoricalTransactions.Add(order);
-				
-			}			
+
+				// add non executed order amount to usersincompetition availableForInvestment
+
+				var excessOrderAmount = item.OrderValue - (quantity * transactionPrice);
+
+				var lastupdatedCurrentValue = context.UsersInCompetition
+				.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+				.Max(o => o.LastUpdatedCurrentValue);
+
+				var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
+
+				var availableForInvestment = context.UsersInCompetition
+					.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+					.Select(v => v.AvailableForInvestment)
+					.FirstOrDefault();
+
+				var currentValue = context.UsersInCompetition
+				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				.Select(v => v.CurrentValue)
+				.SingleOrDefault();
+
+				UsersInCompetition usersInCompetitionAvailableForInvestment = new UsersInCompetition
+				{
+					UserId = item.UserId,
+					CurrentValue = currentValue,
+					AvailableForInvestment = availableForInvestment + excessOrderAmount,
+					LastUpdatedAvailableForInvestment = DateTime.Now,
+					LastUpdatedCurrentValue = lastupdatedCurrentValue,
+					CompId = item.CompId,
+				};
+
+				context.UsersInCompetition.Add(usersInCompetitionAvailableForInvestment);				
+
+			}
 			context.SaveChanges();
 
 			foreach (var item in pendingOrders)
