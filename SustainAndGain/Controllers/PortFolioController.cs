@@ -18,7 +18,7 @@ namespace SustainAndGain.Controllers
             this.service = service;
         }
 
-        [Route("/Portfolio/{id}")]
+        [Route("/Portfolio/{compId}")]
         [HttpGet]
         public IActionResult Portfolio(int compId)
         {
