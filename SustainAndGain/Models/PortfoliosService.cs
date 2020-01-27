@@ -77,6 +77,45 @@ namespace SustainAndGain.Models
 
 		}
 
+		internal void AddBuyOrder(OrderVM order)
+		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			context.Order.Add(new Order
+			{
+				StockId = context.StaticStockData
+					.Where(s => s.Symbol == order.Symbol)
+					.Select(i => i.Id)
+					.SingleOrDefault(),
+				OrderValue = order.OrderValue,
+				TimeOfInsertion = DateTime.Now,
+				BuyOrSell = "Buy",
+				UserId = userId,
+				CompId = order.CompetitionId
+			});
+			context.SaveChanges();
+		}
+
+		internal void AddSellOrder(OrderVM order, int compId)
+		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			context.Order.Add(new Order
+			{
+				StockId = context.StaticStockData
+					.Where(s => s.Symbol == order.Symbol)
+					.Select(i => i.Id)
+					.SingleOrDefault(),
+				OrderValue = order.OrderValue,
+				TimeOfInsertion = DateTime.Now,
+				BuyOrSell = "Sell",
+				UserId = userId,
+				CompId = compId
+			});
+			context.SaveChanges();
+		}
+
+
 		internal OrderEntryVM GetOrderEntry(string symbol, int compId)
 		{
 			return new OrderEntryVM
