@@ -162,7 +162,7 @@ namespace SustainAndGain.Models
 		}
 
 
-
+		//ÄR INTE HELT KLAR!!!
 		internal List<CalculatedPriceVM> GetPurchasePrice(int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
@@ -218,11 +218,11 @@ namespace SustainAndGain.Models
 
 			for (int i = 0; i < holdings.Count; i++)
 			{
-				var lslalal = holdings
+				var calculatedExists = holdings
 					.Find(a => a.StockId == holdings[i].StockId);
-				if (!trimmedList.Contains(lslalal))
+				if (!trimmedList.Contains(calculatedExists))
 				{
-					trimmedList.Add(lslalal);
+					trimmedList.Add(calculatedExists);
 				}
 			}
 
