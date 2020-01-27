@@ -8,12 +8,28 @@ namespace SustainAndGain.Models.ModelViews
 {
     public class OrderVM
     {
-        public string Symbol { get; set; }
+        public int StockId { get; set; }
+        public int CompetitionId { get; set; }
+
+        public string CompanyName { get; set; }
+
+        [Display(Name = "Symbol")]
+        [Required(ErrorMessage = "Must enter a valid symbol")]
+        public string Symbol { get; set; }  
+        
         [Display(Name = "Order Value")]
+        [Required(ErrorMessage ="Must enter an order value")]
         public decimal OrderValue { get; set; }
-        [Display(Name = "Time Of Insertion")]
+
         public DateTime TimeOfInsertion { get; set; }
-        [Display(Name = "Buy Or Sell")]
+        //[Display(Name = "Buy Or Sell")]
         public string BuyOrSell { get; set; }
+
+        [Display(Name = "Available to Invest")]
+        public decimal AvailableToInvest { get; set; }
+
+        [Display(Name = "Last Price")]
+        public decimal LastPrice { get; set; }
+
     }
 }
