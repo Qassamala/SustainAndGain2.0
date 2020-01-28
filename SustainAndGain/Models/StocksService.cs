@@ -45,7 +45,7 @@ namespace SustainAndGain.Models
 			for (int i = 0; i < 8; i++)
 			{
 				GetPricesForStocks(stockData, i);
-				Thread.Sleep(200);
+				Thread.Sleep(500);
 			}
 
 			context.SaveChanges();
