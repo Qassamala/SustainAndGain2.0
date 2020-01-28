@@ -106,6 +106,39 @@ namespace SustainAndGain.Models
 				UserId = userId,
 				CompId = order.CompetitionId
 			});
+
+			// Add entry into usersInComp with updated availableForInvestment value
+
+			var lastupdatedCurrentValue = context.UsersInCompetition
+				.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedCurrentValue);
+
+			var currentValue = context.UsersInCompetition
+				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				.Select(v => v.CurrentValue)
+				.FirstOrDefault();
+
+			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
+
+			var availableForInvestment = context.UsersInCompetition
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				.Select(v => v.AvailableForInvestment)
+				.FirstOrDefault();
+
+			UsersInCompetition availableForInvestmentEntry = new UsersInCompetition
+			{
+				UserId = userId,
+				CurrentValue = currentValue,
+				AvailableForInvestment = availableForInvestment-(order.OrderValue),
+				LastUpdatedAvailableForInvestment = DateTime.Now,
+				LastUpdatedCurrentValue = lastupdatedCurrentValue,
+				CompId = order.CompetitionId,
+			};
+
+			context.UsersInCompetition.Add(availableForInvestmentEntry);
+
 			context.SaveChanges();
 		}
 
