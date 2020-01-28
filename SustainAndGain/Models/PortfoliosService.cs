@@ -244,7 +244,16 @@ namespace SustainAndGain.Models
 				var totalQuantityOfStocks = calculatePurschasePrice
 					.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
 
-				var purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
+
+				
+					decimal purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
+				
+
+
+
+
+
+
 
 				var CoDescSym = context.StaticStockData
 					.Where(a => a.Id == item.StockId).Select(a => new CalculatedPriceVM
@@ -274,8 +283,11 @@ namespace SustainAndGain.Models
 					Symbol = symbol
 				};
 
+
 				holdings.Add(newHolding);
 			}
+
+			
 
 			List<CalculatedPriceVM> trimmedList = new List<CalculatedPriceVM>();
 
