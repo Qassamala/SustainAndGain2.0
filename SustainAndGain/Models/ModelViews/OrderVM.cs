@@ -34,5 +34,7 @@ namespace SustainAndGain.Models.ModelViews
         [Display(Name = "Last Price")]
         public decimal LastPrice { get; set; }
 
+        public int Quantity { get; set; }
+
     }
 }
