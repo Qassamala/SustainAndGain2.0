@@ -24,7 +24,6 @@ namespace SustainAndGain.Controllers
         {
             
             var portfolioData = service.DisplayPortfolioData(compId);
-            
             return View(portfolioData);
         }
 
@@ -48,14 +47,14 @@ namespace SustainAndGain.Controllers
         [HttpGet]
         public IActionResult Holdings(int compId)
         {
-           
-            var holdings = service.GetHoldings(compId);
-
-
-			//var gav = service.GetPurchasePrice(compId);
 
 			//var holdings = service.GetHoldings(compId);
-			return PartialView("_Holdings", holdings);
+
+
+			var gav = service.GetPurchasePrice(compId);
+
+			//var holdings = service.GetHoldings(compId);
+			return PartialView("_Holdings", gav);
 		}
 
 
@@ -84,7 +83,7 @@ namespace SustainAndGain.Controllers
 			if (!ModelState.IsValid)
 				return View(order);
 
-			service.AddBuyOrder(order);
+			//service.AddBuyOrder(order);
 
 			service.ExecuteOrders();    //Testing
 
