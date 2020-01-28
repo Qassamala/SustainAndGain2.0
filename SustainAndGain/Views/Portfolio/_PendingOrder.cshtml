@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<SustainAndGain.Models.ModelViews.OrderVM>
 
+<h4>Current pending orders</h4>
+<h4>Pending orders will be executed daily at 09:05 CET, 13:05 CET and 17:30 CET</h4>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -19,7 +23,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Symbol)

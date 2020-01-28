@@ -142,7 +142,7 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
-		internal OrderVM GetOrderEntrySell(string symbol, int compId)
+		internal SellOrderVM GetOrderEntrySell(string symbol, int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
@@ -161,7 +161,7 @@ namespace SustainAndGain.Models
 						.Select(o => o.CurrentPrice)
 						.FirstOrDefault();
 
-			return new OrderVM
+			return new SellOrderVM
 			{
 				CompanyName = context.StaticStockData
 					.Where(s => s.Symbol == symbol)
@@ -233,7 +233,6 @@ namespace SustainAndGain.Models
 					.Where(s => s.Symbol == order.Symbol)
 					.Select(i => i.Id)
 					.FirstOrDefault(),
-				//OrderValue = order.OrderValue,
 				TimeOfInsertion = DateTime.Now,
 				BuyOrSell = "Sell",
 				UserId = userId,
