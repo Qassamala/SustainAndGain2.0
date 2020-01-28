@@ -162,9 +162,14 @@ namespace SustainAndGain.Models
 		}
 
 
-		//ÄR INTE HELT KLAR!!!
+	
 		internal List<CalculatedPriceVM> GetPurchasePrice(int compId)
 		{
+			//tre databasanrop
+			//.UsersHistoricalTransactions
+			//.HistDataStocks
+			//.StaticStockData
+
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
 			List<CalculatedPriceVM> holdings = new List<CalculatedPriceVM>();
@@ -181,7 +186,7 @@ namespace SustainAndGain.Models
 					CurrentHoldingsAfterTransaction = c.CurrentHoldingsAfterTransaction,
 					CompetitionId = c.CompetitionId,
 					Quantity = c.Quantity
-
+					
 				}).ToList();
 
 			var hisdatastocks = context.HistDataStocks
@@ -199,6 +204,20 @@ namespace SustainAndGain.Models
 
 				var purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
 
+				var CoDescSym = context.StaticStockData
+					.Where(a => a.Id == item.StockId).Select(a => new CalculatedPriceVM
+					{
+						CompanyName = a.CompanyName,
+						Description = a.Description,
+						Symbol = a.Symbol
+					});
+
+				var companyName = CoDescSym
+					.Select(a => a.CompanyName).FirstOrDefault();
+				var symbol = CoDescSym
+					.Select(a => a.Symbol).FirstOrDefault();
+
+
 				var newHolding = new CalculatedPriceVM
 				{
 					PurchasePrice = purrChasePrice,
@@ -208,7 +227,9 @@ namespace SustainAndGain.Models
 					Quantity = item.Quantity,
 					UserId = item.UserId,
 					CurrentPrice = Convert.ToDecimal(price),
-					TransactionPrice = item.TransactionPrice
+					TransactionPrice = item.TransactionPrice,
+					CompanyName = companyName,
+					Symbol = symbol
 				};
 
 				holdings.Add(newHolding);
