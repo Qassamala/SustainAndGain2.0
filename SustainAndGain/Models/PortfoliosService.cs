@@ -171,7 +171,7 @@ namespace SustainAndGain.Models
 				Where(o => ((o.CompId == compId) && (o.UserId == userId)))
 				.Max(o => o.LastUpdatedAvailableForInvestment);
 
-			var availableForInvestment = context.UsersInCompetition
+			var availableForInvestment = (decimal)context.UsersInCompetition
 				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
 				.Select(v => v.AvailableForInvestment)
 				.FirstOrDefault();
@@ -189,7 +189,9 @@ namespace SustainAndGain.Models
 					.FirstOrDefault(),
 				Symbol = symbol,
 				OrderValue = 0,
-				CompetitionId = compId
+				CompetitionId = compId,
+				AvailableToInvest = availableForInvestment,
+				LastPrice = lastPrice
 
 			};
 		}
