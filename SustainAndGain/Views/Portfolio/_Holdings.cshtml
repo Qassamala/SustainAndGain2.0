@@ -67,11 +67,34 @@
                 @Html.DisplayFor(modelItem => item.Return)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @*<form a asp-controller="PortFolio" asp-action="SellOrder" asp-route-id="@item.Id"><input type="submit" value="Sell" /></form>
+                    *@
+                <button id="@item.Symbol" onclick="SellOrder('@item.Symbol', '@item.CompetitionId')">Sell</button>
+
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<div id="divOrderEntrySell"></div>
+
+<script>
+
+
+    function SellOrder(symbol, competitionId) {
+        console.log("runningOrderEntrySell")
+        // Make AJAX call
+        var url = `/portfolio/OrderEntrySell/${symbol}/${competitionId}`;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+                $("#divOrderEntrySell").html(result),
+                    window.onlocation
+                console.log("finishedOrderEntry");
+            }
+        });
+    }
+
+</script>
