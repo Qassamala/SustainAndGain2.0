@@ -142,6 +142,13 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
+		internal void DeleteOrder(OrderVM order)
+		{
+
+			Order orderToBeDeleted = (Order)context.Order.Where(o => o.Id == order.OrderId);
+			context.Order.Remove(orderToBeDeleted);
+		}
+
 		internal void AddSellOrder(OrderVM order, int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
@@ -354,7 +361,8 @@ namespace SustainAndGain.Models
 					OrderValue = o.OrderValue,
 					BuyOrSell = o.BuyOrSell,
 					TimeOfInsertion = o.TimeOfInsertion,
-					CompetitionId = compId
+					CompetitionId = compId,
+					OrderId = o.Id
 				});
 
 			return orders;

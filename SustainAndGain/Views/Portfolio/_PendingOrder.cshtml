@@ -34,8 +34,7 @@
                 @Html.DisplayFor(modelItem => item.BuyOrSell)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-controller="Portfolio" asp-action="DeleteOrder" asp-route-id="@item.OrderId">Delete pending order</a>
             </td>
         </tr>
 }

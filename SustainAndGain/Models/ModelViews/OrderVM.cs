@@ -11,6 +11,8 @@ namespace SustainAndGain.Models.ModelViews
         public int StockId { get; set; }
         public int CompetitionId { get; set; }
 
+        public int OrderId { get; set; }
+
         [Display(Name ="Company Name")]
         public string CompanyName { get; set; }
 
