@@ -4,6 +4,18 @@
     ViewData["Title"] = "Portfolio";
 }
 <link href="~/css/Portfolio.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
+
+<div class="section hpanel leftpan">
+    <div class="background-img">
+
+    </div>
+</div>
+<div class="section hpanel rightpan">
+    <div class="background-img">
+
+    </div>
+</div>
+<div id="Content"></div>
 <h1>My Portfolio</h1>
 <img id="PortPro" src="~/Img/PortfolioProfile.png" />
 <a href='@Url.Action("Userlayout","Stocks")'>
@@ -75,8 +87,7 @@
 
 <div>
     <a asp-action="UserLayout">Back to List of Competitions</a>
-    <a asp-controller="Portfolio" asp-action="FindStocks" asp-route-compId="@Model.CompetitionId">Find stocks to buy new</a>
-    @*<a asp-action="FindStocks">Find stocks to buy</a>*@
+    <a asp-controller="Portfolio" asp-action="FindStocks" asp-route-compId="@Model.CompetitionId">Find stocks to buy</a>
 </div>
 
 <script>
