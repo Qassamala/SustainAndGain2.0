@@ -22,6 +22,8 @@ namespace SustainAndGain.Models.ModelViews
         
         [Display(Name = "Order Value")]
         [Required(ErrorMessage ="Must enter an order value")]
+        [Range(1, 100)]
+        [DataType(DataType.Currency)]
         public decimal OrderValue { get; set; }
 
         public DateTime TimeOfInsertion { get; set; }
