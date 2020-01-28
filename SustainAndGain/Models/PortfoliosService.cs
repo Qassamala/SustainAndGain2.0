@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace SustainAndGain.Models
 {
-    public class PortfoliosService
-    {
+	public class PortfoliosService
+	{
 		private readonly SustainGainContext context;
 		private readonly UserManager<MyIdentityUser> user;
 		private readonly IHttpContextAccessor accessor;
@@ -45,12 +45,16 @@ namespace SustainAndGain.Models
 				.Select(v => v.AvailableForInvestment)
 				.FirstOrDefault();
 
+			// Calculate current invested capital by getting the holdings market cap
+			var holdings = GetHoldings(compId);
+
+			var investedCapital = holdings.Select(h => h.MarketValue).Sum();
 
 			PortfolioVM portfolioData = new PortfolioVM
 			{
 				CurrentValue = (decimal)currentValue,
 				AvailableCapital = (decimal)availableForInvestment,
-				InvestedCapital = (decimal)(currentValue - availableForInvestment),
+				InvestedCapital = investedCapital,
 				CompetitionId = compId
 			};
 
@@ -127,6 +131,23 @@ namespace SustainAndGain.Models
 
 		internal OrderVM GetOrderEntry(string symbol, int compId)
 		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+
+			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == compId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
+
+			var availableForInvestment = context.UsersInCompetition
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				.Select(v => v.AvailableForInvestment)
+				.FirstOrDefault();
+
+			var latestPriceTime = context.HistDataStocks.Where(s => s.Symbol == symbol).Max(d => d.DateTime);
+			var lastPrice = (decimal)context.HistDataStocks.Where(o => ((o.Symbol == symbol) && (o.DateTime == latestPriceTime)))
+						.Select(o => o.CurrentPrice)
+						.FirstOrDefault();
+
 			return new OrderVM
 			{
 				CompanyName = context.StaticStockData
@@ -136,15 +157,85 @@ namespace SustainAndGain.Models
 				Symbol = symbol,
 				OrderValue = 0,
 				CompetitionId = compId
-				
+
 			};
+		}
+
+
+		//ÄR INTE HELT KLAR!!!
+		internal List<CalculatedPriceVM> GetPurchasePrice(int compId)
+		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			List<CalculatedPriceVM> holdings = new List<CalculatedPriceVM>();
+
+			var calculatePurschasePrice = context.UsersHistoricalTransactions
+				.Where(c => c.CompetitionId == compId && c.UserId == userId)
+				.Select(c => new UsersHistoricalTransactions
+				{
+					StockId = c.StockId,
+					TransactionPrice = c.TransactionPrice,
+					BuyOrSell = c.BuyOrSell,
+					UserId = c.UserId,
+					DateTimeOfTransaction = c.DateTimeOfTransaction,
+					CurrentHoldingsAfterTransaction = c.CurrentHoldingsAfterTransaction,
+					CompetitionId = c.CompetitionId,
+					Quantity = c.Quantity
+
+				}).ToList();
+
+			var hisdatastocks = context.HistDataStocks
+					.Where(a => a.StockId == a.StockId).ToList();
+
+			foreach (var item in calculatePurschasePrice)
+			{
+				var price = hisdatastocks.Where(a => a.StockId == item.StockId).Select(a => a.CurrentPrice).FirstOrDefault();
+
+				var purchasePricePerStock = calculatePurschasePrice
+					.Where(a => a.StockId == item.StockId).Sum(a => a.TransactionPrice * a.Quantity);
+
+				var totalQuantityOfStocks = calculatePurschasePrice
+					.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
+
+				var purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
+
+				var newHolding = new CalculatedPriceVM
+				{
+					PurchasePrice = purrChasePrice,
+					BuyOrSell = item.BuyOrSell,
+					TotalQuantity = item.CurrentHoldingsAfterTransaction,
+					StockId = item.StockId,
+					Quantity = item.Quantity,
+					UserId = item.UserId,
+					CurrentPrice = Convert.ToDecimal(price),
+					TransactionPrice = item.TransactionPrice
+				};
+
+				holdings.Add(newHolding);
+			}
+
+			List<CalculatedPriceVM> trimmedList = new List<CalculatedPriceVM>();
+
+			for (int i = 0; i < holdings.Count; i++)
+			{
+				var calculatedExists = holdings
+					.Find(a => a.StockId == holdings[i].StockId);
+				if (!trimmedList.Contains(calculatedExists))
+				{
+					trimmedList.Add(calculatedExists);
+				}
+			}
+
+			return trimmedList;
+
+
 		}
 
 		internal List<HoldingsVM> GetHoldings(int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
-			var holdings =	 context.UsersHistoricalTransactions
+			var holdings = context.UsersHistoricalTransactions
 				.Where(o => o.CompetitionId == compId && o.UserId == userId)
 				.Select(o => new HoldingsVM
 				{
@@ -174,7 +265,7 @@ namespace SustainAndGain.Models
 
 			var stocks = context.StaticStockData
 				.Select(s => new StockInfoVM
-				{					
+				{
 					CompanyName = s.CompanyName,
 					IsSustainable = s.IsSustainable,
 					Symbol = s.Symbol,
