@@ -47,8 +47,8 @@ namespace SustainAndGain.Controllers
         [HttpGet]
         public IActionResult Holdings(int compId)
         {
-
-			//var holdings = service.GetHoldings(compId);
+           
+            //var holdings = service.GetHoldings(compId);
 
 
 			var gav = service.GetPurchasePrice(compId);
@@ -98,6 +98,28 @@ namespace SustainAndGain.Controllers
 			Order order = service.DeleteOrder(id);
 
 			return RedirectToAction("Portfolio", new { compId = order.CompId });
+		}
+
+		[Route("Portfolio/OrderEntrySell/{symbol}/{compId}")]
+		[HttpGet]
+		public IActionResult OrderEntrySell(string symbol, int compId)
+		{
+			var orderEntrySell = service.GetOrderEntrySell(symbol, compId);
+			return PartialView("OrderEntrySell", orderEntrySell);
+		}
+
+		[Route("Portfolio/OrderEntrySell/{symbol}/{compId}")]
+		[HttpPost]
+		public IActionResult OrderEntrySell(OrderVM order)
+		{
+			if (!ModelState.IsValid)
+				return View(order);
+
+			service.AddSellOrder(order);
+
+			//service.ExecuteOrders();    //Testing
+
+			return RedirectToAction("Portfolio", new { compId = order.CompetitionId });
 		}
 	}
 }

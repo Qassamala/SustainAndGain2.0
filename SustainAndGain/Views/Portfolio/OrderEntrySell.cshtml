@@ -1,0 +1,48 @@
+﻿@model SustainAndGain.Models.ModelViews.OrderVM
+
+
+    <h4>Orders will be executed 09:05 CET, 13:05 CET and 17:30 CET</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="OrderEntrySell">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="CompanyName" class="control-label"></label>
+                    <input asp-for="CompanyName" class="form-control" />
+                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Symbol" class="control-label"></label>
+                    <input asp-for="Symbol" class="form-control" />
+                    <span asp-validation-for="Symbol" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="OrderValue" class="control-label"></label>
+                    <input asp-for="OrderValue" class="form-control" />
+                    <span asp-validation-for="OrderValue" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BuyOrSell" class="control-label"></label>
+                    <input asp-for="BuyOrSell" class="form-control" />
+                    <span asp-validation-for="BuyOrSell" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Quantity" class="control-label"></label>
+                    <input asp-for="Quantity" class="form-control" />
+                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="CompetitionId" value="@Model.CompetitionId" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Place sell order" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+

@@ -35,9 +35,6 @@
             </td>
             <td>
                 <form a asp-controller="PortFolio" asp-action="DeleteOrder" asp-route-id="@item.OrderId"><input type="submit" value="Delete order" /></form>
-                @*<a asp-controller="Portfolio" asp-action="DeleteOrder" asp-route-compId="@item.OrderId">Delete pending order</a>*@
-                @*<a href="Portfolio/deleteorder/@item.OrderId">Delete this order</a>*@
-                @*<button id="@item.Symbol" onclick="OrderEntry('@item.Symbol', '@item.CompetitionId')">Buy</button>*@
             </td>
         </tr>
 }
