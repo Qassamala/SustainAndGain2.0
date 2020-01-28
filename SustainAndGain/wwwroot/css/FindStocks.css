@@ -5,7 +5,20 @@
     zoom:0.8;
     font-size: 2vh;
 }
+#ArrowPro {
+    border-radius: 50%;
+    height: 4em;
+    position: absolute;
+    top: 30%;
+    display: block;
+    transition: all 1s;
+    left: -30px;
+    transform: rotate(180deg);
+}
 
+    #ArrowPro:hover {
+        left: 0;
+    }
 body {
     background: linear-gradient(to bottom, rgba(23, 119, 117,0.7), rgba(40, 210, 191,1)), url('../img/stockimg.jpg');
     margin: 0;
