@@ -479,8 +479,15 @@ namespace SustainAndGain.Models
 				.Select(o => o.Quantity)
 				.Sum();
 
-				// calculate order quantity based on ordervalue ( For buy orders only)
-				var quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
+				int quantity = 0;
+
+				if (item.BuyOrSell == "Buy")
+				{
+					 quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
+
+				}
+
+					// calculate order quantity based on ordervalue ( For buy orders only)
 
 				// Increase total quantity depending on if Buy or Sell
 				if (item.BuyOrSell == "Buy")

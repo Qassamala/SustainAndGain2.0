@@ -74,7 +74,7 @@ namespace SustainAndGain.Controllers
 		public IActionResult OrderEntry(string symbol, int compId)
 		{
 			var orderEntry = service.GetOrderEntry(symbol, compId);
-			return PartialView("OrderEntry", orderEntry);
+			return PartialView("_OrderEntry", orderEntry);
 		}
 
 		[Route("Portfolio/OrderEntry/{symbol}/{compId}")]
@@ -118,7 +118,7 @@ namespace SustainAndGain.Controllers
 
 			service.AddSellOrder(order);
 
-			//service.ExecuteOrders();    //Testing
+			service.ExecuteOrders();    //Testing
 
 			return RedirectToAction("Portfolio", new { compId = order.CompetitionId });
 		}
