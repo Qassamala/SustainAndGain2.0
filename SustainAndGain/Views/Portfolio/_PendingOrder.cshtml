@@ -34,7 +34,7 @@
                 @Html.DisplayFor(modelItem => item.BuyOrSell)
             </td>
             <td>
-                <a asp-controller="Portfolio" asp-action="DeleteOrder" asp-route-id="@item.OrderId">Delete pending order</a>
+                <form a asp-controller="PortFolio" asp-action="DeleteOrder" asp-route-id="@item.OrderId"><input type="submit" value="Delete order" /></form>
             </td>
         </tr>
 }

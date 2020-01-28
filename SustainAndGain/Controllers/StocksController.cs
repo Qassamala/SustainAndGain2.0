@@ -28,7 +28,7 @@ namespace SustainAndGain.Controllers
         {
             //competitionsService.DisplayCompetitions();
             //competitionsService.AddCompetition();
-            //service.AddHistDataStocks();
+            service.AddHistDataStocks();
             //service.AddHistDataStocks();
             //service.AddStaticStockData();
 

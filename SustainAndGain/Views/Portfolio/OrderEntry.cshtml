@@ -1,5 +1,7 @@
 ﻿@model SustainAndGain.Models.ModelViews.OrderVM
 
+    <h4>Orders will be executed 09:05 CET, 13:05 CET and 17:30 CET</h4>
+
     <div id="PersInfo">
         <div class="PersDivs">
         <label asp-for="AvailableToInvest" class="control-label"></label>
@@ -47,7 +49,7 @@
                 <input type="hidden" name="CompetitionId" value="@Model.CompetitionId" />
             </div>
             <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary" />
+                <input type="submit" value="Place buy order" class="btn btn-primary" />
             </div>
         </form>
     </div>
