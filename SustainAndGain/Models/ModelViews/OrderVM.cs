@@ -21,8 +21,8 @@ namespace SustainAndGain.Models.ModelViews
         public string Symbol { get; set; }
 
         [Display(Name = "Order Value")]
-        [Required(ErrorMessage = "Must enter an order value")]
-        [Range(1, int.MaxValue, ErrorMessage = "Must be bigger than 0")]
+        //[Required(ErrorMessage = "Must enter an order value")]
+        //[Range(1, int.MaxValue, ErrorMessage = "Must be bigger than 0")]
         public decimal OrderValue { get; set; } 
 
         public DateTime TimeOfInsertion { get; set; }
