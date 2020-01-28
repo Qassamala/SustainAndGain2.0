@@ -28,6 +28,7 @@ namespace SustainAndGain.Models.ModelViews
         public DateTime DateTimeOfTransaction { get; set; }
         public int CurrentHoldingsAfterTransaction { get; set; }
 
+        public string Description { get; set; }
 
 
     }

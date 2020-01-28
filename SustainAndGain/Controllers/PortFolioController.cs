@@ -86,9 +86,21 @@ namespace SustainAndGain.Controllers
 
             service.AddBuyOrder(order);
 
-            service.ExecuteOrders();    //Testing
+            //service.ExecuteOrders();    //Testing
 
             return RedirectToAction("FindStocks", new { compId = order.CompetitionId });
         }
-    }
+
+		[Route("Portfolio/OrderEntry/{OrderId}")]
+		[HttpPost]
+		public IActionResult DeleteOrder(OrderVM order)
+		{
+			if (!ModelState.IsValid)
+				return View(order);
+
+			service.DeleteOrder(order);
+
+			return RedirectToAction("Portfolio", new { compId = order.CompetitionId });
+		}
+	}
 }
