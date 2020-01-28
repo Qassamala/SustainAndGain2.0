@@ -142,11 +142,53 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
-		internal void DeleteOrder(OrderVM order)
+		internal Order DeleteOrder(int orderId)
 		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
 
-			Order orderToBeDeleted = (Order)context.Order.Where(o => o.Id == order.OrderId);
+
+			Order orderToBeDeleted = context.Order.Where(o => o.Id == orderId).FirstOrDefault();
+
 			context.Order.Remove(orderToBeDeleted);
+
+			// Add entry into usersInComp with updated availableForInvestment value to remove reserved cash
+
+			if (orderToBeDeleted.BuyOrSell == "Buy")
+			{
+				var lastupdatedCurrentValue = context.UsersInCompetition
+					.Where(o => ((o.CompId == orderToBeDeleted.CompId) && (o.UserId == userId)))
+					.Max(o => o.LastUpdatedCurrentValue);
+
+				var currentValue = context.UsersInCompetition
+					.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+					.Select(v => v.CurrentValue)
+					.FirstOrDefault();
+
+				var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+					Where(o => ((o.CompId == orderToBeDeleted.CompId) && (o.UserId == userId)))
+					.Max(o => o.LastUpdatedAvailableForInvestment);
+
+				var availableForInvestment = context.UsersInCompetition
+					.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+					.Select(v => v.AvailableForInvestment)
+					.FirstOrDefault();
+
+				UsersInCompetition availableForInvestmentEntry = new UsersInCompetition
+				{
+					UserId = userId,
+					CurrentValue = currentValue,
+					AvailableForInvestment = availableForInvestment + (orderToBeDeleted.OrderValue),
+					LastUpdatedAvailableForInvestment = DateTime.Now,
+					LastUpdatedCurrentValue = lastupdatedCurrentValue,
+					CompId = orderToBeDeleted.CompId,
+				};
+
+				context.UsersInCompetition.Add(availableForInvestmentEntry);
+			}
+
+			context.SaveChanges();
+
+			return orderToBeDeleted;
 		}
 
 		internal void AddSellOrder(OrderVM order, int compId)

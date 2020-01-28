@@ -52,10 +52,10 @@ namespace SustainAndGain.Controllers
             var holdings = service.GetHoldings(compId);
 
 
-			var gav = service.GetPurchasePrice(compId);
+			//var gav = service.GetPurchasePrice(compId);
 
 			//var holdings = service.GetHoldings(compId);
-			return PartialView("_Holdings", gav);
+			return PartialView("_Holdings", holdings);
 		}
 
 
@@ -91,16 +91,14 @@ namespace SustainAndGain.Controllers
             return RedirectToAction("FindStocks", new { compId = order.CompetitionId });
         }
 
-		[Route("Portfolio/OrderEntry/{OrderId}")]
+		[Route("/Portfolio/DeleteOrder/{id}")]
 		[HttpPost]
-		public IActionResult DeleteOrder(OrderVM order)
+		public IActionResult DeleteOrder(int id)
 		{
-			if (!ModelState.IsValid)
-				return View(order);
 
-			service.DeleteOrder(order);
+			Order order = service.DeleteOrder(id);
 
-			return RedirectToAction("Portfolio", new { compId = order.CompetitionId });
+			return RedirectToAction("Portfolio", new { compId = order.CompId });
 		}
 	}
 }
