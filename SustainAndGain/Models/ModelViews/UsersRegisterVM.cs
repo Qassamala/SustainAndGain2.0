@@ -9,6 +9,7 @@ namespace SustainAndGain.Models.ModelViews
     public class UsersRegisterVM
     {
         [Required]
+        [Display(Name ="Username")]
         public string UserName { get; set; }
         [Required]
         [DataType(DataType.EmailAddress)]

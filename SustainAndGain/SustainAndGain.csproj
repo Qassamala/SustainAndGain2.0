@@ -30,8 +30,4 @@
     <TypeScriptCompile Include="wwwroot\Js\file.ts" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Font\" />
-  </ItemGroup>
-
 </Project>

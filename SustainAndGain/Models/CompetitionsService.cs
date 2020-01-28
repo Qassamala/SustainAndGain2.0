@@ -50,7 +50,7 @@ namespace SustainAndGain.Models
 				.Select(item => new CompetitionVM
 				{
 					EndTime = item.EndTime,
-					DaysLeft =item.StartTime.Subtract(now).TotalDays,
+					DaysLeft =item.StartTime.Subtract(now).TotalDays.ToString("0"),
 					Name = item.Name,
 					Id = item.Id,
 					UserId = userId,

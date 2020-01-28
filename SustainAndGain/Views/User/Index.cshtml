@@ -5,7 +5,7 @@
 }
 <link href="~/css/Index.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
 <div class="Flexbox">
-    
+
     <img src="~/Img/SustainGain.svg" />
 </div>
 <div class="LoginDiv">
@@ -24,10 +24,15 @@
         </div>
         <div class="form-group">
             <input type="submit" value="Login" class="btn btn-primary" />
-            <a asp-action="Register">Register new account</a>
+
+
         </div>
     </form>
 
 
-
+</div>
+<div class="Flexbox">
+    <form>
+        <button id="RegisterBtn" asp-action="Register">Register new account</button>
+    </form>
 </div>

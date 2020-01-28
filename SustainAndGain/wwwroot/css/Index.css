@@ -1,78 +1,52 @@
-﻿html{
+﻿html {
+    background: linear-gradient(to bottom right, #177775, #28D2BF, white);
+    background-size: cover;
     margin: 0;
     padding: 0;
     height: 100%;
+    
+    font-size: 2vh;
+  
 }
 
 body {
-   margin-top: 5%;
+    height: 100%;
+    background-color: rgba(0,0,0,0);
     margin-bottom: 0;
     padding: 0;
     position: relative;
     margin-left: 30%;
     margin-right: 30%;
-    background: linear-gradient(to bottom right, #177775, #28D2BF, white);
-    background-size: cover;
 }
 
 
 
-#text {
-    opacity: 0;
-    left: -100px;
-    color: #f2f2f2;
-    font-size: 15px;
-    overflow: hidden;
 
-    position: absolute;
-    bottom: 40%;
-    width: 100%;
-    text-align: left;
-    animation: fade 1s ease 3.5s forwards;
-}
-.fade {
-    -webkit-animation-name: fade;
-    -webkit-animation-duration: 1.5s;
-    animation-name: fade;
-    animation-duration: 1.5s;
-    animation-delay: 0.5s;
-    -webkit-animation-delay: 1s;
-}
-
-@-webkit-keyframes fade {
-    from {
-        opacity: 0;
-        left: -100px;
-    }
-
-    to {
-        opacity: 1;
-        left: 20PX;
-    }
-}
-
-@keyframes fade {
-    from {
-        opacity: .4;
-        left: -500px;
-    }
-
-    to {
-        opacity: 1;
-        left: 20PX;
-    }
-}
 
 .LoginDiv {
     position: relative;
     height: 100%;
-    padding-top: 70px;
-    margin-top: 20px; 
+    padding-top: 20px;
+    margin-top: 20px;
+    margin-left: 5em;
+    margin-right: 5em;
     background: rgba(300, 300, 300, 0.2);
-    padding-bottom: 70px;
+    padding-bottom: 10px;
     border-radius: 30px;
-  
 }
+#ArrowPro {
+    border-radius: 50%;
+    height: 4em;
+    position: fixed;
+    top: 30%;
+    display: block;
+    transition: all 1s;
+    left: -30px;
+    transform: rotate(180deg);
+}
+    #ArrowPro:hover {
+        left: 0;
+    }
 
 .icon {
     padding: 10px;
@@ -84,6 +58,7 @@ img {
  
 }
 .Flexbox{
+    padding-top: 2em;
    display:flex;
    align-items:center;
    justify-content:center;
@@ -117,27 +92,19 @@ form {
 }*/
 
 
-/*#usernameForm {
-    width: 100%;
+#usernameForm {
+    
     background-image: url('../img/isolated-monochrome-black.svg');
-    background-size: 20px;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    height: 40px;
-    padding: 12px 20px 12px 40px;
-    margin-top: 10px;
-    margin-bottom: 20px;
-    font-family: 'Franklin Gothic Medium', arial;
-    display: inline;
-    opacity: 0.5;
-    border-radius: 30px;
-    box-sizing: border-box;
-    background-position-x: 1em;
-    background-position-y: center;
-}*/
+  
+}
 #passwordForm {
-    background-size: 20px;
     background-image: url('../img/password-black.svg');
+}
+#emailForm{
+
+}
+#passwordForm, #usernameForm, #emailForm {
+    background-size: 20px;
     background-repeat: no-repeat;
     overflow: hidden;
     width: 100%;
@@ -154,7 +121,8 @@ form {
 }
 
 
-input[type=submit] {
+
+button, input[type=submit] {
     font-family: 'Franklin Gothic Medium', arial;
     width: 100%;
     padding-bottom: 2em;
@@ -170,9 +138,13 @@ input[type=submit] {
     cursor: pointer;
 }
 
-input[type=submit]:hover {
+button:hover, input[type=submit]:hover {
     background-color: #28D2BF;
     box-shadow: 5px 5px 2px #2D8068;
+}
+#RegisterBtn{
+    width:50%;
+    padding-bottom:0;
 }
 
 

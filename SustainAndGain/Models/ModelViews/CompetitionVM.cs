@@ -11,12 +11,24 @@ namespace SustainAndGain.Models.ModelViews
         {
             
 
-            if (StartTime < DateTime.Now)
-            {
-                IsOngoing = true;
-            }
         }
-        public double DaysLeft { get; set; }
+        private string daysLeft;
+
+        public string DaysLeft
+        {
+            get { return daysLeft; }
+            set
+            {
+                if (double.Parse(value) > 0)
+                {
+                    daysLeft = value;
+                }
+                else
+                    daysLeft = "Ongoing";
+                }
+        }
+
+        
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public bool IsOngoing { get; set; }

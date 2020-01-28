@@ -10,6 +10,21 @@
 
 @* SLides for tävlingar *@
 <h1>Competitions</h1>
+<div class="section hpanel leftpan">
+    <div class="background-img">
+
+    </div>
+</div>
+<div class="section hpanel rightpan">
+    <div class="background-img">
+
+    </div>
+</div>
+<div class="section hpanel thirdpan">
+<div class="background-img">
+
+</div>
+</div>
 <img id="CompPro" src="~/Img/CompProfile.png" />
 <div class="slideContainer">
     @for (int i = 0; i < 4; i++)
@@ -18,20 +33,20 @@
 
             <h2>Competition: @Model[i].Name</h2>
 
-            <h4>Days left: @Model[i].DaysLeft.ToString("0")</h4>
+            <h4>Days left: @Model[i].DaysLeft</h4>
             <h4>Ends: @Model[i].EndTime.Date</h4>
 
 
             <form><button id="portfolio@(i)" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model[i].Id" style="display:none;">Go to portfolio</button></form>
             <input id="join@(i)" onclick="Join(@(i))" type="submit" value="Join" class="btn btn-primary" style="display:none;" />
-           
+
             @if (Model[i].HasJoined)
             {
                 <script>
                     $(document).ready(function() {
   $("#portfolio@(i)").css("display", "block");
 });
-                    
+
                 </script>
             }
             else

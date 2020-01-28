@@ -1,5 +1,9 @@
-﻿html{
-    height:100%;
+﻿html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    zoom:0.8;
+    font-size: 2vh;
 }
 
 body {
@@ -8,8 +12,11 @@ body {
     padding-left: 10%;
     padding-right: 15%;
     font-family: Quicksand;
-    zoom: 0.7;
     height: 100%;
+}
+.col-md-4{
+    flex: 1;
+    max-width:100%;
 }
 h1 {
     text-align: left;
@@ -26,11 +33,13 @@ h1 {
     display: block;
     transition: all 1s;
     left: -30px;
+    z-index: -1;
 }
 table {
     background: rgba(255,255,255,0.8);
     border-radius: 4px;
-    padding: 2%;
+    padding:10%;
+    margin-top:2%;
 }
 button, input[type=submit] {
     border-radius: 4px;
@@ -54,7 +63,7 @@ button, input[type=submit] {
     align-items: center;
     justify-content: center;
     background: rgba(255,255,255,0.8);
-    font-size: 3em;
+    font-size:5vh;
     border-radius: 4px;
    
 }
