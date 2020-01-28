@@ -8,13 +8,18 @@
     font-size: 2vh;
 }
 body {
-    background: linear-gradient(to bottom, rgba(23, 119, 117,0.7), rgba(40, 210, 191,1)), url('../img/stockimg.jpg');
+  
     margin: 0;
     padding-left: 10%;
     padding-right: 15%;
     font-family: Quicksand;
     zoom: 0.8;
     height:100%;
+}
+#Content{
+    position:absolute;
+    z-index: 5;
+    height: 100%;
 }
 h1 {
     text-align: left;
@@ -117,10 +122,97 @@ h1 {
     
 }
 
-
-/*#divChart {
-    position: relative;
+.leftpan {
+    left: -14%;
     width: 70%;
-    background: rgba(255,255,255,0.8);
-    border-radius: 4px;
-}*/
+    -webkit-transform: skew(20deg);
+    -moz-transform: skew(20deg);
+    -o-transform: skew(20deg);
+}
+
+    .leftpan .background-img {
+        background: linear-gradient(to bottom right, #177775, #28D2BF, white);
+       
+    }
+
+.rightpan {
+    right: -20%;
+    width: 79%;
+    -webkit-transform: skew(0deg);
+    -moz-transform: skew(0deg);
+    -o-transform: skew(0deg);
+}
+
+
+
+    .rightpan .content-area {
+        -webkit-transform: skew(-8deg);
+        -moz-transform: skew(-8deg);
+        -o-transform: skew(-8deg);
+    }
+
+
+    .rightpan .background-img {
+        background-image: url('../img/stockimg.jpg');
+        -webkit-transform: skew(10deg);
+        -moz-transform: skew(10deg);
+        -o-transform: skew(10deg);
+        opacity:0.5;
+        animation:animatedBackground 2s ease-in-out;
+    }
+
+.background-img {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+}
+
+.leftpan .content-area {
+    -webkit-transform: skew(8deg);
+    -moz-transform: skew(8deg);
+    -o-transform: skew(8deg);
+}
+
+.rightpan .content-area {
+    -webkit-transform: skew(-20deg);
+    -moz-transform: skew(-20deg);
+    -o-transform: skew(-20deg);
+}
+
+.content-area {
+    text-align: center;
+    margin: 20vh auto;
+    width: 350px;
+}
+
+    .content-area h2 {
+        font-size: 2.8rem;
+        margin-bottom: 50px
+    }
+.hpanel {
+    z-index:-1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #fff
+}
+@keyframes animatedBackground {
+    from {
+        
+       right: -100px;
+    }
+
+    to {
+       right:0;
+    }
+}

@@ -7,8 +7,6 @@ namespace SustainAndGain.Models.ModelViews
 {
 	public class CalculatedPriceVM
 	{
-
-
         public string Symbol { get; set; }
         public string CompanyName { get; set; }
         public bool? IsSustainable { get; set; }

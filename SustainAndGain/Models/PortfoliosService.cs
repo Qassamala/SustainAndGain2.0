@@ -250,9 +250,9 @@ namespace SustainAndGain.Models
 		internal List<CalculatedPriceVM> GetPurchasePrice(int compId)
 		{
 			//tre databasanrop
-			//.UsersHistoricalTransactions
-			//.HistDataStocks
-			//.StaticStockData
+			//UsersHistoricalTransactions
+			//HistDataStocks
+			//StaticStockData
 
 			string userId = user.GetUserId(accessor.HttpContext.User);
 

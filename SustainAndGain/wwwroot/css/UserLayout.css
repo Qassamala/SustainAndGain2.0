@@ -149,11 +149,12 @@ h2{
     }
 
     80% {
-        background-image: url('frame-05.png');
+        background-image: url('../img/nat5.jpg');
     }
 
     100% {
-        background-image: url('frame-06.png');
+        background-image: url('../img/nat6.jpg');
+       
     }
 }
 
@@ -179,22 +180,14 @@ h2{
         -o-transform: skew(20deg);
     }
 
-/*.thirdpan .background-img {
-    background-image: url('../img/nat4.jpg');
-}*/
+
 
 .rightpan .content-area  {
     -webkit-transform: skew(-8deg);
     -moz-transform: skew(-8deg);
     -o-transform: skew(-8deg);
 }
-/*.thirdpan {
-    -webkit-transform: skew(-10deg);
-    -moz-transform: skew(-10deg);
-    -o-transform: skew(-10deg);
-    right: -4%;
-    width: 20%;
-}*/
+
 
 .rightpan .background-img {
     background: linear-gradient(to bottom right, #177775, #28D2BF, white);
