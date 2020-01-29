@@ -334,12 +334,10 @@ namespace SustainAndGain.Models
 				//var getDateTimeOfTransaction = userHoldings
 				//	.Where(a => a.StockId == item.StockId).Max(a => a.DateTimeOfTransaction);
 				
-				decimal purrChasePrice = totalPurchaseAmount / totalQuantityOfStocks;
-				//var currentValue = purrChasePrice * totalQuantityOfStocks;
+				//decimal purchasePrice = totalPurchaseAmount / totalQuantityOfStocks;
 
 				
 				decimal totalPurchasePriceForStock = totalPurchaseAmount / totalQuantityOfStocks;
-				var currentValue = totalPurchasePriceForStock * totalQuantityOfStocks;
 
 
 				var compDescSymb = context.StaticStockData
