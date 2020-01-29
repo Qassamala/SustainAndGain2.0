@@ -289,7 +289,7 @@ namespace SustainAndGain.Models
 
 			List<CalculatedPriceVM> holdings = new List<CalculatedPriceVM>();
 
-			var calculatePurschasePrice = context.UsersHistoricalTransactions
+			var userHoldings = context.UsersHistoricalTransactions
 				.Where(c => c.CompetitionId == compId && c.UserId == userId)
 				.Select(c => new UsersHistoricalTransactions
 				{
@@ -308,20 +308,31 @@ namespace SustainAndGain.Models
 					.Where(a => a.StockId == a.StockId).ToList();
 
 
-			foreach (var item in calculatePurschasePrice)
+			foreach (var item in userHoldings)
 			{
-				var price = hisdatastocks.Where(a => a.StockId == item.StockId).Select(a => a.CurrentPrice).FirstOrDefault();
+				//var price = hisdatastocks.Where(a => a.StockId == item.StockId).Select(a => a.CurrentPrice).FirstOrDefault();
 
-				var purchasePricePerStock = calculatePurschasePrice
+				//Abdis changes
+				var latestPriceDate = context.HistDataStocks
+						.Where(o => ((o.StockId == item.StockId))).Max(o => o.DateTime);
+
+				var currentPrice = (decimal)context.HistDataStocks
+						.Where(o => ((o.StockId == item.StockId) && (o.DateTime == latestPriceDate)))
+						.Select(o => o.CurrentPrice)
+						.FirstOrDefault();
+				// abdis changes above
+
+
+				var totalPurchaseAmount = userHoldings
 					.Where(a => a.StockId == item.StockId).Sum(a => a.TransactionPrice * a.Quantity);
 
-				var totalQuantityOfStocks = calculatePurschasePrice
+				var totalQuantityOfStocks = userHoldings
 					.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
 
 
 				
-					decimal purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
-				var currentValue = purrChasePrice * totalQuantityOfStocks;
+				decimal totalPurchasePriceForStock = totalPurchaseAmount / totalQuantityOfStocks;
+				var currentValue = totalPurchasePriceForStock * totalQuantityOfStocks;
 
 
 				var compDescSymb = context.StaticStockData
@@ -340,13 +351,13 @@ namespace SustainAndGain.Models
 
 				var newHolding = new CalculatedPriceVM
 				{
-					PurchasePrice = purrChasePrice,
+					PurchasePrice = totalPurchasePriceForStock,
 					BuyOrSell = item.BuyOrSell,
 					TotalQuantity = item.CurrentHoldingsAfterTransaction,
 					StockId = item.StockId,
 					Quantity = item.Quantity,
 					UserId = item.UserId,
-					CurrentPrice = Convert.ToDecimal(price),
+					CurrentPrice = currentPrice,
 					TransactionPrice = item.TransactionPrice,
 					CompanyName = companyName,
 					Symbol = symbol,
@@ -520,7 +531,7 @@ namespace SustainAndGain.Models
 						TransactionPrice = transactionPrice,
 						DateTimeOfTransaction = DateTime.Now,
 						BuyOrSell = item.BuyOrSell,
-						Quantity = (int)item.Quantity,
+						Quantity = -(int)item.Quantity,
 						CurrentHoldingsAfterTransaction = currentHoldings,						
 					};
 					context.UsersHistoricalTransactions.Add(order);
