@@ -8,12 +8,10 @@
     font-size: 2vh;
 }
 body {
-  
+    background-color: #fff;
     margin: 0;
-    
-    
     zoom: 0.8;
-    height:100%;
+    height: 100%;
 }
 h4 {
     font-family:Quicksand;
@@ -44,38 +42,61 @@ h4 {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 33px 30px;
+    
     animation: opacity 4s ease-in;
     padding-bottom: 3%;
 }
 #divChart {
     position: relative;
-   width:25%;
-    background: rgba(255,255,255,0.8);
-    border-radius: 25px;
+    width: 50%;
+    word-wrap: break-word;
+    background-color: #fff;
+ 
     transition: all 1s;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
 }
 
-.card{
-    width:25%;
-    text-align:center;
-    height:50%;
+.card {
+    width: 25%;
+    text-align: center;
+    height: 50%;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
 }
 
 
-.rows{
-    display:flex;
-    justify-content:space-evenly;
-    align-items:center;
+.rows {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     position: relative;
     z-index: 5;
-    width:100%;
-    margin: 3%;
+    width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 2vh;
 }
-.box{
-    width:75%;
-    position:relative;
+.box {
+   
+    padding: 4vh;
+    width: 25%;
+    height: 14vh;
+    position: relative;
     text-align: center;
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
 }
 
 

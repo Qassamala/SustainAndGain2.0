@@ -1,12 +1,12 @@
 ﻿@model IEnumerable<SustainAndGain.Models.ModelViews.CalculatedPriceVM>
-<link href="~/css/Templates/main.css" rel="stylesheet" />
-<link href="~/css/Templates/util.css" rel="stylesheet" />
+<link href="~/css/Templates/main.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
+<link href="~/css/Templates/util.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
 
 
 
 
 
-    <div class="wrap-table100" style="-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);">
+    <div class="wrap-table100" style="-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15); width:100%;">
         <div class="table">
 
             <div class="row header">
@@ -25,6 +25,17 @@
                 <div class="cell">
                     @Html.DisplayNameFor(model => model.CurrentPrice)
                 </div>
+                <div class="cell">
+                    @Html.DisplayNameFor(model => model.TotalQuantity)
+                </div>
+                <div class="cell">
+                    @Html.DisplayNameFor(model => model.MarketValue)
+                </div>
+                <div class="cell">
+                    @Html.DisplayNameFor(model => model.Return)
+                </div>
+
+
             </div>
             @foreach (var item in Model)
             {
@@ -44,10 +55,19 @@
             <div class="cell" data-title="Current Price">
                 @Html.DisplayFor(modelItem => item.CurrentPrice)
             </div>
+            <div class="cell" data-title="Current Price">
+                @Html.DisplayFor(modelItem => item.TotalQuantity)
+            </div>
+            <div class="cell" data-title="Current Price">
+                @Html.DisplayFor(modelItem => item.MarketValue)
+            </div>
+            <div class="cell" data-title="Current Price">
+                @Html.DisplayFor(modelItem => item.Return)
+            </div>
             <div class="cell" data-title="Sell Stock">
                 <button id="@item.Symbol" onclick="SellOrder('@item.Symbol', '@item.CompetitionId')">Sell</button>
             </div>
-            </div>
+        </div>
             }
         </div>
     </div>
