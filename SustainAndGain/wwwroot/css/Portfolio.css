@@ -44,13 +44,13 @@ h4 {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    padding: 33px 30px;
+    
     animation: opacity 4s ease-in;
     padding-bottom: 3%;
 }
 #divChart {
     position: relative;
-   width:25%;
+   width:50%;
     background: rgba(255,255,255,0.8);
     border-radius: 25px;
     transition: all 1s;
