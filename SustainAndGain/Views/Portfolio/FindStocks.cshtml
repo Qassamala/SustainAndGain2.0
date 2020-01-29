@@ -78,7 +78,14 @@
                         @Html.DisplayFor(modelItem => item.CompanyName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.IsSustainable)
+                        @if (item.IsSustainable == true )
+                        {
+                            <img style="height:5vh; border-radius:50%;"  src="~/Img/SustainPro.png" />
+                        }
+                        else
+                        {
+                            <img style="height:5vh; border-radius:50%; " src="~/Img/NoPro.png" />
+                        }
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Symbol)

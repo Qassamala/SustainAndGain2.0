@@ -5,6 +5,16 @@
 }
 <link href="~/css/Portfolio.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
 
+<script>  function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("openButton").style.display = "none";
+        document.getElementById("closeButton").style.display = "block";
+    }
+    function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("openButton").style.display = "block";
+        document.getElementById("closeButton").style.display = "none";
+    }</script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom-left-radius: 25px; border-bottom-right-radius:25px;-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);">
 
     <a class="navbar-brand navbar-brand-logo">
@@ -33,12 +43,12 @@
 
     </div>
 </nav>
-<form id="Highscore" class="form-inline my-2 my-lg-0">
+<div id="Highscore" class="form-inline my-2 my-lg-0">
 
     <button id="openButton" onclick="w3_open()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Highscore List</button>
     <button id="closeButton" onclick="w3_close()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Close &times;</button>
     <div style="display:none" id="mySidebar"></div>
-</form>
+</div>
 
 
 
@@ -235,16 +245,7 @@
         });
         }
 
-    function w3_open() {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("openButton").style.display = "none";
-        document.getElementById("closeButton").style.display = "block";
-    }
-    function w3_close() {
-        document.getElementById("mySidebar").style.display = "none";
-        document.getElementById("openButton").style.display = "block";
-        document.getElementById("closeButton").style.display = "none";
-    }
+  
 </script>
 
 

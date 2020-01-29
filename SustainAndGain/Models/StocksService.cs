@@ -91,21 +91,19 @@ namespace SustainAndGain.Models
 		{
 			string sustainPath = @"C:\Users\Martin\source\repos\SustainAndGain\SustainAndGain\wwwroot\SustainBolag.txt";
 			string[] sustainList = File.ReadAllLines(sustainPath);
-		
+			var stockList = context.StaticStockData.ToList();
+			
 			foreach (var item in sustainList)
 			{
-				foreach (var stock in context.StaticStockData)
+				string[] lines = item.Split('.');
+				var sustainStock = stockList
+					.Find(s => s.Symbol.ToLower().Trim().Contains(item.ToLower().Trim()[0]));
+				if (sustainStock == null)
 				{
-					var shortSymbol = stock.Symbol.Split('.');
-					if ( item.ToLower().StartsWith(shortSymbol[0].ToLower().Trim()))
-					{
-						stock.IsSustainable = true;
-						
-					}
-					else
-						stock.IsSustainable = false;
-				}
 
+				}
+				else
+					sustainStock.IsSustainable = true;
 
 
 			}

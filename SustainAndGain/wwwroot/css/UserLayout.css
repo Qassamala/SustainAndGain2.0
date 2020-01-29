@@ -13,15 +13,15 @@ body {
 h4{
     
 }
+nav{
+    z-index:5;
+}
 
 #CompPro {
-    border-radius: 50%;
-    height: 15em;
-    position: absolute;
-    top: -30px;
-    display: block;
-    transition: all 1s;
-    left: -30px;
+    border-radius: 25%;
+    height: 7vh;
+    position: relative;
+    
 }
 h1 {
     text-align: left;
@@ -61,8 +61,8 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    position: relative;
-
+  
+    width: 100%;
     background-repeat: no-repeat;
     background-size: contain;
 }

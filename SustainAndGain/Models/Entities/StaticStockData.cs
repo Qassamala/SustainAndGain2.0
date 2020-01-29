@@ -18,6 +18,21 @@ namespace SustainAndGain.Models.Entities
         public string Sector { get; set; }
         public string CompanyName { get; set; }
         public bool? IsSustainable { get; set; }
+        //private bool? isSustainable;
+
+        //public bool? IsSustainable
+        //{
+        //    get { return isSustainable; }
+        //    set
+        //    {
+        //        if (value == null)
+        //        {
+        //            isSustainable = false;
+        //        }
+        //        else
+        //        isSustainable = value; }
+        //}
+
 
         public virtual ICollection<HistDataStocks> HistDataStocks { get; set; }
         public virtual ICollection<Order> Order { get; set; }
