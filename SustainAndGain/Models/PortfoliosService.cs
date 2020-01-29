@@ -98,74 +98,67 @@ namespace SustainAndGain.Models
 		{
 
 			var allStocks = context.HistDataStocks.ToList();
-			
-			var histTransactions = context.UsersHistoricalTransactions.ToList();
-	
-			foreach (var item in histTransactions)
+			var userHistoricalTransaction = context.UsersHistoricalTransactions.ToList();
+			var usersInCompetition = context.UsersInCompetition.ToList();
+
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			List<decimal> Value = new List<decimal>();
+			List<HistDataStocks> newPricesList = new List<HistDataStocks>();
+
+
+			foreach (var item in allStocks)
 			{
 				var updatedPrice = allStocks
-					.Where(a => a.StockId == item.StockId).Last();
+				.Where(a => a.StockId == item.StockId).Last();
 
+				if (!newPricesList.Contains(updatedPrice))
+				{
+					newPricesList.Add(updatedPrice);
+				}
 			}
 
 
-			//Orders will be executed 09:05 CET, 13:05 CET and 17:30 CET
+			var userInComp = usersInCompetition
+				.Where(a => a.UserId == userId && compId == a.CompId).Last();
 
+			
+				var eachPrice = userHistoricalTransaction
+					.Where(a => a.UserId == userInComp.UserId).ToList();
 
-			var userHoldings = context.UsersHistoricalTransactions
-				
-				.Select(c => new UsersHistoricalTransactions
+				foreach (var price in eachPrice)
 				{
-					StockId = c.StockId,
-					TransactionPrice = c.TransactionPrice,
-					BuyOrSell = c.BuyOrSell,
-					UserId = c.UserId,
-					DateTimeOfTransaction = c.DateTimeOfTransaction,
-					CurrentHoldingsAfterTransaction = c.CurrentHoldingsAfterTransaction,
-					CompetitionId = c.CompetitionId,
-					Quantity = c.Quantity
+					var vs = newPricesList
+						.Where(a => a.StockId == price.StockId)
+						.Select(a => a.CurrentPrice * price.CurrentHoldingsAfterTransaction).Last();
 
-				}).ToList();
 
-			var availableForInvestment = context.UsersInCompetition
-			//.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-			.Select(v => v.AvailableForInvestment)
-			.FirstOrDefault();
+				Value.Add((decimal)vs);
+				}
+				//.Select(a => item.CurrentPrice * a.CurrentHoldingsAfterTransaction).Last();
 
-			var availableForInvestmentDate = context.UsersInCompetition
-				.Select(a => a.LastUpdatedAvailableForInvestment).FirstOrDefault();
 
-			var holdings = GetHoldings(compId);
+			var CurrentValue = Value.Sum();
 
-			var investedCapital = holdings.Select(h => h.MarketValue).Sum();
 
-			//var newHoldings = userHoldings;
 
-			foreach (var item in userHoldings)
+			var newuserincomp = new UsersInCompetition
 			{
-				//var updatePrices = newdata
-				//	.Where(a => a.StockId == item.StockId).Select(a => a.CurrentPrice).FirstOrDefault();
-
-				var totalQuantity = item.CurrentHoldingsAfterTransaction;
-
-				//var newEarnings = updatePrices * totalQuantity;
-
-				var ListOfCurrentValues = new UsersInCompetition
-				{
-					//CurrentValue = Convert.ToDecimal(newEarnings),
-					AvailableForInvestment = availableForInvestment,
-					CompId = compId,
-					//LastUpdatedCurrentValue = lastdate,
-					LastUpdatedAvailableForInvestment = availableForInvestmentDate,
-				};
-				context.UsersInCompetition.Add(ListOfCurrentValues);
-
-			}
+				CurrentValue = CurrentValue + userInComp.AvailableForInvestment,
+				CompId = userInComp.CompId,
+				AvailableForInvestment = userInComp.AvailableForInvestment,
+				UserId = userInComp.UserId,
+				LastUpdatedCurrentValue = DateTime.Now,
+				LastUpdatedAvailableForInvestment = userInComp.LastUpdatedAvailableForInvestment
 
 
 
+			};
 
 
+			context.UsersInCompetition.Add(newuserincomp);
+
+			context.SaveChanges();
 
 
 		}
@@ -402,10 +395,10 @@ namespace SustainAndGain.Models
 				// abdis changes above
 
 
-				var totalPurchaseAmount = userHoldings
+				var totalPurchaseAmount = context.UsersHistoricalTransactions
 					.Where(a => a.StockId == item.StockId).Sum(a => a.TransactionPrice * a.Quantity);
 
-				var totalQuantityOfStocks = userHoldings
+				var totalQuantityOfStocks = context.UsersHistoricalTransactions
 					.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
 
 
