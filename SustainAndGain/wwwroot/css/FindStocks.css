@@ -5,54 +5,43 @@
     zoom:0.8;
     font-size: 2vh;
 }
-#ArrowPro {
-    border-radius: 50%;
-    height: 4em;
-    position: absolute;
-    top: 30%;
-    display: block;
-    transition: all 1s;
-    left: -30px;
-    transform: rotate(180deg);
+@font-face {
+    font-family: 'quicksand-regular';
+    src: url('../img/quicksand-regular.otf') format('opentype');
 }
-
-    #ArrowPro:hover {
-        left: 0;
-    }
+#PortPro {
+    position: relative;
+    height: 7vh;
+    border-radius: 25%;
+}
 body {
-    background: linear-gradient(to bottom, rgba(23, 119, 117,0.7), rgba(40, 210, 191,1)), url('../img/stockimg.jpg');
+  
     margin: 0;
-    padding-left: 10%;
-    padding-right: 15%;
-    font-family: Quicksand;
+  
+  
     height: 100%;
 }
 .col-md-4{
     flex: 1;
     max-width:100%;
 }
-h1 {
-    text-align: left;
-    margin-left: 1.5em;
-    color: white;
-    font-family: Quicksand;
+
+#example_wrapper{
+    width:100%;
+    padding:3%;
 }
 
-#StockPro {
-    border-radius: 50%;
-    height: 15em;
-    position: absolute;
-    top: -30px;
-    display: block;
-    transition: all 1s;
-    left: -30px;
-    z-index: -1;
-}
 table {
-    background: rgba(255,255,255,0.8);
-    border-radius: 4px;
-    padding:10%;
-    margin-top:2%;
+    background-color: #fff;
+    transition: all 1s;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
+   width:75%;
+    padding: 5%;
+    margin-top: 2%;
+   
 }
 button, input[type=submit] {
     border-radius: 4px;
