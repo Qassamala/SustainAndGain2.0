@@ -285,6 +285,7 @@ namespace SustainAndGain.Models
 
 			List<CalculatedPriceVM> holdings = new List<CalculatedPriceVM>();
 
+
 			var calculatePurschasePrice = context.UsersHistoricalTransactions
 				.Where(c => c.CompetitionId == compId && c.UserId == userId)
 				.Select(c => new UsersHistoricalTransactions
@@ -304,6 +305,7 @@ namespace SustainAndGain.Models
 			var hisdatastocks = context.HistDataStocks
 					.Where(a => a.StockId == a.StockId).ToList();
 
+		
 
 			foreach (var item in calculatePurschasePrice)
 			{
