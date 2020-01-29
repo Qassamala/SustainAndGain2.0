@@ -312,7 +312,7 @@ namespace SustainAndGain.Models
 
 			foreach (var item in userHoldings)
 			{
-				//var price = hisdatastocks.Where(a => a.StockId == item.StockId).Select(a => a.CurrentPrice).FirstOrDefault();
+
 
 				//Abdis changes
 				var latestPriceDate = context.HistDataStocks
@@ -330,11 +330,6 @@ namespace SustainAndGain.Models
 
 				var totalQuantityOfStocks = userHoldings
 					.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
-
-				//var getDateTimeOfTransaction = userHoldings
-				//	.Where(a => a.StockId == item.StockId).Max(a => a.DateTimeOfTransaction);
-				
-				//decimal purchasePrice = totalPurchaseAmount / totalQuantityOfStocks;
 
 				
 				decimal totalPurchasePriceForStock = totalPurchaseAmount / totalQuantityOfStocks;
@@ -370,8 +365,9 @@ namespace SustainAndGain.Models
 					CompetitionId = compId,
 					//DateTimeOfTransaction = getDateTimeOfTransaction,
 				};
+					holdings.Add(newHolding);
+				
 
-				holdings.Add(newHolding);
 			}
 
 			List<CalculatedPriceVM> trimmedList = new List<CalculatedPriceVM>();
