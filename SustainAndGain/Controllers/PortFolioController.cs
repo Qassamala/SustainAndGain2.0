@@ -123,7 +123,7 @@ namespace SustainAndGain.Controllers
 			if (!ModelState.IsValid)
 				return View(order);
 
-			service.AddSellOrder(order);
+			//service.AddSellOrder(order);
 
 			service.ExecuteOrders();    //Testing, should be executed after GetPrices job
 
