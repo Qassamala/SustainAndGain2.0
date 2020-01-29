@@ -14,6 +14,8 @@ namespace SustainAndGain.Models.Entities
         public DateTime DateTimeOfTransaction { get; set; }
         public int CurrentHoldingsAfterTransaction { get; set; }
         public string BuyOrSell { get; set; }
+        public decimal AveragePriceForCurrentHoldings { get; set; }
+        public decimal CurrentPurchaseAmountForHoldings { get; set; }
 
         public virtual Competition Competition { get; set; }
         public virtual StaticStockData Stock { get; set; }
