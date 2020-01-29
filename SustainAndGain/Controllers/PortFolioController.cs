@@ -22,8 +22,10 @@ namespace SustainAndGain.Controllers
         [HttpGet]
         public IActionResult Portfolio(int compId)
         {
-            
-            var portfolioData = service.DisplayPortfolioData(compId);
+			//TESTING----
+			service.UpdateCurrentValue(compId);
+
+			var portfolioData = service.DisplayPortfolioData(compId);
             return View(portfolioData);
         }
 
@@ -94,6 +96,7 @@ namespace SustainAndGain.Controllers
 			service.AddBuyOrder(order);
 
 			service.ExecuteOrders();    //Testing
+
 
 			return RedirectToAction("FindStocks", new { compId = order.CompetitionId });
         }
