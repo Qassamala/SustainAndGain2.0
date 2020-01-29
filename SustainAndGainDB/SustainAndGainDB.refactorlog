@@ -14,4 +14,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="BuyOrSell" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="04966b3b-8f71-4d19-ba03-846403d28bdb" ChangeDateTime="01/29/2020 17:58:18">
+    <Property Name="ElementName" Value="[dbo].[UsersHistoricalTransactions].[AveragePrice]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UsersHistoricalTransactions]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AveragePriceForCurrentHoldings" />
+  </Operation>
 </Operations>

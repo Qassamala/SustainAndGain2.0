@@ -3,13 +3,38 @@
     ViewData["Title"] = "UserLayout";
 }
 <link href="~/css/UserLayout.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+@*<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
 <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>*@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom-left-radius: 25px; border-bottom-right-radius:25px;-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);">
+
+    <a class="navbar-brand navbar-brand-logo">
+        <div class="logo">
+            <img id="CompPro" src="~/Img/CompProfile.png" />
+        </div>
+
+    </a>
+    <a class="navbar-brand"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" style="font-family:Quicksand; font-size:4vh;">List Of Stocks<span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
+            </li>
 
 
-@* SLides for tävlingar *@
-<h1>Competitions</h1>
+        </ul>
+
+    </div>
+</nav>
 
 <div class="section hpanel leftpan">
     <div class="background-img">
@@ -26,11 +51,10 @@
 </div>
 <div class="section hpanel rightpan">
     <div class="background-img">
-        
+
     </div>
 </div>
 
-<img id="CompPro" src="~/Img/CompProfile.png" />
 <div class="slideContainer">
     @for (int i = 0; i < 4; i++)
     {
