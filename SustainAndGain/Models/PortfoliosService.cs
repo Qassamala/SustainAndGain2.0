@@ -5,6 +5,7 @@ using SustainAndGain.Models.ModelViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SustainAndGain.Models
 {
@@ -59,6 +60,10 @@ namespace SustainAndGain.Models
 
 			return portfolioData;
 		}
+		//internal object GetSustainProcent(int compId)
+		//{
+			
+		//}
 
 		internal object GetHighScoreForCompetition(int compId)
 		{
@@ -141,7 +146,7 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
-		internal OrderVM GetOrderEntrySell(string symbol, int compId)
+		internal SellOrderVM GetOrderEntrySell(string symbol, int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
@@ -160,7 +165,7 @@ namespace SustainAndGain.Models
 						.Select(o => o.CurrentPrice)
 						.FirstOrDefault();
 
-			return new OrderVM
+			return new SellOrderVM
 			{
 				CompanyName = context.StaticStockData
 					.Where(s => s.Symbol == symbol)
@@ -285,8 +290,7 @@ namespace SustainAndGain.Models
 
 			List<CalculatedPriceVM> holdings = new List<CalculatedPriceVM>();
 
-
-			var calculatePurschasePrice = context.UsersHistoricalTransactions
+			var userHoldings = context.UsersHistoricalTransactions
 				.Where(c => c.CompetitionId == compId && c.UserId == userId)
 				.Select(c => new UsersHistoricalTransactions
 				{
@@ -305,26 +309,37 @@ namespace SustainAndGain.Models
 			var hisdatastocks = context.HistDataStocks
 					.Where(a => a.StockId == a.StockId).ToList();
 
-		
 
-			foreach (var item in calculatePurschasePrice)
+			foreach (var item in userHoldings)
 			{
-				//Abdi har justerat 
-				var price = hisdatastocks.Where(a => a.StockId == item.StockId).Max(a => a.CurrentPrice);
+				//var price = hisdatastocks.Where(a => a.StockId == item.StockId).Select(a => a.CurrentPrice).FirstOrDefault();
 
-				var purchasePricePerStock = calculatePurschasePrice
+				//Abdis changes
+				var latestPriceDate = context.HistDataStocks
+						.Where(o => ((o.StockId == item.StockId))).Max(o => o.DateTime);
+
+				var currentPrice = (decimal)context.HistDataStocks
+						.Where(o => ((o.StockId == item.StockId) && (o.DateTime == latestPriceDate)))
+						.Select(o => o.CurrentPrice)
+						.FirstOrDefault();
+				// abdis changes above
+
+
+				var totalPurchaseAmount = userHoldings
 					.Where(a => a.StockId == item.StockId).Sum(a => a.TransactionPrice * a.Quantity);
 
-				var totalQuantityOfStocks = calculatePurschasePrice
+				var totalQuantityOfStocks = userHoldings
 					.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
 
-				var getDateTimeOfTransaction = calculatePurschasePrice
-					.Where(a => a.StockId == item.StockId).Max(a => a.DateTimeOfTransaction);
+				//var getDateTimeOfTransaction = userHoldings
+				//	.Where(a => a.StockId == item.StockId).Max(a => a.DateTimeOfTransaction);
 				
-				decimal purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
+				decimal purrChasePrice = totalPurchaseAmount / totalQuantityOfStocks;
 				//var currentValue = purrChasePrice * totalQuantityOfStocks;
 
-
+				
+				decimal totalPurchasePriceForStock = totalPurchaseAmount / totalQuantityOfStocks;
+				var currentValue = totalPurchasePriceForStock * totalQuantityOfStocks;
 
 
 				var compDescSymb = context.StaticStockData
@@ -344,18 +359,18 @@ namespace SustainAndGain.Models
 
 				var newHolding = new CalculatedPriceVM
 				{
-					PurchasePrice = purrChasePrice,
+					PurchasePrice = totalPurchasePriceForStock,
 					BuyOrSell = item.BuyOrSell,
 					TotalQuantity = item.CurrentHoldingsAfterTransaction,
 					StockId = item.StockId,
 					Quantity = item.Quantity,
 					UserId = item.UserId,
-					CurrentPrice = Convert.ToDecimal(price),
+					CurrentPrice = currentPrice,
 					TransactionPrice = item.TransactionPrice,
 					CompanyName = companyName,
 					Symbol = symbol,
 					CompetitionId = compId,
-					DateTimeOfTransaction = getDateTimeOfTransaction,
+					//DateTimeOfTransaction = getDateTimeOfTransaction,
 				};
 
 				holdings.Add(newHolding);
@@ -403,9 +418,6 @@ namespace SustainAndGain.Models
 						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == latestPriceDate)))
 						.Select(o => o.CurrentPrice)
 						.FirstOrDefault();
-
-				//item.PurchasePrice = context.UsersHistoricalTransactions
-				//	.Where(o => o.CompetitionId == compId && o.UserId == userId)
 			}
 
 			return holdings;
@@ -481,8 +493,15 @@ namespace SustainAndGain.Models
 				.Select(o => o.Quantity)
 				.Sum();
 
-				// calculate order quantity based on ordervalue ( For buy orders only)
-				var quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
+				int quantity = 0;
+
+				if (item.BuyOrSell == "Buy")
+				{
+					 quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
+
+				}
+
+					// calculate order quantity based on ordervalue ( For buy orders only)
 
 				// Increase total quantity depending on if Buy or Sell
 				if (item.BuyOrSell == "Buy")
@@ -516,7 +535,7 @@ namespace SustainAndGain.Models
 						TransactionPrice = transactionPrice,
 						DateTimeOfTransaction = DateTime.Now,
 						BuyOrSell = item.BuyOrSell,
-						Quantity = (int)item.Quantity,
+						Quantity = -(int)item.Quantity,
 						CurrentHoldingsAfterTransaction = currentHoldings,						
 					};
 					context.UsersHistoricalTransactions.Add(order);

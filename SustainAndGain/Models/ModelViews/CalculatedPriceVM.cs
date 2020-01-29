@@ -14,7 +14,7 @@ namespace SustainAndGain.Models.ModelViews
         public decimal PurchasePrice { get; set; }
         public decimal CurrentPrice { get; set; }
         public int TotalQuantity { get; set; }
-        public decimal MarketValue { get; set; }
+        public decimal MarketValue => TotalQuantity * CurrentPrice;
         public decimal Return { get; set; }
 
         public int Id { get; set; }
