@@ -45,7 +45,7 @@ namespace SustainAndGain.Models
 			for (int i = 0; i < 8; i++)
 			{
 				GetPricesForStocks(stockData, i);
-				Thread.Sleep(500);
+				Thread.Sleep(800);
 			}
 
 			context.SaveChanges();
@@ -185,13 +185,13 @@ namespace SustainAndGain.Models
 
 					UsersInCompetition transactions = new UsersInCompetition
 					{
-					CurrentValue = transactionData.CurrentValue,
-					LastUpdatedCurrentValue = transactionData.LastUpdatedCurrentValue,
-					AvailableForInvestment = transactionData.AvailableForInvestment,
-					CompId = transactionData.CompId,
-					Id = transactionData.Id,
-					LastUpdatedAvailableForInvestment = transactionData.LastUpdatedAvailableForInvestment,
-					UserId = transactionData.UserId
+						CurrentValue = transactionData.CurrentValue,
+						LastUpdatedCurrentValue = transactionData.LastUpdatedCurrentValue,
+						AvailableForInvestment = transactionData.AvailableForInvestment,
+						CompId = transactionData.CompId,
+						Id = transactionData.Id,
+						LastUpdatedAvailableForInvestment = transactionData.LastUpdatedAvailableForInvestment,
+						UserId = transactionData.UserId
 
 					};
 					historicalTransactions.Add(transactions);
