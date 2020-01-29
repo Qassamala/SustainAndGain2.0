@@ -1,32 +1,18 @@
 ﻿@model SustainAndGain.Models.ModelViews.OrderVM
-    <style>
-        .container {
-            max-width: 100%;
-            animation: opacity 1s ease-in-out;
-            padding-bottom: 5vh;
-        }
 
-        .row {
-            justify-content: flex-end;
-            margin-right: 10vh;
-        }
-        
 
-        .col-lg-3, .col-lg-4 {
-            padding: 4vh;
-            margin: 2vh;
-            position: relative;
-            text-align: center;
-            position: relative;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 1px solid rgba(0,0,0,.125);
-            border-radius: .25rem;
-            box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
-        }
-    </style>
+
+<div class="section hpanel leftpan">
+        <div class="background-img">
+
+        </div>
+    </div>
+    <div class="section hpanel rightpan">
+        <div class="background-img">
+
+        </div>
+    </div>
+
 
 
 <div class="container">
@@ -50,26 +36,13 @@
             <span asp-validation-for="CompetitionId" class="text-danger"></span>
         </div>
     </div>
-    </div>
-    @*<div id="PersInfo">
-        <div class="PersDivs">
-            <label asp-for="AvailableToInvest" class="control-label"></label>
-            @Html.DisplayFor(modelItem => Model.AvailableToInvest) kr
-        </div>
+</div>
 
-        <div>
-            <label asp-for="LastPrice" class="control-label"></label>
-            @Html.DisplayFor(modelItem => Model.LastPrice) kr
-        </div>
-        <span asp-validation-for="CompetitionId" class="text-danger"></span>
-
-        <input type="hidden" name="name_default" value="name_default" />
-
-    </div>*@
 
 <form class="form-inline" asp-action="OrderEntry">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group mb-2">
+
         <label asp-for="CompanyName" class="control-label"></label>
         <input asp-for="CompanyName" class="form-control" />
         <span asp-validation-for="CompanyName" class="text-danger"></span>
@@ -87,12 +60,12 @@
     <div class="form-group">
         <input type="hidden" name="CompetitionId" value="@Model.CompetitionId" />
     </div>
-        <div class="form-group">
-            <input type="submit" value="Place buy order" class="btn btn-primary mb-2" />
-        </div>
+    <div class="form-group mb2">
+        <input type="submit" value="Place buy order" class="btn btn-primary mb-2" />
+    </div>
 </form>
 
-    @*<hr />
+@*<hr />
     <div class="row">
         <div class="col-md-4">
             <form id="OrderForm" asp-action="OrderEntry">
