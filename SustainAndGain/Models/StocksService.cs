@@ -25,6 +25,7 @@ namespace SustainAndGain.Models
 {
 	public class StocksService
 	{
+
 		private SustainGainContext context;
 		private readonly UserManager<MyIdentityUser> user;
 		private readonly IHttpContextAccessor accessor;

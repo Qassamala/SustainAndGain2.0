@@ -30,6 +30,9 @@ namespace SustainAndGain.Models.ModelViews
         public decimal MarketValue => TotalQuantity * CurrentPrice;
         public decimal Return { get; set; }
 
+        [Display(Name = "Average price")]
+        public decimal AveragePrice  { get; set; }
+
         public int Id { get; set; }
         public string UserId { get; set; }
         public int CompetitionId { get; set; }
