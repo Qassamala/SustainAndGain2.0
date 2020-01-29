@@ -468,7 +468,7 @@ namespace SustainAndGain.Models
 				}
 			}
 
-			return holdings;
+			return trimmedList;
 
 
 		}
@@ -658,9 +658,17 @@ namespace SustainAndGain.Models
 						BuyOrSell = item.BuyOrSell,
 						Quantity = -(int)item.Quantity,
 						CurrentHoldingsAfterTransaction = currentHoldings,
-						AveragePriceForCurrentHoldings = purchaseAmount / (currentHoldings),
+						//AveragePriceForCurrentHoldings = purchaseAmount / (currentHoldings),
 						CurrentPurchaseAmountForHoldings = purchaseAmount
 					};
+					if (currentHoldings == 0)
+					{
+						order.AveragePriceForCurrentHoldings = 0;
+					}
+					else
+					{
+						order.AveragePriceForCurrentHoldings = purchaseAmount / (currentHoldings);
+					}
 					context.UsersHistoricalTransactions.Add(order);
 				}
 
