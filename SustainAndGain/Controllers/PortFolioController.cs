@@ -125,7 +125,7 @@ namespace SustainAndGain.Controllers
 
 			service.AddSellOrder(order);
 
-			service.ExecuteOrders();    //Testing
+			service.ExecuteOrders();    //Testing, should be executed after GetPrices job
 
 			return RedirectToAction("Portfolio", new { compId = order.CompetitionId });
 		}

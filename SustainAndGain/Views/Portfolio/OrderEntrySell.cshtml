@@ -1,4 +1,4 @@
-﻿@model SustainAndGain.Models.ModelViews.OrderVM
+﻿@model SustainAndGain.Models.ModelViews.SellOrderVM
 
 
     <h4>Orders will be executed 09:05 CET, 13:05 CET and 17:30 CET</h4>
@@ -18,17 +18,15 @@
                     <span asp-validation-for="Symbol" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="BuyOrSell" class="control-label"></label>
-                    <input asp-for="BuyOrSell" class="form-control" />
-                    <span asp-validation-for="BuyOrSell" class="text-danger"></span>
-                </div>
-                <div class="form-group">
                     <label asp-for="Quantity" class="control-label"></label>
                     <input asp-for="Quantity" class="form-control" />
                     <span asp-validation-for="Quantity" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <input type="hidden" name="CompetitionId" value="@Model.CompetitionId" />
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="BuyOrSell" value="Sell" />
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Place sell order" class="btn btn-primary" />
