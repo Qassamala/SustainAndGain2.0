@@ -113,35 +113,35 @@ namespace SustainAndGain.Models
 
 			// Add entry into usersInComp with updated availableForInvestment value
 
-			//var lastupdatedCurrentValue = context.UsersInCompetition
-			//	.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
-			//	.Max(o => o.LastUpdatedCurrentValue);
+			var lastupdatedCurrentValue = context.UsersInCompetition
+				.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedCurrentValue);
 
-			//var currentValue = context.UsersInCompetition
-			//	.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
-			//	.Select(v => v.CurrentValue)
-			//	.FirstOrDefault();
+			var currentValue = context.UsersInCompetition
+				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				.Select(v => v.CurrentValue)
+				.FirstOrDefault();
 
-			//var lastupdatedAvailableForInvestment = context.UsersInCompetition.
-			//	Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
-			//	.Max(o => o.LastUpdatedAvailableForInvestment);
+			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
 
-			//var availableForInvestment = context.UsersInCompetition
-			//	.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-			//	.Select(v => v.AvailableForInvestment)
-			//	.FirstOrDefault();
+			var availableForInvestment = context.UsersInCompetition
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				.Select(v => v.AvailableForInvestment)
+				.FirstOrDefault();
 
-			//UsersInCompetition availableForInvestmentEntry = new UsersInCompetition
-			//{
-			//	UserId = userId,
-			//	CurrentValue = currentValue,
-			//	AvailableForInvestment = availableForInvestment-(order.OrderValue),
-			//	LastUpdatedAvailableForInvestment = DateTime.Now,
-			//	LastUpdatedCurrentValue = lastupdatedCurrentValue,
-			//	CompId = order.CompetitionId,
-			//};
+			UsersInCompetition availableForInvestmentEntry = new UsersInCompetition
+			{
+				UserId = userId,
+				CurrentValue = currentValue,
+				AvailableForInvestment = availableForInvestment - (order.OrderValue),
+				LastUpdatedAvailableForInvestment = DateTime.Now,
+				LastUpdatedCurrentValue = lastupdatedCurrentValue,
+				CompId = order.CompetitionId,
+			};
 
-			//context.UsersInCompetition.Add(availableForInvestmentEntry);
+			context.UsersInCompetition.Add(availableForInvestmentEntry);
 
 			context.SaveChanges();
 		}
@@ -237,6 +237,7 @@ namespace SustainAndGain.Models
 					.Where(s => s.Symbol == order.Symbol)
 					.Select(i => i.Id)
 					.FirstOrDefault(),
+				//OrderValue = order.OrderValue,
 				TimeOfInsertion = DateTime.Now,
 				BuyOrSell = "Sell",
 				UserId = userId,
@@ -301,6 +302,7 @@ namespace SustainAndGain.Models
 					CurrentHoldingsAfterTransaction = c.CurrentHoldingsAfterTransaction,
 					CompetitionId = c.CompetitionId,
 					Quantity = c.Quantity
+				
 					
 				}).ToList();
 
@@ -329,6 +331,11 @@ namespace SustainAndGain.Models
 				var totalQuantityOfStocks = userHoldings
 					.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
 
+				var getDateTimeOfTransaction = calculatePurschasePrice
+					.Where(a => a.StockId == item.StockId).Max(a => a.DateTimeOfTransaction);
+				
+				decimal purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
+				//var currentValue = purrChasePrice * totalQuantityOfStocks;
 
 				
 				decimal totalPurchasePriceForStock = totalPurchaseAmount / totalQuantityOfStocks;
@@ -340,7 +347,8 @@ namespace SustainAndGain.Models
 					{
 						CompanyName = a.CompanyName,
 						Description = a.Description,
-						Symbol = a.Symbol
+						Symbol = a.Symbol,
+
 					});
 
 				var companyName = compDescSymb
@@ -361,21 +369,20 @@ namespace SustainAndGain.Models
 					TransactionPrice = item.TransactionPrice,
 					CompanyName = companyName,
 					Symbol = symbol,
-					CompetitionId = compId
+					CompetitionId = compId,
+					DateTimeOfTransaction = getDateTimeOfTransaction,
 				};
-
 
 				holdings.Add(newHolding);
 			}
-
-			
 
 			List<CalculatedPriceVM> trimmedList = new List<CalculatedPriceVM>();
 
 			for (int i = 0; i < holdings.Count; i++)
 			{
 				var calculatedExists = holdings
-					.Find(a => a.StockId == holdings[i].StockId);
+					.Where(a => a.StockId == holdings[i].StockId).Last();
+
 				if (!trimmedList.Contains(calculatedExists))
 				{
 					trimmedList.Add(calculatedExists);
