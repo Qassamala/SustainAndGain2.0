@@ -4,8 +4,7 @@
     ViewData["Title"] = "Portfolio";
 }
 <link href="~/css/Portfolio.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
-<link href="~/css/Templates/main.css" rel="stylesheet" />
-<link href="~/css/Templates/util.css" rel="stylesheet" />
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom-left-radius: 25px; border-bottom-right-radius:25px;-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);">
 
     <a class="navbar-brand navbar-brand-logo">
@@ -43,20 +42,21 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
         </ul>
-        <form id="Highscore" class="form-inline my-2 my-lg-0">
 
-            <button id="openButton" onclick="w3_open()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Highscore List</button>
-            <button id="closeButton" onclick="w3_close()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Close &times;</button>
-
-        </form>
     </div>
 </nav>
-<div style="display:none" id="mySidebar">
+<form id="Highscore" class="form-inline my-2 my-lg-0">
+
+    <button id="openButton" onclick="w3_open()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Highscore List</button>
+    <button id="closeButton" onclick="w3_close()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Close &times;</button>
+    <div style="display:none" id="mySidebar"></div>
+</form>
 
 
-</div>
 
-<div class="section hpanel leftpan">
+
+
+@*<div class="section hpanel leftpan">
     <div class="background-img">
 
     </div>
@@ -65,7 +65,7 @@
     <div class="background-img">
 
     </div>
-</div>
+</div>*@
 
 
 
@@ -74,9 +74,54 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chartd.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                
+                    <h4> @Html.DisplayNameFor(model => model.CurrentValue):</h4>
 
 
-<div class="rows">
+                    @Html.DisplayFor(model => model.CurrentValue) kr
+               
+              
+            </div>
+            <div class="col-lg-3">
+                <h4>@Html.DisplayNameFor(model => model.AvailableCapital):</h4>
+
+
+                @Html.DisplayFor(model => model.AvailableCapital) kr
+            </div>
+            <div class="col-lg-3">
+                <h4>  @Html.DisplayNameFor(model => model.InvestedCapital):</h4>
+
+
+                @Html.DisplayFor(model => model.InvestedCapital) kr
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-5">
+                <div id="divChart"> </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <img src="~/Img/SustainPro.png" />
+                    <div class="card-img-top" id="chartdiv"></div>
+                    <div class="card-body">
+                        <h4>  @Html.DisplayNameFor(model => model.SustainBonus):</h4>
+
+
+                        @Html.DisplayFor(model => model.SustainBonus) kr
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+@*<div class="rows">
     <div class="box">
         <h4> @Html.DisplayNameFor(model => model.CurrentValue):</h4>
 
@@ -99,7 +144,8 @@
 </div>
 <div class="rows">
     <div id="divChart"> </div>
-    <div class="card" >
+    <div class="card">
+        <img src="~/Img/SustainPro.png" />
         <div class="card-img-top" id="chartdiv"></div>
         <div class="card-body">
             <h4>  @Html.DisplayNameFor(model => model.SustainBonus):</h4>
@@ -109,7 +155,7 @@
 
         </div>
     </div>
-</div>
+</div>*@
 
 
 
@@ -134,10 +180,7 @@
 
 
 
-<div>
-    <a asp-action="UserLayout">Back to List of Competitions</a>
-    <a asp-controller="Portfolio" asp-action="FindStocks" asp-route-compId="@Model.CompetitionId">Find stocks to buy</a>
-</div>
+
 
 <script>
     window.onload = function callWindowOnloadfunctions() {
@@ -149,7 +192,7 @@
         this.getSustainProcent()
     }
 
-    
+
     function getSustainProcent() {
         console.log("running Sustain")
         //Get ID from competition
@@ -251,12 +294,6 @@
 </script>
 
 
-<style>
-    #chartdiv {
-        width: 100%;
-        height: 500px;
-    }
-</style>
 
 <!-- Resources -->
 <script src="https://www.amcharts.com/lib/4/core.js"></script>
@@ -267,36 +304,36 @@
 <!-- Chart code -->
 <script>
     am4core.useTheme(am4themes_animated);
-// Themes end
+    // Themes end
 
 
 
-// create chart
-var chart = am4core.create("chartdiv", am4charts.GaugeChart);
-chart.innerRadius = -15;
+    // create chart
+    var chart = am4core.create("chartdiv", am4charts.GaugeChart);
+    chart.innerRadius = -15;
 
-var axis = chart.xAxes.push(new am4charts.ValueAxis());
-axis.min = 0;
-axis.max = 100;
-axis.strictMinMax = true;
+    var axis = chart.xAxes.push(new am4charts.ValueAxis());
+    axis.min = 0;
+    axis.max = 100;
+    axis.strictMinMax = true;
 
-var colorSet = new am4core.ColorSet();
-   
+    var colorSet = new am4core.ColorSet();
+
     var gradient = new am4core.LinearGradient();
-gradient.stops.push({color:am4core.color("orange")})
-gradient.stops.push({color:am4core.color("yellow")})
-gradient.stops.push({color:am4core.color("#28D2BF")})
+    gradient.stops.push({ color: am4core.color("orange") })
+    gradient.stops.push({ color: am4core.color("yellow") })
+    gradient.stops.push({ color: am4core.color("#28D2BF") })
 
 
 
-axis.renderer.line.stroke = gradient;
-axis.renderer.line.strokeWidth = 15;
-axis.renderer.line.strokeOpacity = 1;
+    axis.renderer.line.stroke = gradient;
+    axis.renderer.line.strokeWidth = 15;
+    axis.renderer.line.strokeOpacity = 1;
 
-axis.renderer.grid.template.disabled = true;
+    axis.renderer.grid.template.disabled = true;
 
-var hand = chart.hands.push(new am4charts.ClockHand());
-hand.radius = am4core.percent(97);
+    var hand = chart.hands.push(new am4charts.ClockHand());
+    hand.radius = am4core.percent(97);
 
 
 

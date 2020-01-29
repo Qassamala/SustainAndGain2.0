@@ -67,7 +67,7 @@ namespace SustainAndGain.Models
 
 		internal object GetHighScoreForCompetition(int compId)
 		{
-			
+
 			var MaxHighScore = context.UsersInCompetition
 				.Where(a => a.CurrentValue > 0 && a.CompId == compId)
 				.Select(n => new HighscoreVM
@@ -291,7 +291,7 @@ namespace SustainAndGain.Models
 			List<CalculatedPriceVM> holdings = new List<CalculatedPriceVM>();
 
 			var userHoldings = context.UsersHistoricalTransactions
-				.Where(c => c.CompetitionId == compId && c.UserId == userId)
+				.Where(c => c.CompetitionId == compId && c.UserId == userId && c.BuyOrSell == "Sell")
 				.Select(c => new UsersHistoricalTransactions
 				{
 					StockId = c.StockId,

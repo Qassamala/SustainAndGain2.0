@@ -1,155 +1,118 @@
 ﻿@model IEnumerable<SustainAndGain.Models.ModelViews.CalculatedPriceVM>
-<link href="~/css/Templates/main.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
-<link href="~/css/Templates/util.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
+    <style>
+        table {
+            background-color: #fff;
+            transition: all 1s;
+            background-clip: border-box;
+            border: 1px solid rgba(0,0,0,.125);
+            border-radius: .25rem;
+            box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
+
+
+        }
+        th{
+            position:relative;
+        }
+       table th img {
+             position: absolute;
+        width: 45%;
+        border-radius: 50%;
+        right: -15px;
+        top: -15px;
+        transition: all 1s;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+       
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
+        }
+        table th img:hover{
+             transform:scale(1.2);
+        }
+    </style>
 
 
 
 
-
-    <div class="wrap-table100" style="-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15); width:100%;">
-        <div class="table">
-
-            <div class="row header">
-                <div class="cell">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th >
                     @Html.DisplayNameFor(model => model.Symbol)
-                </div>
-                <div class="cell">
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.CompanyName)
-                </div>
-                <div class="cell">
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.IsSustainable)
-                </div>
-                <div class="cell">
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BuyOrSell)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.PurchasePrice)
-                </div>
-                <div class="cell">
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.CurrentPrice)
-                </div>
-                <div class="cell">
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.TotalQuantity)
-                </div>
-                <div class="cell">
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.MarketValue)
-                </div>
-                <div class="cell">
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Return)
-                </div>
+                </th>
+                <th>
+                    <a href='@Url.Action("FindStocks",new { compId = Model.ToArray()[0].CompetitionId })' >
+                        <img id="ArrowPro" src='@Url.Content("~/Img/Plusprofile.png")' />
+                    </a></th>
 
+            </tr>
 
-            </div>
+        </thead>
+        <tbody>
             @foreach (var item in Model)
             {
-        <div class="row">
-            <div class="cell" data-title="Symbol">
-                @Html.DisplayFor(modelItem => item.Symbol)
-            </div>
-            <div class="cell" data-title="Company Name">
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </div>
-            <div class="cell" data-title="Sustainable">
-                @Html.DisplayFor(modelItem => item.IsSustainable)
-            </div>
-            <div class="cell" data-title="Purchase Price">
-                @Html.DisplayFor(modelItem => item.PurchasePrice)
-            </div>
-            <div class="cell" data-title="Current Price">
-                @Html.DisplayFor(modelItem => item.CurrentPrice)
-            </div>
-            <div class="cell" data-title="Current Price">
-                @Html.DisplayFor(modelItem => item.TotalQuantity)
-            </div>
-            <div class="cell" data-title="Current Price">
-                @Html.DisplayFor(modelItem => item.MarketValue)
-            </div>
-            <div class="cell" data-title="Current Price">
-                @Html.DisplayFor(modelItem => item.Return)
-            </div>
-            <div class="cell" data-title="Sell Stock">
-                <button id="@item.Symbol" onclick="SellOrder('@item.Symbol', '@item.CompetitionId')">Sell</button>
-            </div>
-        </div>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Symbol)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsSustainable)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BuyOrSell)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PurchasePrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CurrentPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalQuantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MarketValue)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Return)
+                    </td>
+                    <td>
+
+
+                        <button id="@item.Symbol" onclick="SellOrder('@item.Symbol', '@item.CompetitionId')">Sell</button>
+
+                    </td>
+                </tr>
             }
-        </div>
-    </div>
-
-
-
-
-
-@*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Symbol)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsSustainable)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BuyOrSell)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PurchasePrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CurrentPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalQuantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MarketValue)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Return)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Symbol)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CompanyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsSustainable)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BuyOrSell)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PurchasePrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CurrentPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TotalQuantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MarketValue)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Return)
-                </td>*@
-                @*<td>*@
-                    @*<form a asp-controller="PortFolio" asp-action="SellOrder" asp-route-id="@item.Id"><input type="submit" value="Sell" /></form>
-                    *@
-                    @*<button id="@item.Symbol" onclick="SellOrder('@item.Symbol', '@item.CompetitionId')">Sell</button>
-
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>*@
+        </tbody>
+        
+    </table>
 
 <div id="divOrderEntrySell"></div>
 
