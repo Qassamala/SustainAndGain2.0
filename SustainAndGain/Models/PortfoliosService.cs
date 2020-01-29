@@ -402,13 +402,16 @@ namespace SustainAndGain.Models
 
 			foreach (var item in holdings)
 			{
-				var latestPrice = context.HistDataStocks
+				var latestPriceDate = context.HistDataStocks
 						.Where(o => ((o.Symbol == item.Symbol))).Max(o => o.DateTime);
 
 				item.CurrentPrice = (decimal)context.HistDataStocks
-						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == latestPrice)))
+						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == latestPriceDate)))
 						.Select(o => o.CurrentPrice)
 						.FirstOrDefault();
+
+				//item.PurchasePrice = context.UsersHistoricalTransactions
+				//	.Where(o => o.CompetitionId == compId && o.UserId == userId)
 			}
 
 			return holdings;
