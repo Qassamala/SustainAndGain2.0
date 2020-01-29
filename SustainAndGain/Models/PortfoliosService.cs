@@ -331,10 +331,10 @@ namespace SustainAndGain.Models
 				var totalQuantityOfStocks = userHoldings
 					.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
 
-				var getDateTimeOfTransaction = calculatePurschasePrice
-					.Where(a => a.StockId == item.StockId).Max(a => a.DateTimeOfTransaction);
+				//var getDateTimeOfTransaction = userHoldings
+				//	.Where(a => a.StockId == item.StockId).Max(a => a.DateTimeOfTransaction);
 				
-				decimal purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
+				decimal purrChasePrice = totalPurchaseAmount / totalQuantityOfStocks;
 				//var currentValue = purrChasePrice * totalQuantityOfStocks;
 
 				
@@ -370,7 +370,7 @@ namespace SustainAndGain.Models
 					CompanyName = companyName,
 					Symbol = symbol,
 					CompetitionId = compId,
-					DateTimeOfTransaction = getDateTimeOfTransaction,
+					//DateTimeOfTransaction = getDateTimeOfTransaction,
 				};
 
 				holdings.Add(newHolding);
@@ -418,9 +418,6 @@ namespace SustainAndGain.Models
 						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == latestPriceDate)))
 						.Select(o => o.CurrentPrice)
 						.FirstOrDefault();
-
-				//item.PurchasePrice = context.UsersHistoricalTransactions
-				//	.Where(o => o.CompetitionId == compId && o.UserId == userId)
 			}
 
 			return holdings;
