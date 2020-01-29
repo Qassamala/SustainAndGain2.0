@@ -25,6 +25,7 @@ namespace SustainAndGain.Models
 {
 	public class StocksService
 	{
+
 		private SustainGainContext context;
 		private readonly UserManager<MyIdentityUser> user;
 		private readonly IHttpContextAccessor accessor;
@@ -87,29 +88,64 @@ namespace SustainAndGain.Models
 
 			return true;
 		}
-
-		public void AddStaticStockData()
+		public void AddSustainProp()
 		{
-			string path = @"C:\Users\Daniel\source\repos\SustainAndGain\SustainAndGain\Models\yahoo.txt";
-
-			string[] inputFileStocks = File.ReadAllLines(path);
-
-			foreach (var item in inputFileStocks)
+			string sustainPath = @"C:\Users\Martin\source\repos\SustainAndGain\SustainAndGain\wwwroot\SustainBolag.txt";
+			string[] sustainList = File.ReadAllLines(sustainPath);
+		
+			foreach (var item in sustainList)
 			{
-				string[] lines = item.Split('\t');
+				foreach (var stock in context.StaticStockData)
+				{
+					var shortSymbol = stock.Symbol.Split('.');
+					if ( item.ToLower().StartsWith(shortSymbol[0].ToLower().Trim()))
+					{
+						stock.IsSustainable = true;
+						
+					}
+					else
+						stock.IsSustainable = false;
+				}
 
-				string symbol = lines[0];
-				string companyName = lines[1];
 
-				StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName };
 
-				//staticStockData.Description = staticStockData.Description;
-				//staticStockData.Sector = staticStockData.Sector;
-
-				context.StaticStockData.Add(staticStockData);
 			}
-				context.SaveChanges();
+			context.SaveChanges();
 		}
+
+			public void AddStaticStockData()
+			{
+
+
+
+
+
+
+
+
+				string path = @"C:\Users\Daniel\source\repos\SustainAndGain\SustainAndGain\Models\yahoo.txt";
+
+				string[] inputFileStocks = File.ReadAllLines(path);
+
+				foreach (var item in inputFileStocks)
+				{
+					string[] lines = item.Split('\t');
+
+					string symbol = lines[0];
+					string companyName = lines[1];
+
+					StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName };
+
+
+					//staticStockData.Description = staticStockData.Description;
+					//staticStockData.Sector = staticStockData.Sector;
+					
+
+					context.StaticStockData.Add(staticStockData);
+				}
+				context.SaveChanges();
+			}
+		
 
 
 		public void GetCompanyDescription()

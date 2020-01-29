@@ -62,7 +62,7 @@ namespace SustainAndGain.Models
 		}
 		//internal object GetSustainProcent(int compId)
 		//{
-			
+
 		//}
 
 		internal object GetHighScoreForCompetition(int compId)
@@ -91,6 +91,82 @@ namespace SustainAndGain.Models
 
 
 			return MaxHighScore;
+
+		}
+
+		internal void UpdateCurrentValue(int compId)
+		{
+
+			var allStocks = context.HistDataStocks.ToList();
+			
+			var histTransactions = context.UsersHistoricalTransactions.ToList();
+	
+			foreach (var item in histTransactions)
+			{
+				var updatedPrice = allStocks
+					.Where(a => a.StockId == item.StockId).Last();
+
+			}
+
+
+			//Orders will be executed 09:05 CET, 13:05 CET and 17:30 CET
+
+
+			var userHoldings = context.UsersHistoricalTransactions
+				
+				.Select(c => new UsersHistoricalTransactions
+				{
+					StockId = c.StockId,
+					TransactionPrice = c.TransactionPrice,
+					BuyOrSell = c.BuyOrSell,
+					UserId = c.UserId,
+					DateTimeOfTransaction = c.DateTimeOfTransaction,
+					CurrentHoldingsAfterTransaction = c.CurrentHoldingsAfterTransaction,
+					CompetitionId = c.CompetitionId,
+					Quantity = c.Quantity
+
+				}).ToList();
+
+			var availableForInvestment = context.UsersInCompetition
+			//.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+			.Select(v => v.AvailableForInvestment)
+			.FirstOrDefault();
+
+			var availableForInvestmentDate = context.UsersInCompetition
+				.Select(a => a.LastUpdatedAvailableForInvestment).FirstOrDefault();
+
+			var holdings = GetHoldings(compId);
+
+			var investedCapital = holdings.Select(h => h.MarketValue).Sum();
+
+			//var newHoldings = userHoldings;
+
+			foreach (var item in userHoldings)
+			{
+				//var updatePrices = newdata
+				//	.Where(a => a.StockId == item.StockId).Select(a => a.CurrentPrice).FirstOrDefault();
+
+				var totalQuantity = item.CurrentHoldingsAfterTransaction;
+
+				//var newEarnings = updatePrices * totalQuantity;
+
+				var ListOfCurrentValues = new UsersInCompetition
+				{
+					//CurrentValue = Convert.ToDecimal(newEarnings),
+					AvailableForInvestment = availableForInvestment,
+					CompId = compId,
+					//LastUpdatedCurrentValue = lastdate,
+					LastUpdatedAvailableForInvestment = availableForInvestmentDate,
+				};
+				context.UsersInCompetition.Add(ListOfCurrentValues);
+
+			}
+
+
+
+
+
+
 
 		}
 
@@ -283,7 +359,7 @@ namespace SustainAndGain.Models
 		}
 
 
-	
+
 		internal List<CalculatedPriceVM> GetPurchasePrice(int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
@@ -307,6 +383,7 @@ namespace SustainAndGain.Models
 				
 					
 				}).ToList();
+
 
 			var hisdatastocks = context.HistDataStocks
 					.Where(a => a.StockId == a.StockId).ToList();
@@ -391,7 +468,7 @@ namespace SustainAndGain.Models
 				}
 			}
 
-			return trimmedList;
+			return holdings;
 
 
 		}
@@ -490,7 +567,7 @@ namespace SustainAndGain.Models
 						.Where(p => ((p.StockId == item.StockId) && (p.DateTime == lastUpdated)))
 						.Select(p => p.CurrentPrice)
 						.FirstOrDefault();
-				
+
 				// get the current total holdings in security for user in competition
 				var currentHoldings = context.UsersHistoricalTransactions
 				.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId)
@@ -501,11 +578,11 @@ namespace SustainAndGain.Models
 
 				if (item.BuyOrSell == "Buy")
 				{
-					 quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
+					quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
 
 				}
 
-					// calculate order quantity based on ordervalue ( For buy orders only)
+				// calculate order quantity based on ordervalue ( For buy orders only)
 
 				// Increase total quantity depending on if Buy or Sell
 				if (item.BuyOrSell == "Buy")
@@ -589,29 +666,29 @@ namespace SustainAndGain.Models
 
 				var listOfUsersInCompetition = context.UsersInCompetition.ToList();
 
-					var lastupdatedCurrentValue = listOfUsersInCompetition
-					.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
-					.Max(o => o.LastUpdatedCurrentValue);
+				var lastupdatedCurrentValue = listOfUsersInCompetition
+				.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+				.Max(o => o.LastUpdatedCurrentValue);
 
-					var lastupdatedAvailableForInvestment = listOfUsersInCompetition
-					.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
-					.Max(o => o.LastUpdatedAvailableForInvestment);
+				var lastupdatedAvailableForInvestment = listOfUsersInCompetition
+				.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
 
-					var availableForInvestment = listOfUsersInCompetition
-						.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-						.Select(v => v.AvailableForInvestment)
-						.FirstOrDefault();
-
-					var currentValue = listOfUsersInCompetition
-					.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
-					.Select(v => v.CurrentValue)
+				var availableForInvestment = listOfUsersInCompetition
+					.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+					.Select(v => v.AvailableForInvestment)
 					.FirstOrDefault();
+
+				var currentValue = listOfUsersInCompetition
+				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				.Select(v => v.CurrentValue)
+				.FirstOrDefault();
 
 
 				if (item.BuyOrSell == "Buy")
 				{
 
-						var excessOrderAmount = (decimal)(item.OrderValue) - (quantity * transactionPrice);
+					var excessOrderAmount = (decimal)(item.OrderValue) - (quantity * transactionPrice);
 
 					UsersInCompetition usersInCompetitionAvailableForInvestment = new UsersInCompetition
 					{
@@ -630,7 +707,7 @@ namespace SustainAndGain.Models
 					{
 						UserId = item.UserId,
 						CurrentValue = currentValue,
-						AvailableForInvestment = availableForInvestment + (item.Quantity*transactionPrice),
+						AvailableForInvestment = availableForInvestment + (item.Quantity * transactionPrice),
 						LastUpdatedAvailableForInvestment = DateTime.Now,
 						LastUpdatedCurrentValue = lastupdatedCurrentValue,
 						CompId = item.CompId,

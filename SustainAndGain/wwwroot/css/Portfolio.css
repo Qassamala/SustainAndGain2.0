@@ -111,17 +111,6 @@ h4 {
     height: 30vh;
 
 }
-.rows {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    position: relative;
-    z-index: 5;
-    width: 100%;
-    margin-left: 5%;
-    margin-right: 5%;
-    padding: 2vh;
-}
 
 
 
