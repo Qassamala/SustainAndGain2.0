@@ -26,37 +26,45 @@ body {
     max-width:100%;
 }
 
-#example_wrapper{
-    width:100%;
-    padding:3%;
-}
-
-table {
+#example_wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 3%;
     background-color: #fff;
     transition: all 1s;
     background-clip: border-box;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: .25rem;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
-   width:75%;
-    padding: 5%;
-    margin-top: 2%;
+}
+.col-sm-12 {
+   
+    
+}
+
+table {
+   
    
 }
 button, input[type=submit] {
-    border-radius: 4px;
+
     transition: all 1s;
     background-color: white;
-   
-    text-align: center;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
-
+    text-align: center;
+    position: relative;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
 }
     button:hover, input[type=submit]:hover {
         background-color: #28D2BF;
-        box-shadow: 5px 5px 2px #2D8068;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
     }
 #PersInfo {
    
