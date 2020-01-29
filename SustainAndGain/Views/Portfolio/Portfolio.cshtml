@@ -4,6 +4,57 @@
     ViewData["Title"] = "Portfolio";
 }
 <link href="~/css/Portfolio.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
+<link href="~/css/Templates/main.css" rel="stylesheet" />
+<link href="~/css/Templates/util.css" rel="stylesheet" />
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom-left-radius: 25px; border-bottom-right-radius:25px;-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);">
+
+    <a class="navbar-brand navbar-brand-logo">
+        <div class="logo">
+            <img id="PortPro" src="~/Img/PortfolioProfile.png">
+        </div>
+
+    </a>
+    <a class="navbar-brand"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" style="font-family:Quicksand; font-size:4vh;">My Portfolio <span class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
+        <form id="Highscore" class="form-inline my-2 my-lg-0">
+
+            <button id="openButton" onclick="w3_open()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Highscore List</button>
+            <button id="closeButton" onclick="w3_close()" class="btn btn-outline-success my-2 my-sm-0" type="submit">Close &times;</button>
+
+        </form>
+    </div>
+</nav>
+<div style="display:none" id="mySidebar">
+
+
+</div>
 
 <div class="section hpanel leftpan">
     <div class="background-img">
@@ -15,75 +66,73 @@
 
     </div>
 </div>
-<div id="Content"></div>
-<h1>My Portfolio</h1>
-<img id="PortPro" src="~/Img/PortfolioProfile.png" />
-<a href='@Url.Action("Userlayout","Stocks")'>
-    <img id="ArrowPro" src='@Url.Content("~/Img/ArrowProfile.png")' />
-</a>
+
+
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chartd.js/2.7.2/Chart.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 
-<div id="Highscore">
-    <button id="openButton" onclick="w3_open()">Highscore</button>
-    <button id="closeButton" onclick="w3_close()">Close &times;</button>
-    <!-- Sidebar -->
-    <div style="display:none" id="mySidebar">
 
-        @*<a href="#" class="w3-bar-item w3-button"><div id="getHighscore"></div></a>*@
+<div class="rows">
+    <div class="box">
+        <h4> @Html.DisplayNameFor(model => model.CurrentValue):</h4>
+
+
+        @Html.DisplayFor(model => model.CurrentValue) kr
+    </div>
+    <div class="box">
+        <h4>@Html.DisplayNameFor(model => model.AvailableCapital):</h4>
+
+
+        @Html.DisplayFor(model => model.AvailableCapital) kr
+    </div>
+    <div class="box">
+        <h4>  @Html.DisplayNameFor(model => model.InvestedCapital):</h4>
+
+
+        @Html.DisplayFor(model => model.InvestedCapital) kr
     </div>
 
-    @*☰*@
-    <!-- Page Content -->
-    <script>
-        function w3_open() {
-            document.getElementById("mySidebar").style.display = "block";
-            document.getElementById("openButton").style.display = "none";
-            document.getElementById("closeButton").style.display = "block";
-        }
-        function w3_close() {
-            document.getElementById("mySidebar").style.display = "none";
-            document.getElementById("openButton").style.display = "block";
-            document.getElementById("closeButton").style.display = "none";
-        }
-    </script>
 </div>
+<div class="rows">
+    <div id="divChart"> </div>
+    <div class="card" >
+        <div class="card-img-top" id="chartdiv"></div>
+        <div class="card-body">
+            <h4>  @Html.DisplayNameFor(model => model.SustainBonus):</h4>
 
-<div id="Chart_Overv">
-    <hr />
 
-    <dl id="CurrentValue" class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.CurrentValue):
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.CurrentValue) kr
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.AvailableCapital):
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.AvailableCapital) kr
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.InvestedCapital):
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.InvestedCapital) kr
-        </dd>
+            @Html.DisplayFor(model => model.SustainBonus) kr
 
-    </dl>
-    <div id="divChart"></div>
+        </div>
+    </div>
 </div>
 
 
 
 
-<div id="divPendingOrders"></div>
 
-<div id="divHoldings"></div>
+
+
+
+
+
+
+<div class="container-table">
+    <div id="divPendingOrders"></div>
+
+
+    <div id="divHoldings">
+
+
+    </div>
+
+</div>
+
+
 
 <div>
     <a asp-action="UserLayout">Back to List of Competitions</a>
@@ -97,9 +146,28 @@
         this.getMyChart()
         this.getHoldings()
         this.getMyHighscore()
+        this.getSustainProcent()
     }
 
+    
+    function getSustainProcent() {
+        console.log("running Sustain")
+        //Get ID from competition
+        var id = @Model.CompetitionId
+            console.log(id);
+        // Make AJAX call
+        var url = "/procent/" + id;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (result) {
+               setInterval(function(result) {
+    hand.showValue(result, 1000, am4core.ease.cubicOut);
+}, 2000);
+            }
+        });
 
+    }
 
     function getMyHighscore() {
         console.log("running highscores")
@@ -168,6 +236,72 @@
                 console.log("finishedholdings");
             }
         });
-    }
+        }
 
+    function w3_open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("openButton").style.display = "none";
+        document.getElementById("closeButton").style.display = "block";
+    }
+    function w3_close() {
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("openButton").style.display = "block";
+        document.getElementById("closeButton").style.display = "none";
+    }
 </script>
+
+
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/material.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+    am4core.useTheme(am4themes_animated);
+// Themes end
+
+
+
+// create chart
+var chart = am4core.create("chartdiv", am4charts.GaugeChart);
+chart.innerRadius = -15;
+
+var axis = chart.xAxes.push(new am4charts.ValueAxis());
+axis.min = 0;
+axis.max = 100;
+axis.strictMinMax = true;
+
+var colorSet = new am4core.ColorSet();
+   
+    var gradient = new am4core.LinearGradient();
+gradient.stops.push({color:am4core.color("orange")})
+gradient.stops.push({color:am4core.color("yellow")})
+gradient.stops.push({color:am4core.color("#28D2BF")})
+
+
+
+axis.renderer.line.stroke = gradient;
+axis.renderer.line.strokeWidth = 15;
+axis.renderer.line.strokeOpacity = 1;
+
+axis.renderer.grid.template.disabled = true;
+
+var hand = chart.hands.push(new am4charts.ClockHand());
+hand.radius = am4core.percent(97);
+
+
+
+
+ // end am4core.ready()
+</script>
+
+

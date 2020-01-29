@@ -60,6 +60,10 @@ namespace SustainAndGain.Models
 
 			return portfolioData;
 		}
+		//internal object GetSustainProcent(int compId)
+		//{
+			
+		//}
 
 		internal object GetHighScoreForCompetition(int compId)
 		{
@@ -142,7 +146,7 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
-		internal OrderVM GetOrderEntrySell(string symbol, int compId)
+		internal SellOrderVM GetOrderEntrySell(string symbol, int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
@@ -161,7 +165,7 @@ namespace SustainAndGain.Models
 						.Select(o => o.CurrentPrice)
 						.FirstOrDefault();
 
-			return new OrderVM
+			return new SellOrderVM
 			{
 				CompanyName = context.StaticStockData
 					.Where(s => s.Symbol == symbol)
@@ -233,7 +237,6 @@ namespace SustainAndGain.Models
 					.Where(s => s.Symbol == order.Symbol)
 					.Select(i => i.Id)
 					.FirstOrDefault(),
-				//OrderValue = order.OrderValue,
 				TimeOfInsertion = DateTime.Now,
 				BuyOrSell = "Sell",
 				UserId = userId,
@@ -472,8 +475,15 @@ namespace SustainAndGain.Models
 				.Select(o => o.Quantity)
 				.Sum();
 
-				// calculate order quantity based on ordervalue ( For buy orders only)
-				var quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
+				int quantity = 0;
+
+				if (item.BuyOrSell == "Buy")
+				{
+					 quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
+
+				}
+
+					// calculate order quantity based on ordervalue ( For buy orders only)
 
 				// Increase total quantity depending on if Buy or Sell
 				if (item.BuyOrSell == "Buy")

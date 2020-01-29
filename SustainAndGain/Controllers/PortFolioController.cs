@@ -66,6 +66,14 @@ namespace SustainAndGain.Controllers
 			//där current value är högst i nuvarande tävling
 			return PartialView("_highscore", highscores);
 		}
+		[Route("/procent/{compId}")]
+		[HttpGet]
+		public IActionResult SustainProcent(int compId)
+		{
+			var highscores = service.GetHighScoreForCompetition(compId);
+			//där current value är högst i nuvarande tävling
+			return PartialView("_highscore", highscores);
+		}
 
 
 		[Route("Portfolio/OrderEntry/{symbol}/{compId}")]
@@ -73,7 +81,7 @@ namespace SustainAndGain.Controllers
 		public IActionResult OrderEntry(string symbol, int compId)
 		{
 			var orderEntry = service.GetOrderEntry(symbol, compId);
-			return PartialView("OrderEntry", orderEntry);
+			return PartialView("_OrderEntry", orderEntry);
 		}
 
 		[Route("Portfolio/OrderEntry/{symbol}/{compId}")]
@@ -117,7 +125,7 @@ namespace SustainAndGain.Controllers
 
 			//service.AddSellOrder(order);
 
-			//service.ExecuteOrders();    //Testing
+			service.ExecuteOrders();    //Testing, should be executed after GetPrices job
 
 			return RedirectToAction("Portfolio", new { compId = order.CompetitionId });
 		}

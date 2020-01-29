@@ -1,7 +1,58 @@
 ﻿@model IEnumerable<SustainAndGain.Models.ModelViews.OrderVM>
 
-<table class="table">
-    <thead>
+
+
+
+@if (@Model.ToList().Count > 0)
+{
+   
+        <div class="wrap-table100" style="-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);">
+            <div class="table">
+
+                <div class="row header">
+                    <div class="cell">
+                        @Html.DisplayNameFor(model => model.Symbol)
+                    </div>
+                    <div class="cell">
+                        @Html.DisplayNameFor(model => model.OrderValue)
+
+                    </div>
+                    <div class="cell">
+                        @Html.DisplayNameFor(model => model.TimeOfInsertion)
+                    </div>
+                    <div class="cell">
+                        @Html.DisplayNameFor(model => model.BuyOrSell)
+                    </div>
+
+                </div>
+                @foreach (var item in Model)
+                {
+            <div class="row">
+                <div class="cell" data-title="Symbol">
+                    @Html.DisplayFor(modelItem => item.Symbol)
+                </div>
+                <div class="cell" data-title="Company Name">
+                    @Html.DisplayFor(modelItem => item.OrderValue)
+                </div>
+                <div class="cell" data-title="Sustainable">
+                    @Html.DisplayFor(modelItem => item.TimeOfInsertion)
+                </div>
+                <div class="cell" data-title="Purchase Price">
+                    @Html.DisplayFor(modelItem => item.BuyOrSell)
+                </div>
+                <div class="cell" data-title="Purchase Price">
+                    <form a asp-controller="PortFolio" asp-action="DeleteOrder" asp-route-id="@item.OrderId"><input type="submit" value="Delete order" /></form>
+                </div>
+                </div>
+                }
+            </div>
+        </div>
+   
+}
+
+
+@*<<table class="table">
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Symbol)
@@ -19,24 +70,25 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Symbol)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeOfInsertion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BuyOrSell)
-            </td>
-            <td>
-                <form a asp-controller="PortFolio" asp-action="DeleteOrder" asp-route-id="@item.OrderId"><input type="submit" value="Delete order" /></form>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Symbol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfInsertion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BuyOrSell)
+                </td>
+                <td>
+                    <form a asp-controller="PortFolio" asp-action="DeleteOrder" asp-route-id="@item.OrderId"><input type="submit" value="Delete order" /></form>
+                </td>
+            </tr>
+        }
     </tbody>
-</table>
+</table>*@
