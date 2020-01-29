@@ -5,7 +5,6 @@ using SustainAndGain.Models.ModelViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SustainAndGain.Models
 {
@@ -60,10 +59,6 @@ namespace SustainAndGain.Models
 
 			return portfolioData;
 		}
-		//internal object GetSustainProcent(int compId)
-		//{
-			
-		//}
 
 		internal object GetHighScoreForCompetition(int compId)
 		{
@@ -113,40 +108,40 @@ namespace SustainAndGain.Models
 
 			// Add entry into usersInComp with updated availableForInvestment value
 
-			//var lastupdatedCurrentValue = context.UsersInCompetition
-			//	.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
-			//	.Max(o => o.LastUpdatedCurrentValue);
+			var lastupdatedCurrentValue = context.UsersInCompetition
+				.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedCurrentValue);
 
-			//var currentValue = context.UsersInCompetition
-			//	.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
-			//	.Select(v => v.CurrentValue)
-			//	.FirstOrDefault();
+			var currentValue = context.UsersInCompetition
+				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				.Select(v => v.CurrentValue)
+				.FirstOrDefault();
 
-			//var lastupdatedAvailableForInvestment = context.UsersInCompetition.
-			//	Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
-			//	.Max(o => o.LastUpdatedAvailableForInvestment);
+			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
 
-			//var availableForInvestment = context.UsersInCompetition
-			//	.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-			//	.Select(v => v.AvailableForInvestment)
-			//	.FirstOrDefault();
+			var availableForInvestment = context.UsersInCompetition
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				.Select(v => v.AvailableForInvestment)
+				.FirstOrDefault();
 
-			//UsersInCompetition availableForInvestmentEntry = new UsersInCompetition
-			//{
-			//	UserId = userId,
-			//	CurrentValue = currentValue,
-			//	AvailableForInvestment = availableForInvestment-(order.OrderValue),
-			//	LastUpdatedAvailableForInvestment = DateTime.Now,
-			//	LastUpdatedCurrentValue = lastupdatedCurrentValue,
-			//	CompId = order.CompetitionId,
-			//};
+			UsersInCompetition availableForInvestmentEntry = new UsersInCompetition
+			{
+				UserId = userId,
+				CurrentValue = currentValue,
+				AvailableForInvestment = availableForInvestment - (order.OrderValue),
+				LastUpdatedAvailableForInvestment = DateTime.Now,
+				LastUpdatedCurrentValue = lastupdatedCurrentValue,
+				CompId = order.CompetitionId,
+			};
 
-			//context.UsersInCompetition.Add(availableForInvestmentEntry);
+			context.UsersInCompetition.Add(availableForInvestmentEntry);
 
 			context.SaveChanges();
 		}
 
-		internal SellOrderVM GetOrderEntrySell(string symbol, int compId)
+		internal OrderVM GetOrderEntrySell(string symbol, int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
@@ -165,7 +160,7 @@ namespace SustainAndGain.Models
 						.Select(o => o.CurrentPrice)
 						.FirstOrDefault();
 
-			return new SellOrderVM
+			return new OrderVM
 			{
 				CompanyName = context.StaticStockData
 					.Where(s => s.Symbol == symbol)
@@ -237,6 +232,7 @@ namespace SustainAndGain.Models
 					.Where(s => s.Symbol == order.Symbol)
 					.Select(i => i.Id)
 					.FirstOrDefault(),
+				//OrderValue = order.OrderValue,
 				TimeOfInsertion = DateTime.Now,
 				BuyOrSell = "Sell",
 				UserId = userId,
@@ -301,6 +297,7 @@ namespace SustainAndGain.Models
 					CurrentHoldingsAfterTransaction = c.CurrentHoldingsAfterTransaction,
 					CompetitionId = c.CompetitionId,
 					Quantity = c.Quantity
+				
 					
 				}).ToList();
 
@@ -310,7 +307,8 @@ namespace SustainAndGain.Models
 
 			foreach (var item in calculatePurschasePrice)
 			{
-				var price = hisdatastocks.Where(a => a.StockId == item.StockId).Select(a => a.CurrentPrice).FirstOrDefault();
+				//Abdi har justerat 
+				var price = hisdatastocks.Where(a => a.StockId == item.StockId).Max(a => a.CurrentPrice);
 
 				var purchasePricePerStock = calculatePurschasePrice
 					.Where(a => a.StockId == item.StockId).Sum(a => a.TransactionPrice * a.Quantity);
@@ -318,10 +316,13 @@ namespace SustainAndGain.Models
 				var totalQuantityOfStocks = calculatePurschasePrice
 					.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
 
-
+				var getDateTimeOfTransaction = calculatePurschasePrice
+					.Where(a => a.StockId == item.StockId).Max(a => a.DateTimeOfTransaction);
 				
-					decimal purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
-				var currentValue = purrChasePrice * totalQuantityOfStocks;
+				decimal purrChasePrice = purchasePricePerStock / totalQuantityOfStocks;
+				//var currentValue = purrChasePrice * totalQuantityOfStocks;
+
+
 
 
 				var compDescSymb = context.StaticStockData
@@ -329,7 +330,8 @@ namespace SustainAndGain.Models
 					{
 						CompanyName = a.CompanyName,
 						Description = a.Description,
-						Symbol = a.Symbol
+						Symbol = a.Symbol,
+
 					});
 
 				var companyName = compDescSymb
@@ -350,21 +352,20 @@ namespace SustainAndGain.Models
 					TransactionPrice = item.TransactionPrice,
 					CompanyName = companyName,
 					Symbol = symbol,
-					CompetitionId = compId
+					CompetitionId = compId,
+					DateTimeOfTransaction = getDateTimeOfTransaction,
 				};
-
 
 				holdings.Add(newHolding);
 			}
-
-			
 
 			List<CalculatedPriceVM> trimmedList = new List<CalculatedPriceVM>();
 
 			for (int i = 0; i < holdings.Count; i++)
 			{
 				var calculatedExists = holdings
-					.Find(a => a.StockId == holdings[i].StockId);
+					.Where(a => a.StockId == holdings[i].StockId).Last();
+
 				if (!trimmedList.Contains(calculatedExists))
 				{
 					trimmedList.Add(calculatedExists);
@@ -475,15 +476,8 @@ namespace SustainAndGain.Models
 				.Select(o => o.Quantity)
 				.Sum();
 
-				int quantity = 0;
-
-				if (item.BuyOrSell == "Buy")
-				{
-					 quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
-
-				}
-
-					// calculate order quantity based on ordervalue ( For buy orders only)
+				// calculate order quantity based on ordervalue ( For buy orders only)
+				var quantity = (int)Math.Round((decimal)item.OrderValue / transactionPrice);
 
 				// Increase total quantity depending on if Buy or Sell
 				if (item.BuyOrSell == "Buy")
