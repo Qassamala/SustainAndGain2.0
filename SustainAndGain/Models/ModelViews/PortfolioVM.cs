@@ -19,5 +19,8 @@ namespace SustainAndGain.Models.ModelViews
         public decimal InvestedCapital { get; set; }
 
         public int CompetitionId { get; set; }
+        [Display(Name ="Sustainability Bonus")]
+        public double SustainBonus { get; set; }
+        public int SustainProcent { get; set; }
     }
 }

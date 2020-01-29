@@ -60,6 +60,10 @@ namespace SustainAndGain.Models
 
 			return portfolioData;
 		}
+		//internal object GetSustainProcent(int compId)
+		//{
+			
+		//}
 
 		internal object GetHighScoreForCompetition(int compId)
 		{

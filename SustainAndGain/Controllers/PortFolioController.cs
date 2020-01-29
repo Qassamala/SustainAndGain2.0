@@ -66,6 +66,14 @@ namespace SustainAndGain.Controllers
 			//där current value är högst i nuvarande tävling
 			return PartialView("_highscore", highscores);
 		}
+		[Route("/procent/{compId}")]
+		[HttpGet]
+		public IActionResult SustainProcent(int compId)
+		{
+			var highscores = service.GetHighScoreForCompetition(compId);
+			//där current value är högst i nuvarande tävling
+			return PartialView("_highscore", highscores);
+		}
 
 
 		[Route("Portfolio/OrderEntry/{symbol}/{compId}")]
