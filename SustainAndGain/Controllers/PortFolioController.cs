@@ -126,7 +126,7 @@ namespace SustainAndGain.Controllers
 			if (!ModelState.IsValid)
 				return View(order);
 
-			var result = service.CheckTotalHoldings(order);
+			//var result = service.CheckTotalHoldingsForStock(order);
 
 			//switch (result)
 			//{

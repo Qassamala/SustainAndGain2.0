@@ -181,7 +181,7 @@ namespace SustainAndGain.Models
 
 		}
 
-		internal int CheckTotalHoldings(OrderVM order)
+		internal int CheckTotalHoldingsForStock(OrderVM order)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
@@ -492,7 +492,7 @@ namespace SustainAndGain.Models
 					CompanyName = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.CompanyName).SingleOrDefault(),
 					IsSustainable = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.IsSustainable).SingleOrDefault(),
 					BuyOrSell = o.BuyOrSell,
-					TotalQuantity = o.CurrentHoldingsAfterTransaction
+					TotalQuantity = o.Quantity
 				}).ToList();
 
 			foreach (var item in holdings)
