@@ -1,6 +1,6 @@
 ﻿@model List<UsersInCompetition>
 @{
-    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.LastUpdatedCurrentValue).ToList());
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.LastUpdatedCurrentValue.Value.TimeOfDay).ToList());
     var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.CurrentValue).ToList());
     ViewData["Title"] = "Line Chart";
 }

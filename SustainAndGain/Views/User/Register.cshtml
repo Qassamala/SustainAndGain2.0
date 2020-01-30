@@ -3,54 +3,59 @@
 @{
     ViewData["Title"] = "Register";
 }
-    <link href="~/css/Index.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
+ 
+    <link href="/css/Index.css?t=<%= 637160148044875130 %>" rel="stylesheet" />
     <a href='@Url.Action("Index","User")'>
         <img id="ArrowPro" src='@Url.Content("~/Img/ArrowProfile.png")' />
     </a>
+    <div class="header">
 
-    <div class="Flexbox">
+        <div class="inner-header flex">
 
-        <img src="~/Img/SustainGain.svg" />
-    </div>
+            <div class="Flexbox">
 
-
-
-
-
+                <img src="~/Img/SustainGain.svg" />
+            </div>
 
 
+            @*<div class="container"><img src="~/Img/SustainGain.svg" /></div>*@
 
-        <div class="LoginDiv">
-            <form asp-action="Register">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group">
-                    <label asp-for="UserName" class="control-label"></label>
-                    <input id="usernameForm" asp-for="UserName" class="form-control" />
-                    <span asp-validation-for="UserName" class="text-danger"></span>
-                </div>
 
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input id="emailForm" asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
 
-                <div class="form-group">
-                    <label asp-for="Password" class="control-label"></label>
-                    <input id="passwordForm" asp-for="Password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>
+            <div class="LoginDiv">
+                <form asp-action="Register">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                   
-                </div>
-                
-            </form>
+                    <div class="form-group">
+                        <label asp-for="UserName" class="control-label"></label>
+                        <input id="usernameForm" asp-for="UserName" class="form-control" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input id="emailForm" asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input id="passwordForm" asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+
+                    </div>
+
+                </form>
+            </div>
+
+
+
+
+
         </div>
-     
-
-
-
-
+    </div>
