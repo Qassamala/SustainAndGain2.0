@@ -83,6 +83,15 @@ namespace SustainAndGain.Models
 				CompId = int.Parse(data.CompId),
 			};
 
+			BonusDeposit deposit = new BonusDeposit
+			{
+				UserId = data.UserId,
+				CompetitionId = int.Parse(data.CompId),
+				Bonus = 0,
+
+			};
+
+			context.BonusDeposit.Add(deposit);
 			context.UsersInCompetition.Add(stocks);
 			context.SaveChanges();
 
@@ -90,7 +99,7 @@ namespace SustainAndGain.Models
 		}
 		public void AddSustainProp()
 		{
-			string sustainPath = @"C:\Users\Martin\source\repos\SustainAndGain\SustainAndGain\wwwroot\SustainBolag.txt";
+			string sustainPath = @"C:\Users\Abdi G\source\repos\SustainAndGain\SustainAndGain\wwwroot\SustainBolag.txt";
 			string[] sustainList = File.ReadAllLines(sustainPath);
 			var stockList = context.StaticStockData.ToList();
 			
