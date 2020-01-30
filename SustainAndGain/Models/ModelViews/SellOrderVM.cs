@@ -12,20 +12,6 @@ namespace SustainAndGain.Models.ModelViews
 
     public class SellOrderVM
     {
-        //private readonly SustainGainContext context;
-        //private readonly UserManager<MyIdentityUser> user;
-        //private readonly IHttpContextAccessor accessor;
-        //private readonly PortfoliosService service;
-
-        //public SellOrderVM(SustainGainContext context, UserManager<MyIdentityUser> user, IHttpContextAccessor accessor, PortfoliosService service)
-        //{
-        //    this.context = context;
-        //    this.user = user;
-        //    this.accessor = accessor;
-        //    this.service = service;
-        //}
-
-        //SellOrderVM holdings = service.GetHoldings(compId);
 
         public int StockId { get; set; }
         public int CompetitionId { get; set; }
@@ -40,8 +26,6 @@ namespace SustainAndGain.Models.ModelViews
         public string Symbol { get; set; }
 
         [Display(Name = "Quantity")]
-        //[MinValue(1, "Quantity must be at least 1")]
-        //[MaxValueAttribute()]
         [Required(ErrorMessage = "Must enter a quantity")]
         public int Quantity { get; set; }
 

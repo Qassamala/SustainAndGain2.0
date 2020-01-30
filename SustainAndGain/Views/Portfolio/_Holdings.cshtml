@@ -112,7 +112,7 @@
             <td>
 
 
-                <button id="@item.Symbol" onclick="SellOrder('@item.Symbol', '@item.CompetitionId')">Sell</button>
+                <button id="@item.Symbol" onclick="SellOrder('@item.Symbol', '@item.CompetitionId', '@item.StockId')">Sell</button>
 
             </td>
         </tr>
@@ -129,10 +129,10 @@
 <script>
 
 
-    function SellOrder(symbol, competitionId) {
+    function SellOrder(symbol, competitionId, stockId) {
         console.log("runningOrderEntrySell")
         // Make AJAX call
-        var url = `/portfolio/OrderEntrySell/${symbol}/${competitionId}`;
+        var url = `/portfolio/OrderEntrySell/${symbol}/${competitionId}/${stockId}`;
         $.ajax({
             url: url,
             type: "GET",
