@@ -28,7 +28,7 @@ namespace SustainAndGain.Models.ModelViews
 
         [Display(Name = "Market value")]
         public decimal MarketValue => TotalQuantity * CurrentPrice;
-        public decimal Return { get; set; }
+        public decimal Return => (CurrentPrice - PurchasePrice)/PurchasePrice*100;
 
         [Display(Name = "Average price")]
         public decimal AveragePrice  { get; set; }
