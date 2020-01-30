@@ -4,97 +4,116 @@
 }
 <link href="~/css/UserLayout.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
 @*<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>*@
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom-left-radius: 25px; border-bottom-right-radius:25px;-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);">
-
-    <a class="navbar-brand navbar-brand-logo">
-        <div class="logo">
-            <img id="CompPro" src="~/Img/CompProfile.png" />
-        </div>
-
-    </a>
-    <a class="navbar-brand"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" style="font-family:Quicksand; font-size:4vh;">List Of Stocks<span class="sr-only">(current)</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
-            </li>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>*@
 
 
-        </ul>
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li id="iconbar" class="nav-item">
 
-    </div>
-</nav>
-
-<div class="section hpanel leftpan">
-    <div class="background-img">
-        <slider>
-            <slide></slide>
-            <slide></slide>
-            <slide></slide>
-            <slide></slide>
-            <slide></slide>
-            <slide></slide>
-
-        </slider>
-    </div>
-</div>
-<div class="section hpanel rightpan">
-    <div class="background-img">
-
-    </div>
-</div>
-
-<div class="slideContainer">
-    @for (int i = 0; i < 4; i++)
-    {
-        <div id="slide" class="slide">
-
-            <h2>Competition: @Model[i].Name</h2>
-
-            <h4>Days left: @Model[i].DaysLeft</h4>
-            <h4>Ends: @Model[i].EndTime.Date</h4>
+                        <span data-feather="home"></span>
 
 
-            <form><button id="portfolio@(i)" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model[i].Id" style="display:none;">Go to portfolio</button></form>
-            <input id="join@(i)" onclick="Join(@(i))" type="submit" value="Join" class="btn btn-primary" style="display:none;" />
 
-            @if (Model[i].HasJoined)
-            {
-                <script>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
+                    </li>
+                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="shopping-cart"></span>
+                            Current Stocks
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="users"></span>
+                            Users Page
+                        </a>
+                    </li>
+
+                </ul>
+
+
+
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div style="z-index:6;" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <img id="PortPro" src="~/Img/PortfolioProfile.png" />
+                    <h1 style="font-family:Quicksand;" class="h2">My Portfolio</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+
+
+                    </div>
+                </div>
+                <div class="section hpanel leftpan">
+                    <div class="background-img">
+                        <slider>
+                            <slide></slide>
+                            <slide></slide>
+                            <slide></slide>
+                            <slide></slide>
+                            <slide></slide>
+                            <slide></slide>
+
+                        </slider>
+                    </div>
+                </div>
+                <div class="section hpanel rightpan">
+                    <div class="background-img">
+
+                    </div>
+                </div>
+
+                <div class="slideContainer">
+                    @for (int i = 0; i < 4; i++)
+                    {
+                        <div id="slide" class="slide">
+
+                            <h2>Competition: @Model[i].Name</h2>
+
+                            <h4>Days left: @Model[i].DaysLeft</h4>
+                            <h4>Ends: @Model[i].EndTime.Date</h4>
+
+
+                            <form><button id="portfolio@(i)" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model[i].Id" style="display:none;">Go to portfolio</button></form>
+                            <input id="join@(i)" onclick="Join(@(i))" type="submit" value="Join" class="btn btn-primary" style="display:none;" />
+
+                            @if (Model[i].HasJoined)
+                            {
+                                <script>
                     $(document).ready(function() {
   $("#portfolio@(i)").css("display", "block");
 });
 
-                </script>
-            }
-            else
-            {
-                <script>
+                                </script>
+                            }
+                            else
+                            {
+                                <script>
                        $(document).ready(function() {
                            $("#join@(i)").css("display", "block");
                            });
-                </script>
-            }
+                                </script>
+                            }
 
-        </div>
-    }
-
-
-</div>
+                        </div>
+                    }
 
 
-<script>
+                </div>
+
+
+                <script>
       let codeblocks = []
 
         @foreach (var item in Model)
@@ -128,6 +147,24 @@
 
 
     }
-</script>
+                </script>
+
+
+
+
+            </div>
+            <
+
+
+
+
+
+
+
+        </main>
+    </div>
+</div>
+
+
 
 
