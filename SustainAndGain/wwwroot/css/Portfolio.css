@@ -7,6 +7,26 @@
     font-family: sans-serif;
     font-size: 2vh;
 }
+nav {
+    background: linear-gradient(to bottom, rgba(43, 128, 171, 1), rgba(43, 128, 171, 0.5)), url('../img/city.jpg');
+    background-position-x: center;
+    background-size: cover;
+    animation: slidein 2s ease-in-out;
+    z-index: 6;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    box-shadow: 0 20px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+li {
+    background: rgba(0,0,0,.1);
+    text-align: center;
+    color: #fff;
+    font-size: 3vh;
+}
+    li a {
+        color: #fff;
+    }
 
 @font-face {
     font-family: 'quicksand-regular';
@@ -31,7 +51,7 @@ h4 {
 }
 .row {
     justify-content:flex-end;
-    margin-right:10vh;
+  
 }
 .col-lg-3 {
     padding: 4vh;
@@ -47,11 +67,27 @@ h4 {
     border-radius: .25rem;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
 }
-
+#iconbar {
+    background: rgba(0,0,0,.0);
+    text-align:left;
+}
 #PortPro {
     position:relative;
-    height: 7vh;
+    height: 10vh;
     border-radius:25%;
+}
+@keyframes slidein{
+    0%{
+        top:0;
+        left:-200px;
+        opacity: 0;
+    }
+   
+    100%{
+        left:0;
+        top:0;
+        opacity:1;
+    }
 }
 @keyframes opacity{
     from{
@@ -67,6 +103,7 @@ h4 {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    flex-direction:column;
     
     animation: opacity 1s ease-in-out;
     padding-bottom: 3%;
@@ -132,13 +169,13 @@ h4 {
 #Highscore {
     width: 10%;
     height: 10vh;
-    position: fixed;
-    left: 0;
-    top: 10em;
+    position: absolute;
+    left: 44vh;
+    top: 6em;
     transition: all 1s;
-    border-bottom-right-radius: 25%;
-    border-top-right-radius: 25%;
+    display:none;
     z-index:5;
+    animation:opacity 6s ease-in-out;
 }
 #openButton:hover, #closeButton:hover{
     left:0;
@@ -148,7 +185,7 @@ h4 {
     transition: all 1s;
     width: 100%;
     height: 100%;
-    left: -50px;
+  
     border-bottom-right-radius: 25%;
     border-top-right-radius: 25%;
     background-color: #fff;
@@ -158,7 +195,7 @@ h4 {
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
     position: absolute;
     color: black;
-    font-family:Quicksand;
+    font-family: Quicksand;
 }
 #closeButton{
     display:none;

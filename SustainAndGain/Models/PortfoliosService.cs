@@ -607,10 +607,10 @@ namespace SustainAndGain.Models
 							.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId)
 							.Max(o => o.DateTimeOfTransaction);
 
-							lastPurchaseAmount = transactions
-							.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId && o.DateTimeOfTransaction == lastUpdatedPurchaseAmountDate)
-							.Select(p => p.CurrentPurchaseAmountForHoldings)
-							.FirstOrDefault();
+						lastPurchaseAmount = transactions
+						.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId && o.DateTimeOfTransaction == lastUpdatedPurchaseAmountDate)
+						.Select(p => p.CurrentPurchaseAmountForHoldings)
+						.FirstOrDefault();
 					}
 
 					var purchaseAmount = lastPurchaseAmount += (quantity* transactionPrice);
