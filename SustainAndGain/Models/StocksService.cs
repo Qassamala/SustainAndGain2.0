@@ -83,6 +83,15 @@ namespace SustainAndGain.Models
 				CompId = int.Parse(data.CompId),
 			};
 
+			BonusDeposit deposit = new BonusDeposit
+			{
+				UserId = data.UserId,
+				CompetitionId = int.Parse(data.CompId),
+				Bonus = 0,
+
+			};
+
+			context.BonusDeposit.Add(deposit);
 			context.UsersInCompetition.Add(stocks);
 			context.SaveChanges();
 

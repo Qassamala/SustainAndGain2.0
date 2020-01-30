@@ -22,6 +22,7 @@ namespace SustainAndGain.Models.Entities
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
+        public virtual DbSet<BonusDeposit> BonusDeposit { get; set; }
         public virtual DbSet<Competition> Competition { get; set; }
         public virtual DbSet<HistDataStocks> HistDataStocks { get; set; }
         public virtual DbSet<Order> Order { get; set; }
@@ -119,6 +120,27 @@ namespace SustainAndGain.Models.Entities
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
                 entity.Property(e => e.UserName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<BonusDeposit>(entity =>
+            {
+                entity.Property(e => e.Bonus).HasColumnType("money");
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.HasOne(d => d.Competition)
+                    .WithMany(p => p.BonusDeposit)
+                    .HasForeignKey(d => d.CompetitionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__BonusDepo__Compe__07C12930");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.BonusDeposit)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__BonusDepo__UserI__08B54D69");
             });
 
             modelBuilder.Entity<Competition>(entity =>
