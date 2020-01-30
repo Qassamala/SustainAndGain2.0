@@ -35,7 +35,7 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th >
+                <th>
                     @Html.DisplayNameFor(model => model.Symbol)
                 </th>
                 <th>
@@ -44,7 +44,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.IsSustainable)
                 </th>
-               
+
                 <th>
                     @Html.DisplayNameFor(model => model.PurchasePrice)
                 </th>
@@ -61,58 +61,68 @@
                     @Html.DisplayNameFor(model => model.Return)
                 </th>
                 <th>
-                    </th>
+                </th>
 
             </tr>
 
         </thead>
-        <tbody>
+
+      
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Symbol)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CompanyName)
-                    </td>
-                    <td>
-                        @if (item.IsSustainable == true)
-                        {
-                            <img style="height:5vh; border-radius:50%;" src="~/Img/SustainPro.png" />
-                        }
-                        else
-                        {
-                            <img style="height:5vh; border-radius:50%; " src="~/Img/NoPro.png" />
-                        }
-                    </td>
-                    
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PurchasePrice)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CurrentPrice)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TotalQuantity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MarketValue)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Return) %
-                    </td>
-                    <td>
+                @if (item.Quantity == 0)
+                {
+
+                }
+                else
+                {
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Symbol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @if (item.IsSustainable == true)
+                {
+                    <img style="height:5vh; border-radius:50%;" src="~/Img/SustainPro.png" />
+                }
+                else
+                {
+                }
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchasePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalQuantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarketValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Return)
+            </td>
+            <td>
 
 
-                        <button id="@item.Symbol" onclick="SellOrder('@item.Symbol', '@item.CompetitionId')">Sell</button>
+                <button id="@item.Symbol" onclick="SellOrder('@item.Symbol', '@item.CompetitionId')">Sell</button>
 
-                    </td>
-                </tr>
-            }
-        </tbody>
-        
-    </table>
+            </td>
+        </tr>
+    </tbody>
+                    }
+
+                    }
+                
+
+            </table>
 
 <div id="divOrderEntrySell"></div>
 

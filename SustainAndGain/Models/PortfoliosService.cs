@@ -142,7 +142,7 @@ namespace SustainAndGain.Models
 
 			
 				var eachPrice = userHistoricalTransaction
-					.Where(a => a.UserId == userInComp.UserId).ToList();
+					.Where(a => a.UserId == userInComp.UserId && a.CompetitionId == compId).ToList();
 
 				foreach (var price in eachPrice)
 				{

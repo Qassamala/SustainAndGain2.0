@@ -10,9 +10,21 @@
 body {
     zoom: 0.8;
 }
-h4{
-    
+.card img {
+    position: absolute;
+    width: 15%;
+    border-radius: 50%;
+    left: -25px;
+    bottom: -25px;
+    transition: all 1s;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
 }
+
+    .card img:hover {
+        transform: scale(1.2);
+    }
 nav{
     z-index:5;
 }
