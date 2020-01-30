@@ -144,15 +144,24 @@ namespace SustainAndGain.Models
 				var eachPrice = userHistoricalTransaction
 					.Where(a => a.UserId == userInComp.UserId && a.CompetitionId == compId).ToList();
 
+			var newList = new List<UsersHistoricalTransactions>();
+
 				foreach (var price in eachPrice)
 				{
-					var vs = newPricesList
-						.Where(a => a.StockId == price.StockId)
-						.Select(a => a.CurrentPrice * price.CurrentHoldingsAfterTransaction).Last();
+					newList.Add(eachPrice.Where(s => s.StockId == price.StockId).Last());
+
+
+				}
+
+			foreach (var transaction in newList)
+			{
+				var vs = newPricesList
+						.Where(a => a.StockId == transaction.StockId)
+						.Select(a => a.CurrentPrice * transaction.CurrentHoldingsAfterTransaction).Last();
 
 
 				Value.Add((decimal)vs);
-				}
+			}
 				//.Select(a => item.CurrentPrice * a.CurrentHoldingsAfterTransaction).Last();
 
 
