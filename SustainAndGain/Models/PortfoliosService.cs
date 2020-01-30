@@ -238,6 +238,7 @@ namespace SustainAndGain.Models
 				LastUpdatedAvailableForInvestment = DateTime.Now,
 				LastUpdatedCurrentValue = lastupdatedCurrentValue,
 				CompId = order.CompetitionId,
+				
 			};
 
 			context.UsersInCompetition.Add(availableForInvestmentEntry);
@@ -456,7 +457,11 @@ namespace SustainAndGain.Models
 						Symbol = symbol,
 						CompetitionId = compId,
 					};
+					if (newHolding.TotalQuantity > 0)
+					{
 					holdings.Add(newHolding);
+
+					}
 				}
 				
 
@@ -493,6 +498,7 @@ namespace SustainAndGain.Models
 					IsSustainable = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.IsSustainable).SingleOrDefault(),
 					BuyOrSell = o.BuyOrSell,
 					TotalQuantity = o.CurrentHoldingsAfterTransaction
+				
 				}).ToList();
 
 			foreach (var item in holdings)
