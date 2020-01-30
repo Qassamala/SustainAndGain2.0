@@ -94,24 +94,6 @@ namespace SustainAndGain.Models
 
 		}
 
-		internal void UpdateCurrentValuesAbdi()
-		{
-			var holdings = context.UsersHistoricalTransactions
-				.OrderBy(c => c.CompetitionId)
-				.ThenBy(u => u.UserId)
-				.ThenBy(s => s.StockId)
-				.Select(h => h.CurrentHoldingsAfterTransaction)
-				.ToList();
-
-			var trimmedHoldings = context.UsersHistoricalTransactions;
-
-			//foreach (var item in holdings)
-			//{
-				
-			//}
-
-		}
-
 		internal void UpdateCurrentValue(int compId)
 		{
 
@@ -140,24 +122,34 @@ namespace SustainAndGain.Models
 			var userInComp = usersInCompetition
 				.Where(a => a.UserId == userId && compId == a.CompId).Last();
 
+			var date = userHistoricalTransaction
+				.Select(a => a.DateTimeOfTransaction).Last();
+
+
+			var eachPrice = userHistoricalTransaction
+				.Where(a => a.UserId == userInComp.UserId && a.CompetitionId == compId).ToList();
+
 			
-				var eachPrice = userHistoricalTransaction
-					.Where(a => a.UserId == userInComp.UserId && a.CompetitionId == compId).ToList();
+
+			var newList = new List<UsersHistoricalTransactions>();
 
 				foreach (var price in eachPrice)
 				{
-					var vs = newPricesList
-						.Where(a => a.StockId == price.StockId)
-						.Select(a => a.CurrentPrice * price.CurrentHoldingsAfterTransaction).Last();
+					newList.Add(eachPrice.Where(s => s.StockId == price.StockId).Last());
+				}
+
+			foreach (var transaction in newList)
+			{
+				var vs = newPricesList
+						.Where(a => a.StockId == transaction.StockId)
+						.Select(a => a.CurrentPrice * transaction.CurrentHoldingsAfterTransaction).Last();
 
 
 				Value.Add((decimal)vs);
-				}
-				//.Select(a => item.CurrentPrice * a.CurrentHoldingsAfterTransaction).Last();
+			}
 
 
 			var CurrentValue = Value.Sum();
-
 
 
 			var newuserincomp = new UsersInCompetition
@@ -168,20 +160,15 @@ namespace SustainAndGain.Models
 				UserId = userInComp.UserId,
 				LastUpdatedCurrentValue = DateTime.Now,
 				LastUpdatedAvailableForInvestment = userInComp.LastUpdatedAvailableForInvestment
-
-
-
 			};
 
 
 			context.UsersInCompetition.Add(newuserincomp);
 
 			context.SaveChanges();
-
-
 		}
 
-		internal int CheckTotalHoldings(OrderVM order)
+		internal int CheckTotalHoldingsForStock(OrderVM order)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
@@ -238,6 +225,7 @@ namespace SustainAndGain.Models
 				LastUpdatedAvailableForInvestment = DateTime.Now,
 				LastUpdatedCurrentValue = lastupdatedCurrentValue,
 				CompId = order.CompetitionId,
+				
 			};
 
 			context.UsersInCompetition.Add(availableForInvestmentEntry);
@@ -402,8 +390,6 @@ namespace SustainAndGain.Models
 					Quantity = c.Quantity,
 					CurrentPurchaseAmountForHoldings = c.CurrentPurchaseAmountForHoldings,
 					AveragePriceForCurrentHoldings = c.AveragePriceForCurrentHoldings
-				
-					
 				}).ToList();
 
 
@@ -456,7 +442,11 @@ namespace SustainAndGain.Models
 						Symbol = symbol,
 						CompetitionId = compId,
 					};
+					if (newHolding.TotalQuantity > 0)
+					{
 					holdings.Add(newHolding);
+
+					}
 				}
 				
 
@@ -492,7 +482,7 @@ namespace SustainAndGain.Models
 					CompanyName = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.CompanyName).SingleOrDefault(),
 					IsSustainable = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.IsSustainable).SingleOrDefault(),
 					BuyOrSell = o.BuyOrSell,
-					TotalQuantity = o.CurrentHoldingsAfterTransaction
+					TotalQuantity = o.Quantity
 				}).ToList();
 
 			foreach (var item in holdings)
@@ -603,12 +593,9 @@ namespace SustainAndGain.Models
 				if (item.BuyOrSell == "Buy")
 				{
 					//// checking previous transactions for calculation of average price
-					//var usersTransactionsInComp = transactions
-					//.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId);
 
 					// If previous entry exists in table for this user in this competition, execute below if statement, else ignore
 
-					//var usersTransactionsInComp = transactions.Where(t => t.UserId == item.UserId && t.CompetitionId == item.CompId && t.StockId == item.StockId)
 
 					decimal lastPurchaseAmount = 0;
 
