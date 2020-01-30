@@ -4,12 +4,54 @@
     height: 100%;
     width: 100%;
     overflow-x: hidden;
-   
+   overflow-y:hidden;
     font-size: 2vh;
 }
 body {
     zoom: 0.8;
 }
+
+@keyframes slidein {
+    0% {
+        left: -200px;
+        opacity: 0;
+    }
+
+    100% {
+        left: 0px;
+        opacity: 1;
+    }
+}
+
+nav {
+    background: linear-gradient(to bottom, rgba(23, 119, 117, 1),rgba(40, 210, 191, 0.5)), url('../img/city.jpg');
+    background-position-x: center;
+    background-size: cover;
+    animation: slidein 2s ease-in-out;
+    z-index: 6;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    box-shadow: 0 20px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+li {
+    background: rgba(0,0,0,.1);
+    text-align: center;
+    color: #fff;
+    font-size: 3vh;
+    border-bottom: 1px solid rgba(0,0,0,.5);
+    transition: all 2s;
+}
+
+    li a, li a:hover {
+        color: #fff;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
+    }
+
+        li a:hover {
+            background-color: rgba(0,0,0,.5);
+        }
 .card img {
     position: absolute;
     width: 15%;
@@ -142,8 +184,8 @@ h2{
 }
 
     .leftpan {
-        left: -4%;
-        width: 60%;
+        left: -24%;
+        width: 80%;
         -webkit-transform: skew(0deg);
         -moz-transform: skew(0deg);
         -o-transform: skew(0deg);
