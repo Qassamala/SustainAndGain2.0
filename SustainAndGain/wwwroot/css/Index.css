@@ -1,52 +1,123 @@
 ﻿html {
-    background: linear-gradient(to bottom right, #177775, #28D2BF, white);
-    background-size: cover;
     margin: 0;
     padding: 0;
     height: 100%;
-    
+    overflow-x: hidden;
+    overflow-y: hidden;
     font-size: 2vh;
-  
 }
 
 body {
     height: 100%;
-    background-color: rgba(0,0,0,0);
+  
     margin-bottom: 0;
     padding: 0;
     position: relative;
-    margin-left: 30%;
-    margin-right: 30%;
+    
 }
 
 
+.inner-header {
+    height: 80vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    position: relative;
+    text-align: center;
+    background: linear-gradient(to bottom right, #177775, #28D2BF, white);
+    color: white;
+}
+.flex {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* text-align: center;*/
+}
 
+.waves {
+    position: relative;
+    width: 100%;
+    height: 10vh;
+    margin-bottom: -7px;
+    /*Fix for safari gap*/
+    min-height: 50px;
+    max-height: 100px;
+}
+
+.content {
+    position: relative;
+    height: 10vh;
+    text-align: center;
+    background-color: white;
+}
+/* Animation */
+.parallax > use {
+    animation: move-forever 25s cubic-bezier(.55, .5, .45, .5) infinite;
+}
+
+    .parallax > use:nth-child(1) {
+        animation-delay: -2s;
+        animation-duration: 7s;
+    }
+
+    .parallax > use:nth-child(2) {
+        animation-delay: -3s;
+        animation-duration: 10s;
+    }
+
+    .parallax > use:nth-child(3) {
+        animation-delay: -4s;
+        animation-duration: 13s;
+    }
+
+    .parallax > use:nth-child(4) {
+        animation-delay: -5s;
+        animation-duration: 20s;
+    }
+
+@keyframes move-forever {
+    0% {
+        transform: translate3d(-90px, 0, 0);
+    }
+
+    100% {
+        transform: translate3d(85px, 0, 0);
+    }
+}
+/*Shrinking for mobile*/
+@media (max-width: 768px) {
+    .waves {
+        height: 40px;
+        min-height: 40px;
+    }
+
+    .content {
+        height: 30vh;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+}
 
 
 .LoginDiv {
-    position: relative;
     height: 100%;
-    padding-top: 20px;
-    margin-top: 20px;
-    margin-left: 5em;
-    margin-right: 5em;
+    position: relative;
+    /* padding-top: 20px; */
+    /* margin-top: 20px; */
+    /* margin-left: 10em; */
+    margin-right: 15em;
     background: rgba(300, 300, 300, 0.2);
-    padding-bottom: 10px;
+    /* padding-bottom: 10px; */
     border-radius: 30px;
 }
-#ArrowPro {
-    border-radius: 50%;
-    height: 4em;
-    position: fixed;
-    top: 30%;
-    display: block;
-    transition: all 1s;
-    left: -30px;
-    transform: rotate(180deg);
 }
-    #ArrowPro:hover {
-        left: 0;
-    }
+
+
 
 .icon {
     padding: 10px;
@@ -62,15 +133,20 @@ img {
    display:flex;
    align-items:center;
    justify-content:center;
+   
 }
 form {
-    width: 100%;
+    /*padding-left:40px;
+    padding-right:40px;*/
+   
+    width:300px;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    transition: all 1s;
+    
 }
 /*.input-validation-error {
     width: 100%;
@@ -90,7 +166,19 @@ form {
     background-position-x: 1em;
     background-position-y: center;
 }*/
+@keyframes slidein {
+    0% {
+        top: 0;
+        left: -200px;
+        opacity: 0;
+    }
 
+    100% {
+        left: 0;
+        top: 0;
+        opacity: 1;
+    }
+}
 
 #usernameForm {
     
@@ -107,9 +195,11 @@ form {
     background-size: 20px;
     background-repeat: no-repeat;
     overflow: hidden;
-    width: 100%;
+    width: 250px;
     padding: 12px 20px 12px 40px;
     margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
     margin-bottom: 20px;
     font-family: 'Franklin Gothic Medium', arial;
     display: inline;
@@ -122,10 +212,10 @@ form {
 
 
 
-button, input[type=submit] {
-    font-family: 'Franklin Gothic Medium', arial;
+button, input[type=submit], #RegisterBtn {
+    
     width: 100%;
-    padding-bottom: 2em;
+    
    
     position: relative;
     border-radius: 30px;
@@ -138,14 +228,11 @@ button, input[type=submit] {
     cursor: pointer;
 }
 
-button:hover, input[type=submit]:hover {
+button:hover, input[type=submit]:hover, #RegisterBtn:hover {
     background-color: #28D2BF;
     box-shadow: 5px 5px 2px #2D8068;
 }
-#RegisterBtn{
-    width:50%;
-    padding-bottom:0;
-}
+
 
 
 

@@ -94,24 +94,6 @@ namespace SustainAndGain.Models
 
 		}
 
-		internal void UpdateCurrentValuesAbdi()
-		{
-			var holdings = context.UsersHistoricalTransactions
-				.OrderBy(c => c.CompetitionId)
-				.ThenBy(u => u.UserId)
-				.ThenBy(s => s.StockId)
-				.Select(h => h.CurrentHoldingsAfterTransaction)
-				.ToList();
-
-			var trimmedHoldings = context.UsersHistoricalTransactions;
-
-			//foreach (var item in holdings)
-			//{
-				
-			//}
-
-		}
-
 		internal void UpdateCurrentValue(int compId)
 		{
 
@@ -154,8 +136,6 @@ namespace SustainAndGain.Models
 				foreach (var price in eachPrice)
 				{
 					newList.Add(eachPrice.Where(s => s.StockId == price.StockId).Last());
-
-
 				}
 
 			foreach (var transaction in newList)
@@ -167,11 +147,9 @@ namespace SustainAndGain.Models
 
 				Value.Add((decimal)vs);
 			}
-				//.Select(a => item.CurrentPrice * a.CurrentHoldingsAfterTransaction).Last();
 
 
 			var CurrentValue = Value.Sum();
-
 
 
 			var newuserincomp = new UsersInCompetition
@@ -182,17 +160,12 @@ namespace SustainAndGain.Models
 				UserId = userInComp.UserId,
 				LastUpdatedCurrentValue = DateTime.Now,
 				LastUpdatedAvailableForInvestment = userInComp.LastUpdatedAvailableForInvestment
-
-
-
 			};
 
 
 			context.UsersInCompetition.Add(newuserincomp);
 
 			context.SaveChanges();
-
-
 		}
 
 		internal int CheckTotalHoldingsForStock(OrderVM order)
@@ -417,8 +390,6 @@ namespace SustainAndGain.Models
 					Quantity = c.Quantity,
 					CurrentPurchaseAmountForHoldings = c.CurrentPurchaseAmountForHoldings,
 					AveragePriceForCurrentHoldings = c.AveragePriceForCurrentHoldings
-				
-					
 				}).ToList();
 
 
@@ -622,12 +593,9 @@ namespace SustainAndGain.Models
 				if (item.BuyOrSell == "Buy")
 				{
 					//// checking previous transactions for calculation of average price
-					//var usersTransactionsInComp = transactions
-					//.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId);
 
 					// If previous entry exists in table for this user in this competition, execute below if statement, else ignore
 
-					//var usersTransactionsInComp = transactions.Where(t => t.UserId == item.UserId && t.CompetitionId == item.CompId && t.StockId == item.StockId)
 
 					decimal lastPurchaseAmount = 0;
 
