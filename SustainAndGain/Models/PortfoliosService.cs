@@ -94,6 +94,24 @@ namespace SustainAndGain.Models
 
 		}
 
+		internal void UpdateCurrentValuesAbdi()
+		{
+			var holdings = context.UsersHistoricalTransactions
+				.OrderBy(c => c.CompetitionId)
+				.ThenBy(u => u.UserId)
+				.ThenBy(s => s.StockId)
+				.Select(h => h.CurrentHoldingsAfterTransaction)
+				.ToList();
+
+			var trimmedHoldings = context.UsersHistoricalTransactions;
+
+			//foreach (var item in holdings)
+			//{
+				
+			//}
+
+		}
+
 		internal void UpdateCurrentValue(int compId)
 		{
 
@@ -161,6 +179,18 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 
 
+		}
+
+		internal int CheckTotalHoldings(OrderVM order)
+		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			var holding = context.UsersHistoricalTransactions
+				.Where(o => o.CompetitionId == order.CompetitionId && o.UserId == userId && o.StockId == order.StockId)
+				.Select(o => o.CurrentHoldingsAfterTransaction)
+				.Last();
+
+			return holding;
 		}
 
 		internal void AddBuyOrder(OrderVM order)
@@ -306,7 +336,6 @@ namespace SustainAndGain.Models
 					.Where(s => s.Symbol == order.Symbol)
 					.Select(i => i.Id)
 					.FirstOrDefault(),
-				//OrderValue = order.OrderValue,
 				TimeOfInsertion = DateTime.Now,
 				BuyOrSell = "Sell",
 				UserId = userId,
@@ -387,9 +416,6 @@ namespace SustainAndGain.Models
 				if (item.BuyOrSell == "Buy")
 				{
 
-
-
-					//Abdis changes
 					var latestPriceDate = context.HistDataStocks
 							.Where(o => ((o.StockId == item.StockId))).Max(o => o.DateTime);
 
@@ -397,18 +423,6 @@ namespace SustainAndGain.Models
 							.Where(o => ((o.StockId == item.StockId) && (o.DateTime == latestPriceDate)))
 							.Select(o => o.CurrentPrice)
 							.FirstOrDefault();
-					// abdis changes above
-
-
-					//var totalPurchaseAmount = userHoldings
-					//	.Where(a => a.StockId == item.StockId).Sum(a => a.TransactionPrice * a.Quantity);
-
-					//var totalQuantityOfStocks = userHoldings
-					//	.Where(a => a.StockId == item.StockId).Sum(a => a.Quantity);
-
-
-					//decimal totalPurchasePriceForStock = totalPurchaseAmount / totalQuantityOfStocks;
-
 
 					var compDescSymb = context.StaticStockData
 						.Where(a => a.Id == item.StockId).Select(a => new CalculatedPriceVM
@@ -548,6 +562,9 @@ namespace SustainAndGain.Models
 
 			foreach (var item in pendingOrders)
 			{
+				var usersTransactionsInComp = transactions
+					.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId);
+
 				var listOfHisDataStocks = context.HistDataStocks.ToList();
 
 				// get latest date
@@ -563,9 +580,9 @@ namespace SustainAndGain.Models
 
 				// get the current total holdings in security for user in competition
 				var currentHoldings = context.UsersHistoricalTransactions
-				.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId)
-				.Select(o => o.Quantity)
-				.Sum();
+					.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId)
+					.Select(o => o.Quantity)
+					.Sum();
 
 				int quantity = 0;
 
@@ -585,22 +602,23 @@ namespace SustainAndGain.Models
 
 				if (item.BuyOrSell == "Buy")
 				{
-					// checking previous transactions for calculation of average price
-					transactions
-					.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId)
-					.ToList();
+					//// checking previous transactions for calculation of average price
+					//var usersTransactionsInComp = transactions
+					//.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId);
 
 					// If previous entry exists in table for this user in this competition, execute below if statement, else ignore
 
+					//var usersTransactionsInComp = transactions.Where(t => t.UserId == item.UserId && t.CompetitionId == item.CompId && t.StockId == item.StockId)
+
 					decimal lastPurchaseAmount = 0;
 
-					if (transactions.Any())
+					if (usersTransactionsInComp.Any())
 					{
-						var lastUpdatedPurchaseAmountDate = transactions
+						var lastUpdatedPurchaseAmountDate = usersTransactionsInComp
 							.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId)
 							.Max(o => o.DateTimeOfTransaction);
 
-							lastPurchaseAmount = transactions
+							lastPurchaseAmount = usersTransactionsInComp
 							.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId && o.DateTimeOfTransaction == lastUpdatedPurchaseAmountDate)
 							.Select(p => p.CurrentPurchaseAmountForHoldings)
 							.FirstOrDefault();
@@ -630,11 +648,11 @@ namespace SustainAndGain.Models
 				else if (item.BuyOrSell == "Sell")
 				{
 
-					var lastUpdatedAvgPriceDate = transactions
+					var lastUpdatedAvgPriceDate = usersTransactionsInComp
 					.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId)
 					.Max(o => o.DateTimeOfTransaction);
 
-					var lastaveragePrice = transactions
+					var lastaveragePrice = usersTransactionsInComp
 						.Where(o => o.CompetitionId == item.CompId && o.UserId == item.UserId && o.StockId == item.StockId && o.DateTimeOfTransaction == lastUpdatedAvgPriceDate)
 						.Select(p => p.AveragePriceForCurrentHoldings)
 						.FirstOrDefault();
@@ -651,10 +669,9 @@ namespace SustainAndGain.Models
 						BuyOrSell = item.BuyOrSell,
 						Quantity = -(int)item.Quantity,
 						CurrentHoldingsAfterTransaction = currentHoldings,
-						//AveragePriceForCurrentHoldings = purchaseAmount / (currentHoldings),
 						CurrentPurchaseAmountForHoldings = purchaseAmount
 					};
-					if (currentHoldings == 0)
+					if (currentHoldings == 0) // Whenever sell results in total quantity 0, this executes as attempted to divide by zero would result in exception
 					{
 						order.AveragePriceForCurrentHoldings = 0;
 					}
@@ -668,12 +685,12 @@ namespace SustainAndGain.Models
 				var listOfUsersInCompetition = context.UsersInCompetition.ToList();
 
 				var lastupdatedCurrentValue = listOfUsersInCompetition
-				.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
-				.Max(o => o.LastUpdatedCurrentValue);
+					.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+					.Max(o => o.LastUpdatedCurrentValue);
 
 				var lastupdatedAvailableForInvestment = listOfUsersInCompetition
-				.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
-				.Max(o => o.LastUpdatedAvailableForInvestment);
+					.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+					.Max(o => o.LastUpdatedAvailableForInvestment);
 
 				var availableForInvestment = listOfUsersInCompetition
 					.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
@@ -681,9 +698,9 @@ namespace SustainAndGain.Models
 					.FirstOrDefault();
 
 				var currentValue = listOfUsersInCompetition
-				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
-				.Select(v => v.CurrentValue)
-				.FirstOrDefault();
+					.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+					.Select(v => v.CurrentValue)
+					.FirstOrDefault();
 
 
 				if (item.BuyOrSell == "Buy")

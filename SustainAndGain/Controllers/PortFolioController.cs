@@ -126,6 +126,18 @@ namespace SustainAndGain.Controllers
 			if (!ModelState.IsValid)
 				return View(order);
 
+			var result = service.CheckTotalHoldings(order);
+
+			//switch (result)
+			//{
+			//	case CreateUserResult.UserNameAlreadyExists:
+			//		ModelState.AddModelError(nameof(UsersCreateVM.UserName), $"Enter a quantity no more than {}.");
+			//		return View(user);
+			//	case CreateUserResult.EmailAdressAlreadyExists:
+			//		ModelState.AddModelError(nameof(UsersCreateVM.Email), "Emailadress already exists");
+			//		return View(user);
+			//}
+
 			service.AddSellOrder(order);
 
 			service.ExecuteOrders();    //Testing, should be executed after GetPrices job
