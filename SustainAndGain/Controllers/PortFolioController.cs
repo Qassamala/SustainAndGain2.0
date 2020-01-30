@@ -108,22 +108,28 @@ namespace SustainAndGain.Controllers
 			return RedirectToAction("Portfolio", new { compId = order.CompId });
 		}
 
-		[Route("Portfolio/OrderEntrySell/{symbol}/{compId}")]
+		[Route("Portfolio/OrderEntrySell/{symbol}/{compId}/{stockId}")]
 		[HttpGet]
-		public IActionResult OrderEntrySell(string symbol, int compId)
+		public IActionResult OrderEntrySell(string symbol, int compId, int stockId)
 		{
-			var orderEntrySell = service.GetOrderEntrySell(symbol, compId);
+			var orderEntrySell = service.GetOrderEntrySell(symbol, compId, stockId);
 			return PartialView("OrderEntrySell", orderEntrySell);
 		}
 
-		[Route("Portfolio/OrderEntrySell/{symbol}/{compId}")]
+		[Route("Portfolio/OrderEntrySell/{symbol}/{compId}/{stockId}")]
 		[HttpPost]
-		public IActionResult OrderEntrySell(OrderVM order)
+		public IActionResult OrderEntrySell(SellOrderVM order)
 		{
 			if (!ModelState.IsValid)
 				return View(order);
 
-			//var result = service.CheckTotalHoldings(order);
+			var totalHolding = service.CheckTotalHoldingsForStock(order);
+
+			if (order.Quantity > totalHolding || order.Quantity < 1)
+			{
+				ModelState.AddModelError(nameof(SellOrderVM.Quantity), $"Enter a quantity no more than {totalHolding}.");
+				return View(order);
+			}
 
 			//switch (result)
 			//{

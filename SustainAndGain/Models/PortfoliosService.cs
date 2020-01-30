@@ -168,14 +168,14 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
-		internal int CheckTotalHoldingsForStock(OrderVM order)
+		internal int CheckTotalHoldingsForStock(SellOrderVM order)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
 			var holding = context.UsersHistoricalTransactions
 				.Where(o => o.CompetitionId == order.CompetitionId && o.UserId == userId && o.StockId == order.StockId)
-				.Select(o => o.CurrentHoldingsAfterTransaction)
-				.Last();
+				.Select(o => o.Quantity)
+				.Sum();
 
 			return holding;
 		}
@@ -233,7 +233,7 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
-		internal SellOrderVM GetOrderEntrySell(string symbol, int compId)
+		internal SellOrderVM GetOrderEntrySell(string symbol, int compId, int stockId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
@@ -261,6 +261,7 @@ namespace SustainAndGain.Models
 				Symbol = symbol,
 				CompetitionId = compId,
 				Quantity = 0,
+				StockId = stockId
 
 			};
 		}
@@ -314,7 +315,7 @@ namespace SustainAndGain.Models
 			return orderToBeDeleted;
 		}
 
-		internal void AddSellOrder(OrderVM order)
+		internal void AddSellOrder(SellOrderVM order)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
@@ -533,7 +534,7 @@ namespace SustainAndGain.Models
 				.Where(o => o.CompId == compId && o.UserId == userId)
 				.Select(o => new OrderVM
 				{
-					Symbol = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.Symbol).SingleOrDefault(),
+					Symbol = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.Symbol).FirstOrDefault(),
 					OrderValue = (decimal)o.OrderValue,
 					BuyOrSell = o.BuyOrSell,
 					TimeOfInsertion = o.TimeOfInsertion,
