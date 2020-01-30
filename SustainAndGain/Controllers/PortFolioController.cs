@@ -80,7 +80,7 @@ namespace SustainAndGain.Controllers
 		public IActionResult OrderEntry(string symbol, int compId)
 		{
 			var orderEntry = service.GetOrderEntry(symbol, compId);
-			return PartialView("_OrderEntry", orderEntry);
+			return PartialView("OrderEntry", orderEntry);
 		}
 
 		[Route("Portfolio/OrderEntry/{symbol}/{compId}")]
@@ -89,6 +89,14 @@ namespace SustainAndGain.Controllers
 		{
 			if (!ModelState.IsValid)
 				return View(order);
+
+			var availableForInvestment = service.CheckTotalAvailableToInvestForStockBuy(order);
+
+			if (order.OrderValue > availableForInvestment || order.OrderValue <= 0)
+			{
+				ModelState.AddModelError(nameof(OrderVM.OrderValue), $"You only have {availableForInvestment} to purchase stocks for.");
+				return View(order);
+			}
 
 			service.AddBuyOrder(order);
 
@@ -123,23 +131,13 @@ namespace SustainAndGain.Controllers
 			if (!ModelState.IsValid)
 				return View(order);
 
-			var totalHolding = service.CheckTotalHoldingsForStock(order);
+			var totalHolding = service.CheckTotalHoldingsForStockSell(order);
 
 			if (order.Quantity > totalHolding || order.Quantity < 1)
 			{
 				ModelState.AddModelError(nameof(SellOrderVM.Quantity), $"Enter a quantity no more than {totalHolding}.");
 				return View(order);
 			}
-
-			//switch (result)
-			//{
-			//	case CreateUserResult.UserNameAlreadyExists:
-			//		ModelState.AddModelError(nameof(UsersCreateVM.UserName), $"Enter a quantity no more than {}.");
-			//		return View(user);
-			//	case CreateUserResult.EmailAdressAlreadyExists:
-			//		ModelState.AddModelError(nameof(UsersCreateVM.Email), "Emailadress already exists");
-			//		return View(user);
-			//}
 
 			service.AddSellOrder(order);
 

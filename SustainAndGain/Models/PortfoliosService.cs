@@ -94,6 +94,22 @@ namespace SustainAndGain.Models
 
 		}
 
+		internal decimal CheckTotalAvailableToInvestForStockBuy(OrderVM order)
+		{
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
+
+			var availableForInvestment = (decimal)context.UsersInCompetition
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				.Select(v => v.AvailableForInvestment)
+				.FirstOrDefault();
+
+			return availableForInvestment;
+		}
+
 		internal void UpdateCurrentValue(int compId)
 		{
 
@@ -168,7 +184,7 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
-		internal int CheckTotalHoldingsForStock(SellOrderVM order)
+		internal int CheckTotalHoldingsForStockSell(SellOrderVM order)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
