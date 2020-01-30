@@ -47,9 +47,7 @@ namespace SustainAndGain.Controllers
         [Route("Portfolio/Holdings/{compId}")]
         [HttpGet]
         public IActionResult Holdings(int compId)
-        {
-           
-            //var holdings = service.GetHoldings(compId); ////old code
+        {           
 
 			var gav = service.GetPurchasePrice(compId);
 
