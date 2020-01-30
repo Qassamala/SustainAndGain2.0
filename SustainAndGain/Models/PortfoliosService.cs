@@ -52,7 +52,7 @@ namespace SustainAndGain.Models
 
 			PortfolioVM portfolioData = new PortfolioVM
 			{
-				CurrentValue = (decimal)currentValue,
+				//CurrentValue = (decimal)currentValue,
 				AvailableCapital = (decimal)availableForInvestment,
 				InvestedCapital = investedCapital,
 				CompetitionId = compId
@@ -148,7 +148,8 @@ namespace SustainAndGain.Models
 
 				foreach (var price in eachPrice)
 				{
-					newList.Add(eachPrice.Where(s => s.StockId == price.StockId).Last());
+					newList.Add(eachPrice.Where(s => s.StockId == price.StockId)
+						.Select(t => t).Last());
 				}
 
 			foreach (var transaction in newList)

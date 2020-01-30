@@ -10,7 +10,7 @@ namespace SustainAndGain.Models.ModelViews
     public class PortfolioVM
     {
         [Display(Name = "Current value")]
-        public decimal CurrentValue { get; set; }
+        public decimal CurrentValue => AvailableCapital + InvestedCapital;
 
         [Display(Name = "Available capital")]
         public decimal AvailableCapital { get; set; }
