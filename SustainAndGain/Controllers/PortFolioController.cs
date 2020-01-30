@@ -19,7 +19,7 @@ namespace SustainAndGain.Controllers
 		}
 
         [Route("/Portfolio/{compId}")]
-        [HttpGet]
+		[HttpGet]
         public IActionResult Portfolio(int compId)
         {
 			service.UpdateCurrentValue(compId);

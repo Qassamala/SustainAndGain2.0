@@ -29,6 +29,10 @@
                 <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model.Select(a => a.CompetitionId).Last()">Portfolio</a>
+            </li>
+            
 
         </ul>
 
