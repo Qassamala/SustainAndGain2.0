@@ -27,7 +27,7 @@ namespace SustainAndGain.Controllers
         public IActionResult List()
         {
             //competitionsService.DisplayCompetitions();
-            competitionsService.AddCompetition();
+            //competitionsService.AddCompetition();
             //service.AddSustainProp();
             //service.AddHistDataStocks();
             //service.AddStaticStockData();
