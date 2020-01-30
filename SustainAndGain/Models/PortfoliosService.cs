@@ -138,9 +138,6 @@ namespace SustainAndGain.Models
 			var userInComp = usersInCompetition
 				.Where(a => a.UserId == userId && compId == a.CompId).Last();
 
-			var date = userHistoricalTransaction
-				.Select(a => a.DateTimeOfTransaction).Last();
-
 
 			var eachPrice = userHistoricalTransaction
 				.Where(a => a.UserId == userInComp.UserId && a.CompetitionId == compId).ToList();
