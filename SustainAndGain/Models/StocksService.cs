@@ -158,7 +158,7 @@ namespace SustainAndGain.Models
 		public void GetCompanyDescription()
 		{
 			Encoding unicode = Encoding.UTF7;
-			string descriptionFile = @"C:/Users/Daniel/Documents/SustainAndGain/testStockTickers.txt";
+			string descriptionFile = @"C:\Users\Abdi G\source\repos\SustainAndGain\SustainAndGain\Models\testStockTickers.json";
 
 			var companies = JsonConvert.DeserializeObject<DescriptionClass[]>(File.ReadAllText(descriptionFile, unicode));
 			var listOfCompanies = companies.Select(a => new DescriptionClass
