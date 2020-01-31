@@ -31,6 +31,7 @@ namespace SustainAndGain.Controllers
             //service.AddSustainProp();
             //service.AddHistDataStocks();
             //service.AddStaticStockData();
+            //service.GetCompanyDescription();
 
             // Test reset 1
             //service.AddStocksInComp();
