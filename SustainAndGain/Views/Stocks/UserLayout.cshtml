@@ -49,7 +49,7 @@
             <div style="z-index:6;" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <img id="PortPro" src="~/Img/PortfolioProfile.png" />
-                    <h1 style="font-family:Quicksand;" class="h2">My Portfolio</h1>
+                    <h1 style="font-family:Quicksand;" class="h2"></h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
 
 
@@ -89,7 +89,7 @@
                                 <div class="clash-card__unit-description">
                                     @if (i == 0)
                                     {
-                                        <p> Let´s celebrate the new year with </p>
+                                       
                                     }
                                     <form><button id="portfolio@(i)" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model[i].Id" style="display:none;">Go to portfolio</button></form>
                                     <input id="join@(i)" onclick="Join(@(i))" type="submit" value="Join" class="btn btn-primary" style="display:none;" />

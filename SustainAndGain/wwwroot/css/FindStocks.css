@@ -8,24 +8,27 @@
 }
 
 nav {
-    background: linear-gradient(to bottom, rgba(23, 119, 117, 1),rgba(40, 210, 191, 0.5)), url('../img/city.jpg');
+    /*background: linear-gradient(to bottom, rgba(23, 119, 117, 1),rgba(40, 210, 191, 0.5)), url('../img/city.jpg');
     background-position-x: center;
     background-size: cover;
-    animation: slidein 2s ease-in-out;
+    animation: slidein 2s ease-in-out;*/
     z-index: 6;
-    background-clip: border-box;
+    background: linear-gradient(to bottom right, #177775, #28D2BF, white);
+    border-box;
     border: 1px solid rgba(0,0,0,.125);
     border-radius: .25rem;
     box-shadow: 0 20px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    list-style:
 }
 
 li {
-    background: rgba(0,0,0,.1);
+   
+    /*background: rgba(0,0,0,.1);
     text-align: center;
     color: #fff;
     font-size: 3vh;
     border-bottom: 1px solid rgba(0,0,0,.5);
-    transition: all 2s;
+    transition: all 2s;*/
 }
 
     li a, li a:hover {
