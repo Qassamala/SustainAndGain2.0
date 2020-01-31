@@ -10,7 +10,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" >
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li id="iconbar" class="nav-item">
@@ -25,18 +25,7 @@
                         <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="shopping-cart"></span>
-                            Current Stocks
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="users"></span>
-                            Users Page
-                        </a>
-                    </li>
+                  
 
                 </ul>
 
@@ -49,7 +38,7 @@
             <div style="z-index:6;" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <img id="PortPro" src="~/Img/PortfolioProfile.png" />
-                    <h1 style="font-family:Quicksand;" class="h2">My Portfolio</h1>
+                    <h1 style="font-family:Quicksand;" class="h2"></h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
 
 
@@ -75,46 +64,97 @@
                 </div>
 
                 <div class="slideContainer">
+
+                 
+
+
                     @for (int i = 0; i < 4; i++)
                     {
-                        <div id="slide" class="slide">
+                        <div class="wrapper">
+                            <div id="id@(i)" class="clash-card barbarian" style="padding-top:20px;">
+                               
+                                
+                                <div class="clash-card__unit-name">@Model[i].Name</div>
+                                <div class="clash-card__unit-description">
+                                    @if (i == 0)
+                                    {
+                                       
+                                    }
+                                    <form><button id="portfolio@(i)" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model[i].Id" style="display:none;">Go to portfolio</button></form>
+                                    <input id="join@(i)" onclick="Join(@(i))" type="submit" value="Join" class="btn btn-primary" style="display:none;" />
+                                    @if (Model[i].HasJoined)
+                                    {
+                                        <script>
+                        $(document).ready(function() {
+      $("#portfolio@(i)").css("display", "block");
+    });
 
-                            <h2>Competition: @Model[i].Name</h2>
+                                        </script>
+                                    }
+                                    else
+                                    {
+                                        <script>
+                           $(document).ready(function() {
+                               $("#join@(i)").css("display", "block");
+                               });
+                                        </script>
+                                    }
 
-                            <h4>Days left: @Model[i].DaysLeft</h4>
-                            <h4>Ends: @Model[i].EndTime.Date</h4>
+                                </div>
 
+                                <div id="stats@(i)" class="clash-card__unit-stats clash-card__unit-stats--barbarian clearfix">
+                                    <div class="one-third">
+                                        <div class="stat">@Model[i].DaysLeft</div>
+                                        <div class="stat-value">Days left</div>
+                                    </div>
 
-                            <form><button id="portfolio@(i)" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model[i].Id" style="display:none;">Go to portfolio</button></form>
-                            <input id="join@(i)" onclick="Join(@(i))" type="submit" value="Join" class="btn btn-primary" style="display:none;" />
+                                    @*<div class="one-third">
+                                        <div class="stat"></div>
+                                        <div class="stat-value"></div>
+                                    </div>*@
 
-                            @if (Model[i].HasJoined)
-                            {
-                                <script>
-                    $(document).ready(function() {
-  $("#portfolio@(i)").css("display", "block");
-});
+                                    <div class="one-third no-border">
+                                        <div class="stat">@Model[i].EndTime.ToString("MMMM dd")</div>
+                                        <div class="stat-value">End</div>
+                                    </div>
 
-                                </script>
-                            }
-                            else
-                            {
-                                <script>
-                       $(document).ready(function() {
-                           $("#join@(i)").css("display", "block");
-                           });
-                                </script>
-                            }
-
+                                </div>
+                            </div>
                         </div>
                     }
+
+
+
 
 
                 </div>
 
 
-                <script>
-      let codeblocks = []
+            </div>
+
+
+
+
+
+
+
+
+        </main>
+    </div>
+</div>
+
+
+
+
+            
+
+
+
+
+<script>
+
+
+     let codeblocks = []
 
         @foreach (var item in Model)
         {
@@ -122,10 +162,7 @@
         }
 
 
-
-
-            //Reading text box values using Jquery
-    function Join(number) {
+         function Join(number) {
         console.log(number);
 
             var obj = { "UserId": "@Model[0].UserId", "CompId": String(codeblocks[number]) };
@@ -146,24 +183,35 @@
                 })
 
 
-    }
-                </script>
+                    }
+
+</script>
+
+@*<div class="card">
+        <img src="~/Img/SustainPro.png" />
+        <div class="card-img-top"></div>
+        <div class="card-body">
+            <h4>  @Html.DisplayNameFor(model => model[i].DaysLeft):</h4>
 
 
+            <h4> @Html.DisplayFor(model => model[i].DaysLeft) days </h4>
 
-
-            </div>
-            
-
-
-
-
-
-
-
-        </main>
+        </div>
     </div>
-</div>
+
+    <div id="slide" class="slide">
+
+        <h2>Competition: @Model[i].Name</h2>
+
+        <h4>Days left: @Model[i].DaysLeft</h4>
+        <h4>Ends: @Model[i].EndTime.Date</h4>
+
+
+        <form><button id="portfolio@(i)" asp-controller="PortFolio" asp-action="Portfolio" asp-route-compId="@Model[i].Id" style="display:none;">Go to portfolio</button></form>
+        <input id="join@(i)" onclick="Join(@(i))" type="submit" value="Join" class="btn btn-primary" style="display:none;" />*@
+
+        
+    
 
 
 

@@ -405,7 +405,8 @@ namespace SustainAndGain.Models
 					CompetitionId = c.CompetitionId,
 					Quantity = c.Quantity,
 					CurrentPurchaseAmountForHoldings = c.CurrentPurchaseAmountForHoldings,
-					AveragePriceForCurrentHoldings = c.AveragePriceForCurrentHoldings
+					AveragePriceForCurrentHoldings = c.AveragePriceForCurrentHoldings,					
+					
 				}).ToList();
 
 
@@ -457,6 +458,7 @@ namespace SustainAndGain.Models
 						CompanyName = companyName,
 						Symbol = symbol,
 						CompetitionId = compId,
+						IsSustainable = context.StaticStockData.Where(s => s.Id == item.StockId).Select(s => s.IsSustainable).SingleOrDefault(),
 					};
 					if (newHolding.TotalQuantity > 0)
 					{
