@@ -6,6 +6,37 @@
     overflow-x:hidden;
     font-size: 2vh;
 }
+
+nav {
+    background: linear-gradient(to bottom, rgba(23, 119, 117, 1),rgba(40, 210, 191, 0.5)), url('../img/city.jpg');
+    background-position-x: center;
+    background-size: cover;
+    animation: slidein 2s ease-in-out;
+    z-index: 6;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    box-shadow: 0 20px 10px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+li {
+    background: rgba(0,0,0,.1);
+    text-align: center;
+    color: #fff;
+    font-size: 3vh;
+    border-bottom: 1px solid rgba(0,0,0,.5);
+    transition: all 2s;
+}
+
+    li a, li a:hover {
+        color: #fff;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
+    }
+
+        li a:hover {
+            background-color: rgba(0,0,0,.5);
+        }
+    
 @font-face {
     font-family: 'quicksand-regular';
     src: url('../img/quicksand-regular.otf') format('opentype');

@@ -6,115 +6,143 @@
 <link href="~/css/FindStocks.css?t=<%= @DateTime.Now.Ticks %>" rel="stylesheet" />
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom-left-radius: 25px; border-bottom-right-radius:25px;-webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15);">
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li id="iconbar" class="nav-item">
 
-    <a class="navbar-brand navbar-brand-logo">
-        <div class="logo">
-            <img id="PortPro" src="~/Img/StockProfile.png">
-        </div>
-
-    </a>
-    <a class="navbar-brand"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" style="font-family:Quicksand; font-size:4vh;">List Of Stocks<span class="sr-only">(current)</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
-            </li>
+                        <span data-feather="home"></span>
 
 
-        </ul>
 
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="shopping-cart"></span>
+                            Current Stocks
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span data-feather="users"></span>
+                            Users Page
+                        </a>
+                    </li>
+
+                </ul>
+
+
+
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <div style="z-index:6;" class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <img id="PortPro" src="~/Img/PortfolioProfile.png" />
+                    <h1 style="font-family:Quicksand;" class="h2">My Portfolio</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+
+
+                    </div>
+                    </div>
+                </div>
+
+                    <div id="divOrderEntry"></div>
+
+                    <div id="divPendingOrders"></div>
+
+
+                    <table id="example" style="height:0;" class="table table-hover table-striped table-bordered table-sm">
+                        <thead>
+                            <tr>
+                                <th class="th-sm">
+                                    @Html.DisplayNameFor(model => model.CompanyName)
+                                </th>
+                                <th class="th-sm">
+                                    @Html.DisplayNameFor(model => model.IsSustainable)
+                                </th>
+                                <th class="th-sm">
+                                    @Html.DisplayNameFor(model => model.Symbol)
+                                </th>
+                                <th class="th-sm">
+                                    @Html.DisplayNameFor(model => model.LastPrice)
+                                </th>
+                                <th class="th-sm">
+                                    @Html.DisplayNameFor(model => model.LastUpdated)
+                                </th>
+                                <th class="th-sm">
+                                    @Html.DisplayNameFor(model => model.ReturnThisYear)
+                                </th>
+                                <th class="th-sm">
+                                    @Html.DisplayNameFor(model => model.Description)
+                                </th>
+                                <th class="th-sm">
+                                    @Html.DisplayNameFor(model => model.Sector)
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyName)
+                                    </td>
+                                    <td>
+                                        @if (item.IsSustainable == true)
+                                        {
+                                            <img style="height:5vh; border-radius:50%;" src="~/Img/SustainPro.png" />
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Symbol)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LastPrice)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.LastUpdated)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ReturnThisYear)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Sector)
+                                    </td>
+
+                                    <td>
+                                        <button id="@item.Symbol" onclick="OrderEntry('@item.Symbol', '@item.CompetitionId')">Buy</button>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                
+
+        </main>
     </div>
-</nav>
-<div id="divOrderEntry"></div>
-
-<div id="divPendingOrders"></div>
+</div>
 
 
-    <table id="example"class="table table-hover table-striped table-bordered table-sm" >
-        <thead>
-            <tr>
-                <th class="th-sm">
-                    @Html.DisplayNameFor(model => model.CompanyName)
-                </th>
-                <th class="th-sm">
-                    @Html.DisplayNameFor(model => model.IsSustainable)
-                </th>
-                <th class="th-sm">
-                    @Html.DisplayNameFor(model => model.Symbol)
-                </th>
-                <th class="th-sm">
-                    @Html.DisplayNameFor(model => model.LastPrice)
-                </th>
-                <th class="th-sm">
-                    @Html.DisplayNameFor(model => model.LastUpdated)
-                </th>
-                <th class="th-sm">
-                    @Html.DisplayNameFor(model => model.ReturnThisYear)
-                </th>
-                <th class="th-sm">
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th class="th-sm">
-                    @Html.DisplayNameFor(model => model.Sector)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CompanyName)
-                    </td>
-                    <td>
-                        @if (item.IsSustainable == true )
-                        {
-                            <img style="height:5vh; border-radius:50%;"  src="~/Img/SustainPro.png" />
-                        }
-                        else
-                        {
-                         
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Symbol)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastPrice)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LastUpdated)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReturnThisYear)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Sector)
-                    </td>
-                   
-                    <td>
-                        <button id="@item.Symbol" onclick="OrderEntry('@item.Symbol', '@item.CompetitionId')">Buy</button>
-
-                    </td>
-
-                </tr>
-            }
-        </tbody>
-    </table>
 
 
 <script>
@@ -134,9 +162,9 @@
             }
         });
     }
-$(document).ready(function() {
-    $('#example').DataTable();
-} );
+    $(document).ready(function () {
+        $('#example').DataTable();
+    });
 
 </script>
 @*<script>

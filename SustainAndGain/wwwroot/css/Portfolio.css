@@ -153,11 +153,11 @@ h4 {
 }
 #Plus {
     position: relative;
-    height: 10vh;
+    height: 6vh;
     border-radius: 50%;
     transition: all 1s;
     border: 1px solid rgba(0,0,0,.125);
-    margin-right: 10vh;
+    
     box-shadow: 0 2px 5px 0 rgba(0,0,0,.06);
    
 }

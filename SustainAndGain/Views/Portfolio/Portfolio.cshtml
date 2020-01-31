@@ -122,7 +122,7 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="card">
-                            <img src="~/Img/SustainPro.png" />
+                            
                             <div class="card-img-top" id="chartdiv"></div>
                             <div class="card-body">
                                 <h4>  @Html.DisplayNameFor(model => model.SustainBonus):</h4>
@@ -139,25 +139,6 @@
 
 
 
-            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                 viewBox="0 0 1440 126" style="enable-background:new 0 0 1440 126;" xml:space="preserve">
-<style type="text/css">
-    .st0 {
-        fill: #0052CC;
-    }
-</style>
-<title>Rectangle 3</title>
-<desc>Created with Sketch.</desc>
-<path class="st0" d="M685.6,38.8C418.7-11.1,170.2,9.9,0,30v96h1440V30C1252.7,52.2,1010,99.4,685.6,38.8z" />
-
-
-
-
-
-
-
-</svg>
-
 
 
 
@@ -166,9 +147,6 @@
 
 
             <div class="container-table">
-                <div id="divPendingOrders"></div>
-
-
                 <div id="divHoldings">
 
 
@@ -176,6 +154,10 @@
                 <a href='@Url.Action("FindStocks",new { compId = Model.CompetitionId })'>
                     <img id="Plus" src='@Url.Content("~/Img/Plusprofile.png")' />
                 </a>
+                <div id="divPendingOrders"></div>
+
+
+
 
             </div>
 
