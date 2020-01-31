@@ -24,31 +24,19 @@
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
                     <li id="iconbar" class="nav-item">
-                        
-                            <span data-feather="home"></span>
-                          
-                           
-                     
+
+                        <span data-feather="home"></span>
+
+
+
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="file"></span>
-                            Competitions
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="shopping-cart"></span>
-                            Current Stocks
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="users"></span>
-                            Users Page
-                        </a>
+                        <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
                     </li>
                   
+                    
+                   
+
                 </ul>
 
                
@@ -247,11 +235,17 @@
         this.getMyChart()
         this.getHoldings()
         this.getMyHighscore()
-        this.getSustainProcent()
+        this.Sustain()
     }
 
+                function Sustain() {
+                    setInterval(function() {
+    hand.showValue(36, 1000, am4core.ease.cubicOut);
+}, 2000);
+                }
 
-    function getSustainProcent() {
+                  
+    @*function getSustainProcent() {
         console.log("running Sustain")
         //Get ID from competition
         var id = @Model.CompetitionId
@@ -261,14 +255,14 @@
         $.ajax({
             url: url,
             type: "GET",
-            success: function (result) {
-               setInterval(function(result) {
-    hand.showValue(result, 1000, am4core.ease.cubicOut);
-}, 2000);
-            }
-        });
+            success: function (result) {*@
+//               setInterval(function(result) {
+//    hand.showValue(result, 1000, am4core.ease.cubicOut);
+//}, 2000);
+//            }
+//        });
 
-    }
+    
 
     function getMyHighscore() {
         console.log("running highscores")
