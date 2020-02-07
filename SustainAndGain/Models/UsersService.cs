@@ -10,8 +10,6 @@ namespace SustainAndGain.Models
 {
     public class UsersService
     {
-
-
         private readonly UserManager<MyIdentityUser> userManager;
         private readonly SignInManager<MyIdentityUser> signInManager;
         private readonly IHttpContextAccessor httpContextAccessor;
@@ -36,14 +34,19 @@ namespace SustainAndGain.Models
             return vm;
         }
 
-        public async void LogOutUser(UserMemberVM vm)
+        internal async Task LogoutUserAsync()
         {
-            string userId = userManager.GetUserId(httpContextAccessor.HttpContext.User);
-            MyIdentityUser user = await userManager.FindByIdAsync(userId);
-            var result = await userManager.RemoveLoginAsync(user, "hej", "hej");
+            await signInManager.SignOutAsync();
         }
 
-        internal async Task<IdentityResult> TryCreateUser(UsersRegisterVM vm)
+        //public async void LogOutUser(UserMemberVM vm)
+        //{
+        //    string userId = userManager.GetUserId(httpContextAccessor.HttpContext.User);
+        //    MyIdentityUser user = await userManager.FindByIdAsync(userId);
+        //    var result = await userManager.RemoveLoginAsync(user, "hej", "hej");
+        //}
+
+        internal async Task<IdentityResult> TryCreateUserAsync(UsersRegisterVM vm)
         {
             var result = await userManager.CreateAsync(new MyIdentityUser
             {
@@ -51,8 +54,8 @@ namespace SustainAndGain.Models
                 UserName = vm.UserName,
                 Email = vm.Email
             }, vm.Password);
-            //if (result.Succeeded)
-            //    await signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
+            if (result.Succeeded)
+                await signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
             return result;
         }
 

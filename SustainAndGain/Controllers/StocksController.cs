@@ -10,7 +10,7 @@ using SustainAndGain.Models.ModelViews;
 
 namespace SustainAndGain.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class StocksController : Controller
     {
         private readonly StocksService service;

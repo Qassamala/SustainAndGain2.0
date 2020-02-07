@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using SustainAndGain.Models;
 using SustainAndGain.Models.ModelViews;
 using SustainAndGain.Controllers;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace SustainAndGain.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly UsersService service;
@@ -18,18 +21,19 @@ namespace SustainAndGain.Controllers
             this.service = service;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("")]
         [Route("/login")]
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }
 
-       
+        [AllowAnonymous]
         [HttpPost]
         [Route("/login")]
-        public async Task<IActionResult> Index(UserLoginVM vm)
+        public async Task<IActionResult> Login(UserLoginVM vm)
         {
             if (!ModelState.IsValid)
                 return View(vm);
@@ -45,6 +49,7 @@ namespace SustainAndGain.Controllers
             return RedirectToAction("UserLayout", "Stocks");
         }
 
+        [AllowAnonymous]
         [Route("/Register")]
         [HttpGet]
         public IActionResult Register()
@@ -52,6 +57,7 @@ namespace SustainAndGain.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [Route("/Register")]
         [HttpPost]
         public async Task<IActionResult> Register(UsersRegisterVM vm)
@@ -59,18 +65,29 @@ namespace SustainAndGain.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
-            var result = await service.TryCreateUser(vm);
+            var result = await service.TryCreateUserAsync(vm);
             if (!result.Succeeded)
             {
+                ModelState.AddModelError(nameof(UsersRegisterVM.UserName), result.Errors.First().Description);
+
                 ModelState.AddModelError(string.Empty, result.Errors.First().Description);
                 return View(vm);
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Login));
+        }
+
+        [Route("Logout")]
+        [HttpPost]
+        public async Task<IActionResult> Logout(IFormCollection form)
+        {
+            await service.LogoutUserAsync();
+
+            return RedirectToAction(nameof(Login));
         }
 
 
-      
+
 
 
 
