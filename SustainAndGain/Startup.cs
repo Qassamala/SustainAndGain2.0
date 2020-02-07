@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +29,7 @@ namespace SustainAndGain
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
             //// Adding Quartz services
             //services.AddSingleton<IJobFactory, SingletonJobFactory>();
@@ -42,7 +43,11 @@ namespace SustainAndGain
 
             var connString = configuration.GetConnectionString("DefaultConnection");
             //var secret = configuration["x-rapidapi-key"];
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(o => 
+            {
+                if (env.IsProduction())
+                    o.Filters.Add(new RequireHttpsAttribute());
+            });
 
             services.AddDbContext<SustainGainContext>(o => o.UseSqlServer(connString));
             services.AddDbContext<MyIdentityContext>(o => o.UseSqlServer(connString));
