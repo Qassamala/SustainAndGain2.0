@@ -45,6 +45,8 @@ namespace SustainAndGain
             //var secret = configuration["x-rapidapi-key"];
             services.AddControllersWithViews(o => 
             {
+                o.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                
                 if (env.IsProduction())
                     o.Filters.Add(new RequireHttpsAttribute());
             });
