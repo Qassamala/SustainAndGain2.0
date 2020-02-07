@@ -22,9 +22,8 @@ namespace SustainAndGain.Controllers
             this.competitionsService = competitionsService;
         }
        
-
-        [Route("List")]
-        public IActionResult List()
+        [Route("Admin")]
+        public IActionResult Admin()
         {
             //competitionsService.DisplayCompetitions();
             //competitionsService.AddCompetition();

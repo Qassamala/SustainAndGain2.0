@@ -20,6 +20,7 @@ using SustainAndGain.Models.Entities;
 using System.Threading;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace SustainAndGain.Models
 {
@@ -29,13 +30,16 @@ namespace SustainAndGain.Models
 		private SustainGainContext context;
 		private readonly UserManager<MyIdentityUser> user;
 		private readonly IHttpContextAccessor accessor;
+		private readonly IConfiguration configuration;
 
-		public StocksService(SustainGainContext context, UserManager<MyIdentityUser> user, IHttpContextAccessor accessor)
+		public StocksService(SustainGainContext context, UserManager<MyIdentityUser> user, IHttpContextAccessor accessor, IConfiguration configuration)
 		{
 			this.context = context;
 			this.user = user;
 			this.accessor = accessor;
+			this.configuration = configuration;
 		}
+
 
 		public void AddHistDataStocks()
 		{
@@ -51,6 +55,7 @@ namespace SustainAndGain.Models
 
 			context.SaveChanges();
 		}
+
 
 		private void GetPricesForStocks(string[] stockData, int i)
 		{
@@ -68,11 +73,9 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
+
 		internal bool AddUsersInComp(CompetitionVM data)
 		{
-
-
-
 			UsersInCompetition stocks = new UsersInCompetition
 			{
 				UserId = data.UserId,
@@ -88,7 +91,6 @@ namespace SustainAndGain.Models
 				UserId = data.UserId,
 				CompetitionId = int.Parse(data.CompId),
 				Bonus = 0,
-
 			};
 
 			context.BonusDeposit.Add(deposit);
@@ -97,6 +99,8 @@ namespace SustainAndGain.Models
 
 			return true;
 		}
+
+
 		public void AddSustainProp()
 		{
 			string sustainPath = @"C:\Users\Abdi G\source\repos\SustainAndGain\SustainAndGain\wwwroot\SustainBolag.txt";
@@ -114,23 +118,14 @@ namespace SustainAndGain.Models
 				}
 				else
 					sustainStock.IsSustainable = true;
-
-
 			}
 			context.SaveChanges();
 		}
 
+
 			public void AddStaticStockData()
 			{
-
-
-
-
-
-
-
-
-				string path = @"C:\Users\Daniel\source\repos\SustainAndGain\SustainAndGain\Models\yahoo.txt";
+				string path = @"C:\Users\abdig\source\repos\SustainAndGain2.0\SustainAndGain\Models\yahoo.txt";
 
 				string[] inputFileStocks = File.ReadAllLines(path);
 
@@ -141,24 +136,18 @@ namespace SustainAndGain.Models
 					string symbol = lines[0];
 					string companyName = lines[1];
 
-					StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName };
-
-
-					//staticStockData.Description = staticStockData.Description;
-					//staticStockData.Sector = staticStockData.Sector;
-					
+					StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName };					
 
 					context.StaticStockData.Add(staticStockData);
 				}
 				context.SaveChanges();
-			}
-		
+			}		
 
 
 		public void GetCompanyDescription()
 		{
 			Encoding unicode = Encoding.UTF7;
-			string descriptionFile = @"C:\Users\Abdi G\source\repos\SustainAndGain\SustainAndGain\Models\testStockTickers.json";
+			string descriptionFile = @"C:\Users\abdig\source\repos\SustainAndGain2.0\SustainAndGain\Models\testStockTickers.json";
 
 			var companies = JsonConvert.DeserializeObject<DescriptionClass[]>(File.ReadAllText(descriptionFile, unicode));
 			var listOfCompanies = companies.Select(a => new DescriptionClass
@@ -206,12 +195,10 @@ namespace SustainAndGain.Models
 			var client = new RestClient(url);
 			var request = new RestRequest(Method.GET);
 			request.AddHeader("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com");
-			request.AddHeader("x-rapidapi-key", "f8544aa2bamshc436653380b874cp1efcc0jsn3741bd4318a2");
+			request.AddHeader("x-rapidapi-key", configuration["x-rapidapi-key"]);
 			IRestResponse response = client.Execute(request);
 			return response;
 		}
-
-
 
 
 		public List<UsersInCompetition> GetHistoricalTransactionData(int compId)
@@ -220,12 +207,10 @@ namespace SustainAndGain.Models
 
 			List<UsersInCompetition> historicalTransactions = new List<UsersInCompetition>();
 
-
 			foreach (var transactionData in context.UsersInCompetition)
 			{
 				if (transactionData.UserId == userId && transactionData.CompId == compId)
 				{
-
 					UsersInCompetition transactions = new UsersInCompetition
 					{
 						CurrentValue = transactionData.CurrentValue,
@@ -235,12 +220,10 @@ namespace SustainAndGain.Models
 						Id = transactionData.Id,
 						LastUpdatedAvailableForInvestment = transactionData.LastUpdatedAvailableForInvestment,
 						UserId = transactionData.UserId
-
 					};
 					historicalTransactions.Add(transactions);
 				}
 			}
-
 			return historicalTransactions;
 		}
 	}

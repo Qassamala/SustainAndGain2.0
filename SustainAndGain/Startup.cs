@@ -41,6 +41,7 @@ namespace SustainAndGain
             //services.AddHostedService<QuartzHostedService>();
 
             var connString = configuration.GetConnectionString("DefaultConnection");
+            //var secret = configuration["x-rapidapi-key"];
             services.AddControllersWithViews();
 
             services.AddDbContext<SustainGainContext>(o => o.UseSqlServer(connString));
@@ -49,10 +50,7 @@ namespace SustainAndGain
             {
                 o.Password.RequireNonAlphanumeric = false;
                 o.Password.RequiredLength = 3;
-
-
             }
-
                 )
                 .AddEntityFrameworkStores<MyIdentityContext>()
                 .AddDefaultTokenProviders();
@@ -62,12 +60,7 @@ namespace SustainAndGain
             services.AddTransient<StocksService>();
             services.AddTransient<PortfoliosService>();
             services.AddTransient<CompetitionsService>();
-
-
-            services.AddHttpContextAccessor();
-            
-
-
+            services.AddHttpContextAccessor();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,6 +70,8 @@ namespace SustainAndGain
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+                app.UseExceptionHandler("/error/exception");
 
             app.UseAuthentication();
             app.UseRouting();
