@@ -71,7 +71,7 @@ namespace SustainAndGain
                 app.UseDeveloperExceptionPage();
             }
             else
-                app.UseExceptionHandler("/error/exception");
+                app.UseExceptionHandler("/Error/ServerError");
 
             app.UseAuthentication();
             app.UseRouting();
