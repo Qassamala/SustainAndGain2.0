@@ -76,10 +76,11 @@ namespace SustainAndGain.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction(nameof(Login));
+            return RedirectToAction(nameof(UserLayout));
         }
 
         [Route("/UserLayout")]
+        [HttpGet]
         public IActionResult UserLayout()
         {
 
