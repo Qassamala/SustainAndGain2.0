@@ -77,6 +77,7 @@ namespace SustainAndGain.Controllers
         }
 
         [Route("/UserLayout")]
+        [HttpGet]
         public IActionResult UserLayout()
         {
 
