@@ -15,12 +15,10 @@ namespace SustainAndGain.Controllers
     public class UserController : Controller
     {
         private readonly UsersService service;
-        private readonly CompetitionsService competitionsService;
 
-        public UserController(UsersService service, CompetitionsService competitionsService)
+        public UserController(UsersService service)
         {
             this.service = service;
-            this.competitionsService = competitionsService;
         }
 
         [AllowAnonymous]
@@ -48,7 +46,7 @@ namespace SustainAndGain.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction(nameof(UserLayout));
+            return RedirectToAction("UserLayout", "Stocks");
         }
 
         [AllowAnonymous]
@@ -76,27 +74,7 @@ namespace SustainAndGain.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction(nameof(UserLayout));
-        }
-
-        [Route("/UserLayout")]
-        [HttpGet]
-        public IActionResult UserLayout()
-        {
-
-            var result = competitionsService.DisplayCompetitions();
-
-            return View(result);
-        }
-
-        [AllowAnonymous]
-        [Route("User/InsertAjax")]
-        [HttpPost]
-        public IActionResult InsertAjax([FromBody]CompetitionVM obj)
-        {
-            service.AddUsersInComp(obj);
-            return Ok();
-
+            return RedirectToAction(nameof(Login));
         }
 
         [Route("Logout")]
@@ -107,8 +85,6 @@ namespace SustainAndGain.Controllers
 
             return RedirectToAction(nameof(Login));
         }
-
-
 
 
 
