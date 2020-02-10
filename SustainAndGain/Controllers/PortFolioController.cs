@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SustainAndGain.Models;
 using SustainAndGain.Models.Entities;
@@ -10,7 +9,6 @@ using SustainAndGain.Models.ModelViews;
 
 namespace SustainAndGain.Controllers
 {
-	[Authorize]
 	public class PortFolioController : Controller
 	{
 		private readonly PortfoliosService service;
