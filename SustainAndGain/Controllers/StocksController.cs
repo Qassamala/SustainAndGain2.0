@@ -14,13 +14,14 @@ namespace SustainAndGain.Controllers
     public class StocksController : Controller
     {
         private readonly StocksService service;
+        private readonly CompetitionsService competitionsService;
 
-        public StocksController(StocksService service)
+        public StocksController(StocksService service, CompetitionsService competitionsService)
         {
             this.service = service;
+            this.competitionsService = competitionsService;
         }
-
-        [AllowAnonymous]
+       
         [Route("Admin")]
         public IActionResult Admin()
         {
@@ -35,6 +36,14 @@ namespace SustainAndGain.Controllers
             //service.AddStocksInComp();
 
             return View();
+        }
+        [Route("/UserLayout")]
+        public IActionResult UserLayout()
+        {
+
+            var result = competitionsService.DisplayCompetitions();
+          
+            return View(result);
         }
 
         [Route("/chart/{id}")]
