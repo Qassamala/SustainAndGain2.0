@@ -89,6 +89,16 @@ namespace SustainAndGain.Controllers
             return View(result);
         }
 
+        [AllowAnonymous]
+        [Route("User/InsertAjax")]
+        [HttpPost]
+        public IActionResult InsertAjax([FromBody]CompetitionVM obj)
+        {
+            service.AddUsersInComp(obj);
+            return Ok();
+
+        }
+
         [Route("Logout")]
         [HttpPost]
         public async Task<IActionResult> Logout(IFormCollection form)

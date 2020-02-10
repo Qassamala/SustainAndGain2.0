@@ -37,15 +37,6 @@ namespace SustainAndGain.Controllers
             return View();
         }
 
-        [HttpPost]
-        [Route("Stocks/InsertAjax")]
-        public IActionResult InsertAjax([FromBody]CompetitionVM obj)
-        {
-            service.AddUsersInComp(obj);
-            return Ok();
-            
-        }
-
         [Route("/chart/{id}")]
         public IActionResult Chart(int id)
         {

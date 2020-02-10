@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using SustainAndGain.Models.Entities;
 using SustainAndGain.Models.ModelViews;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,14 @@ namespace SustainAndGain.Models
         private readonly UserManager<MyIdentityUser> userManager;
         private readonly SignInManager<MyIdentityUser> signInManager;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly SustainGainContext context;
 
-        public UsersService(UserManager<MyIdentityUser> userManager, SignInManager<MyIdentityUser> signInManager, IHttpContextAccessor httpContextAccessor)
+        public UsersService(UserManager<MyIdentityUser> userManager, SignInManager<MyIdentityUser> signInManager, IHttpContextAccessor httpContextAccessor, SustainGainContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.httpContextAccessor = httpContextAccessor;
+            this.context = context;
         }
 
         internal async Task<UserMemberVM> GetLoggedInUser()
@@ -32,6 +35,32 @@ namespace SustainAndGain.Models
             };
 
             return vm;
+        }
+
+        internal bool AddUsersInComp(CompetitionVM data)
+        {
+            UsersInCompetition stocks = new UsersInCompetition
+            {
+                UserId = data.UserId,
+                CurrentValue = 10000,
+                AvailableForInvestment = 10000,
+                LastUpdatedAvailableForInvestment = DateTime.Now,
+                LastUpdatedCurrentValue = DateTime.Now,
+                CompId = int.Parse(data.CompId),
+            };
+
+            BonusDeposit deposit = new BonusDeposit
+            {
+                UserId = data.UserId,
+                CompetitionId = int.Parse(data.CompId),
+                Bonus = 0,
+            };
+
+            context.BonusDeposit.Add(deposit);
+            context.UsersInCompetition.Add(stocks);
+            context.SaveChanges();
+
+            return true;
         }
 
         internal async Task LogoutUserAsync()
