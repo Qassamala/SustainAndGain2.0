@@ -29,7 +29,7 @@ namespace SustainAndGain
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             //// Adding Quartz services
             //services.AddSingleton<IJobFactory, SingletonJobFactory>();
@@ -43,13 +43,7 @@ namespace SustainAndGain
 
             var connString = configuration.GetConnectionString("DefaultConnection");
             //var secret = configuration["x-rapidapi-key"];
-            services.AddControllersWithViews(o => 
-            {
-                o.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                
-                if (env.IsProduction())
-                    o.Filters.Add(new RequireHttpsAttribute());
-            });
+            services.AddControllersWithViews();
 
             services.AddDbContext<SustainGainContext>(o => o.UseSqlServer(connString));
             services.AddDbContext<MyIdentityContext>(o => o.UseSqlServer(connString));
