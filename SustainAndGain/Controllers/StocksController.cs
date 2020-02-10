@@ -52,6 +52,7 @@ namespace SustainAndGain.Controllers
         {
             service.AddUsersInComp(obj);
             return Ok();
+            //test
             
         }
 
