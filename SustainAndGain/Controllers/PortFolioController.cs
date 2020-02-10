@@ -22,7 +22,8 @@ namespace SustainAndGain.Controllers
 		[HttpGet]
         public IActionResult Portfolio(int compId)
         {
-			service.UpdateCurrentValue(compId);
+			////Not working properly, it sets a new instance everytime one views the page
+			//service.UpdateCurrentValue(compId);
 
 			var portfolioData = service.DisplayPortfolioData(compId);
             return View(portfolioData);

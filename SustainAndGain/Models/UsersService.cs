@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using SustainAndGain.Models.Entities;
 using SustainAndGain.Models.ModelViews;
 using System;
 using System.Collections.Generic;
@@ -10,17 +11,17 @@ namespace SustainAndGain.Models
 {
     public class UsersService
     {
-
-
         private readonly UserManager<MyIdentityUser> userManager;
         private readonly SignInManager<MyIdentityUser> signInManager;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly SustainGainContext context;
 
-        public UsersService(UserManager<MyIdentityUser> userManager, SignInManager<MyIdentityUser> signInManager, IHttpContextAccessor httpContextAccessor)
+        public UsersService(UserManager<MyIdentityUser> userManager, SignInManager<MyIdentityUser> signInManager, IHttpContextAccessor httpContextAccessor, SustainGainContext context)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.httpContextAccessor = httpContextAccessor;
+            this.context = context;
         }
 
         internal async Task<UserMemberVM> GetLoggedInUser()
@@ -36,14 +37,45 @@ namespace SustainAndGain.Models
             return vm;
         }
 
-        public async void LogOutUser(UserMemberVM vm)
+        internal bool AddUsersInComp(CompetitionVM data)
         {
-            string userId = userManager.GetUserId(httpContextAccessor.HttpContext.User);
-            MyIdentityUser user = await userManager.FindByIdAsync(userId);
-            var result = await userManager.RemoveLoginAsync(user, "hej", "hej");
+            UsersInCompetition stocks = new UsersInCompetition
+            {
+                UserId = data.UserId,
+                CurrentValue = 10000,
+                AvailableForInvestment = 10000,
+                LastUpdatedAvailableForInvestment = DateTime.Now,
+                LastUpdatedCurrentValue = DateTime.Now,
+                CompId = int.Parse(data.CompId),
+            };
+
+            BonusDeposit deposit = new BonusDeposit
+            {
+                UserId = data.UserId,
+                CompetitionId = int.Parse(data.CompId),
+                Bonus = 0,
+            };
+
+            context.BonusDeposit.Add(deposit);
+            context.UsersInCompetition.Add(stocks);
+            context.SaveChanges();
+
+            return true;
         }
 
-        internal async Task<IdentityResult> TryCreateUser(UsersRegisterVM vm)
+        internal async Task LogoutUserAsync()
+        {
+            await signInManager.SignOutAsync();
+        }
+
+        //public async void LogOutUser(UserMemberVM vm)
+        //{
+        //    string userId = userManager.GetUserId(httpContextAccessor.HttpContext.User);
+        //    MyIdentityUser user = await userManager.FindByIdAsync(userId);
+        //    var result = await userManager.RemoveLoginAsync(user, "hej", "hej");
+        //}
+
+        internal async Task<IdentityResult> TryCreateUserAsync(UsersRegisterVM vm)
         {
             var result = await userManager.CreateAsync(new MyIdentityUser
             {
@@ -51,8 +83,8 @@ namespace SustainAndGain.Models
                 UserName = vm.UserName,
                 Email = vm.Email
             }, vm.Password);
-            //if (result.Succeeded)
-            //    await signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
+            if (result.Succeeded)
+                await signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
             return result;
         }
 

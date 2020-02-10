@@ -28,24 +28,13 @@ namespace SustainAndGain.Models
 
 			var usersInCompetitionList = context.UsersInCompetition.ToList();
 
-			var lastupdatedCurrentValue = usersInCompetitionList
-				.Where(o => ((o.CompId == compId) && (o.UserId == userId)))
-				.Max(o => o.LastUpdatedCurrentValue);
+			DateTime? lastupdatedCurrentValue = GetLatestCurrentValueDate(compId, userId, usersInCompetitionList);
 
-			var currentValue = usersInCompetitionList
-				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
-				.Select(v => v.CurrentValue)
-				.FirstOrDefault();
+			Decimal? currentValue = GetLatestCurrentValue(usersInCompetitionList, lastupdatedCurrentValue);
 
+			DateTime? lastupdatedAvailableForInvestment = GetLatestAvailableForInvestmenDate(compId, userId, usersInCompetitionList);
 
-			var lastupdatedAvailableForInvestment = usersInCompetitionList
-				.Where(o => ((o.CompId == compId) && (o.UserId == userId)))
-				.Max(o => o.LastUpdatedAvailableForInvestment);
-
-			var availableForInvestment = usersInCompetitionList
-				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-				.Select(v => v.AvailableForInvestment)
-				.FirstOrDefault();
+			decimal? availableForInvestment = GetLatestAvailableForInvestment(usersInCompetitionList, lastupdatedAvailableForInvestment);
 
 			// Calculate current invested capital by getting the holdings market cap
 			var holdings = GetHoldings(compId);
@@ -62,6 +51,37 @@ namespace SustainAndGain.Models
 
 			return portfolioData;
 		}
+
+		private static decimal? GetLatestAvailableForInvestment(List<UsersInCompetition> usersInCompetitionList, DateTime? lastupdatedAvailableForInvestment)
+		{
+			return usersInCompetitionList
+				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				.Select(v => v.AvailableForInvestment)
+				.FirstOrDefault();
+		}
+
+		private static DateTime? GetLatestAvailableForInvestmenDate(int compId, string userId, List<UsersInCompetition> usersInCompetitionList)
+		{
+			return usersInCompetitionList
+				.Where(o => ((o.CompId == compId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedAvailableForInvestment);
+		}
+
+		private static decimal? GetLatestCurrentValue(List<UsersInCompetition> usersInCompetitionList, DateTime? lastupdatedCurrentValue)
+		{
+			return usersInCompetitionList
+				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				.Select(v => v.CurrentValue)
+				.FirstOrDefault();
+		}
+
+		private static DateTime? GetLatestCurrentValueDate(int compId, string userId, List<UsersInCompetition> usersInCompetitionList)
+		{
+			return usersInCompetitionList
+				.Where(o => ((o.CompId == compId) && (o.UserId == userId)))
+				.Max(o => o.LastUpdatedCurrentValue);
+		}
+
 		//internal object GetSustainProcent(int compId)
 		//{
 
@@ -95,16 +115,12 @@ namespace SustainAndGain.Models
 
 			var usersInCompetitionList = context.UsersInCompetition.ToList();
 
-			var lastupdatedAvailableForInvestment = usersInCompetitionList
-				.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
-				.Max(o => o.LastUpdatedAvailableForInvestment);
+			DateTime? lastupdatedAvailableForInvestment = GetLatestAvailableForInvestmenDate(order.CompetitionId, userId, usersInCompetitionList);
 
-			var availableForInvestment = (decimal)usersInCompetitionList
-				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-				.Select(v => v.AvailableForInvestment)
-				.FirstOrDefault();
+			decimal? availableForInvestment = GetLatestAvailableForInvestment(usersInCompetitionList, lastupdatedAvailableForInvestment);
 
-			return availableForInvestment;
+
+			return (decimal)availableForInvestment;
 		}
 
 		internal void UpdateCurrentValue(int compId)
@@ -212,23 +228,31 @@ namespace SustainAndGain.Models
 
 			var usersInCompetitionList = context.UsersInCompetition.ToList();
 
-			var lastupdatedCurrentValue = usersInCompetitionList
-				.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
-				.Max(o => o.LastUpdatedCurrentValue);
+			DateTime? lastupdatedCurrentValue = GetLatestCurrentValueDate(order.CompetitionId, userId, usersInCompetitionList);
 
-			var currentValue = usersInCompetitionList
-				.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
-				.Select(v => v.CurrentValue)
-				.FirstOrDefault();
+			Decimal? currentValue = GetLatestCurrentValue(usersInCompetitionList, lastupdatedCurrentValue);
 
-			var lastupdatedAvailableForInvestment = usersInCompetitionList
-				.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
-				.Max(o => o.LastUpdatedAvailableForInvestment);
+			DateTime? lastupdatedAvailableForInvestment = GetLatestAvailableForInvestmenDate(order.CompetitionId, userId, usersInCompetitionList);
 
-			var availableForInvestment = usersInCompetitionList
-				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-				.Select(v => v.AvailableForInvestment)
-				.FirstOrDefault();
+			decimal? availableForInvestment = GetLatestAvailableForInvestment(usersInCompetitionList, lastupdatedAvailableForInvestment);
+
+			//var lastupdatedCurrentValue = usersInCompetitionList
+			//	.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
+			//	.Max(o => o.LastUpdatedCurrentValue);
+
+			//var currentValue = usersInCompetitionList
+			//	.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+			//	.Select(v => v.CurrentValue)
+			//	.FirstOrDefault();
+
+			//var lastupdatedAvailableForInvestment = usersInCompetitionList
+			//	.Where(o => ((o.CompId == order.CompetitionId) && (o.UserId == userId)))
+			//	.Max(o => o.LastUpdatedAvailableForInvestment);
+
+			//var availableForInvestment = usersInCompetitionList
+			//	.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+			//	.Select(v => v.AvailableForInvestment)
+			//	.FirstOrDefault();
 
 			UsersInCompetition availableForInvestmentEntry = new UsersInCompetition
 			{
@@ -252,14 +276,18 @@ namespace SustainAndGain.Models
 
 			var usersInCompetitionList = context.UsersInCompetition.ToList();
 
-			var lastupdatedAvailableForInvestment = usersInCompetitionList
-				.Where(o => ((o.CompId == compId) && (o.UserId == userId)))
-				.Max(o => o.LastUpdatedAvailableForInvestment);
+			DateTime? lastupdatedAvailableForInvestment = GetLatestAvailableForInvestmenDate(compId, userId, usersInCompetitionList);
 
-			var availableForInvestment = (decimal)usersInCompetitionList
-				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-				.Select(v => v.AvailableForInvestment)
-				.FirstOrDefault();
+			decimal? availableForInvestment = GetLatestAvailableForInvestment(usersInCompetitionList, lastupdatedAvailableForInvestment);
+
+			//var lastupdatedAvailableForInvestment = usersInCompetitionList
+			//	.Where(o => ((o.CompId == compId) && (o.UserId == userId)))
+			//	.Max(o => o.LastUpdatedAvailableForInvestment);
+
+			//var availableForInvestment = (decimal)usersInCompetitionList
+			//	.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+			//	.Select(v => v.AvailableForInvestment)
+			//	.FirstOrDefault();
 
 			var latestPriceTime = context.HistDataStocks.Where(s => s.Symbol == symbol).Max(d => d.DateTime);
 
@@ -290,27 +318,37 @@ namespace SustainAndGain.Models
 
 			context.Order.Remove(orderToBeDeleted);
 
+			var usersInCompetitionList = context.UsersInCompetition.ToList();
+
 			// Add entry into usersInComp with updated availableForInvestment value to remove reserved cash
 
 			if (orderToBeDeleted.BuyOrSell == "Buy")
 			{
-				var lastupdatedCurrentValue = context.UsersInCompetition
-					.Where(o => ((o.CompId == orderToBeDeleted.CompId) && (o.UserId == userId)))
-					.Max(o => o.LastUpdatedCurrentValue);
+				DateTime? lastupdatedCurrentValue = GetLatestCurrentValueDate(orderToBeDeleted.CompId, userId, usersInCompetitionList);
 
-				var currentValue = context.UsersInCompetition
-					.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
-					.Select(v => v.CurrentValue)
-					.FirstOrDefault();
+				Decimal? currentValue = GetLatestCurrentValue(usersInCompetitionList, lastupdatedCurrentValue);
 
-				var lastupdatedAvailableForInvestment = context.UsersInCompetition.
-					Where(o => ((o.CompId == orderToBeDeleted.CompId) && (o.UserId == userId)))
-					.Max(o => o.LastUpdatedAvailableForInvestment);
+				DateTime? lastupdatedAvailableForInvestment = GetLatestAvailableForInvestmenDate(orderToBeDeleted.CompId, userId, usersInCompetitionList);
 
-				var availableForInvestment = context.UsersInCompetition
-					.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-					.Select(v => v.AvailableForInvestment)
-					.FirstOrDefault();
+				decimal? availableForInvestment = GetLatestAvailableForInvestment(usersInCompetitionList, lastupdatedAvailableForInvestment);
+
+				//var lastupdatedCurrentValue = context.UsersInCompetition
+				//	.Where(o => ((o.CompId == orderToBeDeleted.CompId) && (o.UserId == userId)))
+				//	.Max(o => o.LastUpdatedCurrentValue);
+
+				//var currentValue = context.UsersInCompetition
+				//	.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				//	.Select(v => v.CurrentValue)
+				//	.FirstOrDefault();
+
+				//var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+				//	Where(o => ((o.CompId == orderToBeDeleted.CompId) && (o.UserId == userId)))
+				//	.Max(o => o.LastUpdatedAvailableForInvestment);
+
+				//var availableForInvestment = context.UsersInCompetition
+				//	.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				//	.Select(v => v.AvailableForInvestment)
+				//	.FirstOrDefault();
 
 				UsersInCompetition availableForInvestmentEntry = new UsersInCompetition
 				{
@@ -354,15 +392,20 @@ namespace SustainAndGain.Models
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
 
+			var usersInCompetitionList = context.UsersInCompetition.ToList();
 
-			var lastupdatedAvailableForInvestment = context.UsersInCompetition.
-				Where(o => ((o.CompId == compId) && (o.UserId == userId)))
-				.Max(o => o.LastUpdatedAvailableForInvestment);
+			DateTime? lastupdatedAvailableForInvestment = GetLatestAvailableForInvestmenDate(compId, userId, usersInCompetitionList);
 
-			var availableForInvestment = (decimal)context.UsersInCompetition
-				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-				.Select(v => v.AvailableForInvestment)
-				.FirstOrDefault();
+			decimal? availableForInvestment = GetLatestAvailableForInvestment(usersInCompetitionList, lastupdatedAvailableForInvestment);
+
+			//var lastupdatedAvailableForInvestment = context.UsersInCompetition.
+			//	Where(o => ((o.CompId == compId) && (o.UserId == userId)))
+			//	.Max(o => o.LastUpdatedAvailableForInvestment);
+
+			//var availableForInvestment = (decimal)context.UsersInCompetition
+			//	.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+			//	.Select(v => v.AvailableForInvestment)
+			//	.FirstOrDefault();
 
 			var latestPriceTime = context.HistDataStocks.Where(s => s.Symbol == symbol).Max(d => d.DateTime);
 			var lastPrice = (decimal)context.HistDataStocks.Where(o => ((o.Symbol == symbol) && (o.DateTime == latestPriceTime)))
@@ -378,7 +421,7 @@ namespace SustainAndGain.Models
 				Symbol = symbol,
 				OrderValue = 0,
 				CompetitionId = compId,
-				AvailableToInvest = availableForInvestment,
+				AvailableToInvest = (decimal)availableForInvestment,
 				LastPrice = lastPrice
 
 			};
@@ -689,23 +732,31 @@ namespace SustainAndGain.Models
 
 				var listOfUsersInCompetition = context.UsersInCompetition.ToList();
 
-				var lastupdatedCurrentValue = listOfUsersInCompetition
-					.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
-					.Max(o => o.LastUpdatedCurrentValue);
+				DateTime? lastupdatedCurrentValue = GetLatestCurrentValueDate(item.CompId, item.UserId, listOfUsersInCompetition);
 
-				var lastupdatedAvailableForInvestment = listOfUsersInCompetition
-					.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
-					.Max(o => o.LastUpdatedAvailableForInvestment);
+				Decimal? currentValue = GetLatestCurrentValue(listOfUsersInCompetition, lastupdatedCurrentValue);
 
-				var availableForInvestment = listOfUsersInCompetition
-					.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-					.Select(v => v.AvailableForInvestment)
-					.FirstOrDefault();
+				DateTime? lastupdatedAvailableForInvestment = GetLatestAvailableForInvestmenDate(item.CompId, item.UserId, listOfUsersInCompetition);
 
-				var currentValue = listOfUsersInCompetition
-					.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
-					.Select(v => v.CurrentValue)
-					.FirstOrDefault();
+				decimal? availableForInvestment = GetLatestAvailableForInvestment(listOfUsersInCompetition, lastupdatedAvailableForInvestment);
+
+				//var lastupdatedCurrentValue = listOfUsersInCompetition
+				//	.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+				//	.Max(o => o.LastUpdatedCurrentValue);
+
+				//var lastupdatedAvailableForInvestment = listOfUsersInCompetition
+				//	.Where(o => ((o.CompId == item.CompId) && (o.UserId == item.UserId)))
+				//	.Max(o => o.LastUpdatedAvailableForInvestment);
+
+				//var availableForInvestment = listOfUsersInCompetition
+				//	.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
+				//	.Select(v => v.AvailableForInvestment)
+				//	.FirstOrDefault();
+
+				//var currentValue = listOfUsersInCompetition
+				//	.Where(o => o.LastUpdatedCurrentValue == lastupdatedCurrentValue)
+				//	.Select(v => v.CurrentValue)
+				//	.FirstOrDefault();
 
 
 				if (item.BuyOrSell == "Buy")

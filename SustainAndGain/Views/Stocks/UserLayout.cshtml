@@ -22,7 +22,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Stocks" asp-action="UserLayout">Competitions</a>
+                        <a class="nav-link" asp-controller="User" asp-action="UserLayout">Competitions</a>
                     </li>
 
                   
@@ -169,7 +169,7 @@
             $.ajax(
                 {
                     type: "POST", //HTTP POST Method
-                    url: "Stocks/InsertAjax",
+                    url: "/InsertAjax",
                     contentType: 'application/json',
                     data: JSON.stringify(obj),
                     success: function () {
