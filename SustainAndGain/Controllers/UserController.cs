@@ -12,10 +12,12 @@ namespace SustainAndGain.Controllers
     public class UserController : Controller
     {
         private readonly UsersService service;
+        private readonly CompetitionsService competitionsService;
 
-        public UserController(UsersService service)
+        public UserController(UsersService service, CompetitionsService competitionsService)
         {
             this.service = service;
+            this.competitionsService = competitionsService;
         }
 
         [HttpGet]
@@ -59,18 +61,27 @@ namespace SustainAndGain.Controllers
             if (!ModelState.IsValid)
                 return View(vm);
 
-            var result = await service.TryCreateUser(vm);
+            var result = await service.TryCreateUserAsync(vm);
             if (!result.Succeeded)
             {
                 ModelState.AddModelError(string.Empty, result.Errors.First().Description);
                 return View(vm);
             }
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(UserLayout));
+        }
+
+        [Route("/UserLayout")]
+        public IActionResult UserLayout()
+        {
+
+            var result = competitionsService.DisplayCompetitions();
+
+            return View(result);
         }
 
 
-      
+
 
 
 
