@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using SustainAndGain.Models;
 using SustainAndGain.Models.ModelViews;
 using SustainAndGain.Controllers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SustainAndGain.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private readonly UsersService service;
@@ -20,6 +22,7 @@ namespace SustainAndGain.Controllers
             this.competitionsService = competitionsService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [Route("")]
         [Route("/login")]
@@ -28,7 +31,7 @@ namespace SustainAndGain.Controllers
             return View();
         }
 
-       
+        [AllowAnonymous]
         [HttpPost]
         [Route("/login")]
         public async Task<IActionResult> Index(UserLoginVM vm)
@@ -44,9 +47,10 @@ namespace SustainAndGain.Controllers
                 return View(vm);
             }
 
-            return RedirectToAction("UserLayout", "Stocks");
+            return RedirectToAction("UserLayout");
         }
 
+        [AllowAnonymous]
         [Route("/Register")]
         [HttpGet]
         public IActionResult Register()
@@ -54,6 +58,7 @@ namespace SustainAndGain.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         [Route("/Register")]
         [HttpPost]
         public async Task<IActionResult> Register(UsersRegisterVM vm)
