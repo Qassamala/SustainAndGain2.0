@@ -10,7 +10,7 @@ using SustainAndGain.Models.ModelViews;
 
 namespace SustainAndGain.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class StocksController : Controller
     {
         private readonly StocksService service;
@@ -21,46 +21,39 @@ namespace SustainAndGain.Controllers
             this.service = service;
             this.competitionsService = competitionsService;
         }
+
        [AllowAnonymous]
-        [Route("Admin")]
-        public IActionResult Admin()
-        {
-            //competitionsService.DisplayCompetitions();
-            //competitionsService.AddCompetition();
-            //service.AddSustainProp();
-            //service.AddHistDataStocks();
-            //service.AddStaticStockData();
-            //service.GetCompanyDescription();
+       [Route("Admin")]
+       public IActionResult Admin()
+       {
+           //competitionsService.DisplayCompetitions();
+           //competitionsService.AddCompetition();
+           //service.AddSustainProp();
+           //service.AddHistDataStocks();
+           //service.AddStaticStockData();
+           //service.GetCompanyDescription();
 
-            // Test reset 1
-            //service.AddStocksInComp();
+           // Test reset 1
+           //service.AddStocksInComp();
 
-            return View();
-        }
-        //[Route("/UserLayout")]
-        //public IActionResult UserLayout()
-        //{
-
-        //    var result = competitionsService.DisplayCompetitions();
-          
-        //    return View(result);
-        //}
+           return View();
+       }
 
         [Route("/chart/{id}")]
         public IActionResult Chart(int id)
         {
             var viewmodel = service.GetHistoricalTransactionData(id);
 
-            return PartialView("Chart", viewmodel);
-        }
+           return PartialView("Chart", viewmodel);
+       }
 
-        [Route("/financial/{id}")]
-        public IActionResult FinancialChart(int id)
-        {
-            var viewmodel = service.GetHistoricalTransactionData(id);
+       [Route("/financial/{id}")]
+       public IActionResult FinancialChart(int id)
+       {
+           var viewmodel = service.GetHistoricalTransactionData(id);
 
-            return PartialView("FinancialChart", viewmodel);
-        }
+           return PartialView("FinancialChart", viewmodel);
+       }
 
 
 

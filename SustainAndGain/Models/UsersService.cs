@@ -11,8 +11,6 @@ namespace SustainAndGain.Models
 {
     public class UsersService
     {
-
-
         private readonly UserManager<MyIdentityUser> userManager;
         private readonly SignInManager<MyIdentityUser> signInManager;
         private readonly IHttpContextAccessor httpContextAccessor;
@@ -41,9 +39,7 @@ namespace SustainAndGain.Models
 
         public async void LogOutUser(UserMemberVM vm)
         {
-            string userId = userManager.GetUserId(httpContextAccessor.HttpContext.User);
-            MyIdentityUser user = await userManager.FindByIdAsync(userId);
-            var result = await userManager.RemoveLoginAsync(user, "hej", "hej");
+            await signInManager.SignOutAsync();
         }
 
         internal async Task<IdentityResult> TryCreateUserAsync(UsersRegisterVM vm)
