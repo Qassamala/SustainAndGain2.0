@@ -74,31 +74,31 @@ namespace SustainAndGain.Models
 		}
 
 
-		internal bool AddUsersInComp(CompetitionVM data)
-		{
-			UsersInCompetition stocks = new UsersInCompetition
-			{
-				UserId = data.UserId,
-				CurrentValue = 10000,
-				AvailableForInvestment = 10000,
-				LastUpdatedAvailableForInvestment = DateTime.Now,
-				LastUpdatedCurrentValue = DateTime.Now,
-				CompId = int.Parse(data.CompId),
-			};
+		//internal bool AddUsersInComp(CompetitionVM data)
+		//{
+		//	UsersInCompetition stocks = new UsersInCompetition
+		//	{
+		//		UserId = data.UserId,
+		//		CurrentValue = 10000,
+		//		AvailableForInvestment = 10000,
+		//		LastUpdatedAvailableForInvestment = DateTime.Now,
+		//		LastUpdatedCurrentValue = DateTime.Now,
+		//		CompId = int.Parse(data.CompId),
+		//	};
 
-			BonusDeposit deposit = new BonusDeposit
-			{
-				UserId = data.UserId,
-				CompetitionId = int.Parse(data.CompId),
-				Bonus = 0,
-			};
+		//	BonusDeposit deposit = new BonusDeposit
+		//	{
+		//		UserId = data.UserId,
+		//		CompetitionId = int.Parse(data.CompId),
+		//		Bonus = 0,
+		//	};
 
-			context.BonusDeposit.Add(deposit);
-			context.UsersInCompetition.Add(stocks);
-			context.SaveChanges();
+		//	context.BonusDeposit.Add(deposit);
+		//	context.UsersInCompetition.Add(stocks);
+		//	context.SaveChanges();
 
-			return true;
-		}
+		//	return true;
+		//}
 
 
 		public void AddSustainProp()

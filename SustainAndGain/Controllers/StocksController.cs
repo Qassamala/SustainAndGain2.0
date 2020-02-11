@@ -37,24 +37,6 @@ namespace SustainAndGain.Controllers
 
             return View();
         }
-        //[Route("/UserLayout")]
-        //public IActionResult UserLayout()
-        //{
-
-        //    var result = competitionsService.DisplayCompetitions();
-          
-        //    return View(result);
-        //}
-
-        [HttpPost]
-        [Route("Stocks/InsertAjax")]
-        public IActionResult InsertAjax([FromBody]CompetitionVM obj)
-        {
-            service.AddUsersInComp(obj);
-            return Ok();
-            //test
-            
-        }
 
         [Route("/chart/{id}")]
         public IActionResult Chart(int id)

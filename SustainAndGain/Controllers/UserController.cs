@@ -80,6 +80,15 @@ namespace SustainAndGain.Controllers
             return View(result);
         }
 
+        [HttpPost]
+        [Route("User/InsertAjax")]
+        public IActionResult InsertAjax([FromBody]CompetitionVM obj)
+        {
+            service.AddUsersInComp(obj);
+            return Ok();
+
+        }
+
 
 
 
