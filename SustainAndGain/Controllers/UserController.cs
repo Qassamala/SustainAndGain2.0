@@ -26,7 +26,7 @@ namespace SustainAndGain.Controllers
         [HttpGet]
         [Route("")]
         [Route("/login")]
-        public IActionResult Index()
+        public IActionResult Login()
         {
             return View();
         }
@@ -34,7 +34,7 @@ namespace SustainAndGain.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("/login")]
-        public async Task<IActionResult> Index(UserLoginVM vm)
+        public async Task<IActionResult> Login(UserLoginVM vm)
         {
             if (!ModelState.IsValid)
                 return View(vm);
