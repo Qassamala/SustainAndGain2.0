@@ -29,7 +29,7 @@ namespace SustainAndGain
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             //// Adding Quartz services
             //services.AddSingleton<IJobFactory, SingletonJobFactory>();
@@ -50,7 +50,7 @@ namespace SustainAndGain
             services.AddIdentity<MyIdentityUser, IdentityRole>(o =>
             {
                 o.Password.RequireNonAlphanumeric = false;
-                o.Password.RequiredLength = 3;
+                o.Password.RequiredLength = 6;
             }
                 )
                 .AddEntityFrameworkStores<MyIdentityContext>()
