@@ -37,4 +37,8 @@
     <TypeScriptCompile Include="wwwroot\Js\file.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Stocks\" />
+  </ItemGroup>
+
 </Project>

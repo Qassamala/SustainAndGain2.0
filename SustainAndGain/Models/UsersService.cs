@@ -43,7 +43,7 @@ namespace SustainAndGain.Models
             var result = await userManager.RemoveLoginAsync(user, "hej", "hej");
         }
 
-        internal async Task<IdentityResult> TryCreateUser(UsersRegisterVM vm)
+        internal async Task<IdentityResult> TryCreateUserAsync(UsersRegisterVM vm)
         {
             var result = await userManager.CreateAsync(new MyIdentityUser
             {
@@ -51,8 +51,8 @@ namespace SustainAndGain.Models
                 UserName = vm.UserName,
                 Email = vm.Email
             }, vm.Password);
-            //if (result.Succeeded)
-            //    await signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
+            if (result.Succeeded)
+                await signInManager.PasswordSignInAsync(vm.UserName, vm.Password, false, false);
             return result;
         }
 

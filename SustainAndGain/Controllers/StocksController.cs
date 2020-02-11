@@ -37,14 +37,14 @@ namespace SustainAndGain.Controllers
 
             return View();
         }
-        [Route("/UserLayout")]
-        public IActionResult UserLayout()
-        {
+        //[Route("/UserLayout")]
+        //public IActionResult UserLayout()
+        //{
 
-            var result = competitionsService.DisplayCompetitions();
+        //    var result = competitionsService.DisplayCompetitions();
           
-            return View(result);
-        }
+        //    return View(result);
+        //}
 
         [HttpPost]
         [Route("Stocks/InsertAjax")]
