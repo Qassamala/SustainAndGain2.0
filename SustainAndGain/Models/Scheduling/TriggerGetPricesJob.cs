@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Quartz;
+using SustainAndGain.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +12,12 @@ namespace SustainAndGain.Models
     public class TriggerGetStockPricesJob : IJob
     {
         private readonly StocksService service;
+        private readonly SustainGainContext dbContext;
 
-        public TriggerGetStockPricesJob(StocksService service)
+        public TriggerGetStockPricesJob(StocksService service, SustainGainContext dbContext)
         {
             this.service = service;
-        }
-        private readonly ILogger<TriggerGetStockPricesJob> _logger;
-
-        public TriggerGetStockPricesJob(ILogger<TriggerGetStockPricesJob> logger)
-        {
-            _logger = logger;
+            this.dbContext = dbContext;
         }
 
         public Task Execute(IJobExecutionContext context)

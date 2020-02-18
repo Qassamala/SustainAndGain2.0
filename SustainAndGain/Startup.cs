@@ -16,6 +16,7 @@ using Quartz.Impl;
 using Quartz.Spi;
 using SustainAndGain.Models;
 using SustainAndGain.Models.Entities;
+using SustainAndGain.Models.Scheduling;
 
 namespace SustainAndGain
 {
@@ -31,15 +32,17 @@ namespace SustainAndGain
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //// Adding Quartz services
-            //services.AddSingleton<IJobFactory, SingletonJobFactory>();
-            //services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
-            ////Adding our job
-            //services.AddSingleton<TriggerGetStockPricesJob>();
-            //services.AddSingleton(new JobSchedule(
-            //    jobType: typeof(TriggerGetStockPricesJob),
-            //    cronExpression: "0 5 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run Monday thorugh Friday, at 0905, 1305, and 1805
-            //services.AddHostedService<QuartzHostedService>();
+            // Adding Quartz services
+            services.AddSingleton<IJobFactory, SingletonJobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            // Adding QurtzJobrunner to be able to use scoped servicces(writing to db)
+            services.AddSingleton<QuartzJobRunner>();
+            //Adding our job
+            services.AddScoped<TriggerGetStockPricesJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(TriggerGetStockPricesJob),
+                cronExpression: "0 5 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run Monday through Friday, at 0905, 1305, and 1805
+            services.AddHostedService<QuartzHostedService>();
 
             var connString = configuration.GetConnectionString("DefaultConnection");
             //var secret = configuration["x-rapidapi-key"];
