@@ -71,7 +71,7 @@ namespace SustainAndGain.Controllers
 		public IActionResult SustainablePercentage(int compId)
 		{
 			var percent = service.GetSustainablePercentage(compId);
-			return Json(percent);
+			return Json(percent*100);
 		}
 
 
