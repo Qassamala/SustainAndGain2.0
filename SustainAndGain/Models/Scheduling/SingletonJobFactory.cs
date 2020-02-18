@@ -20,7 +20,6 @@ namespace SustainAndGain.Models
         public IJob NewJob(TriggerFiredBundle bundle, IScheduler scheduler)
         {
             return _serviceProvider.GetRequiredService<QuartzJobRunner>();
-            //return _serviceProvider.GetRequiredService(bundle.JobDetail.JobType) as IJob;
         }
 
         public void ReturnJob(IJob job) { }

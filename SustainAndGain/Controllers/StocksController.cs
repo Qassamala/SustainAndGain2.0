@@ -15,17 +15,20 @@ namespace SustainAndGain.Controllers
     {
         private readonly StocksService service;
         private readonly CompetitionsService competitionsService;
+        private readonly PortfoliosService pservice;
 
-        public StocksController(StocksService service, CompetitionsService competitionsService)
+        public StocksController(StocksService service, CompetitionsService competitionsService, PortfoliosService pservice)
         {
             this.service = service;
             this.competitionsService = competitionsService;
+            this.pservice = pservice;
         }
 
        [AllowAnonymous]
        [Route("Admin")]
        public IActionResult Admin()
        {
+            pservice.UpdateCurrentValues();
            //competitionsService.DisplayCompetitions();
            //competitionsService.AddCompetition();
            //service.AddSustainProp();
@@ -33,10 +36,10 @@ namespace SustainAndGain.Controllers
            //service.AddStaticStockData();
            //service.GetCompanyDescription();
 
-           // Test reset 1
-           //service.AddStocksInComp();
+            // Test reset 1
+            //service.AddStocksInComp();
 
-           return View();
+            return View();
        }
 
         [Route("/chart/{id}")]

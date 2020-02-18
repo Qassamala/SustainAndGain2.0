@@ -51,6 +51,51 @@ namespace SustainAndGain.Models
 
 			return portfolioData;
 		}
+		
+		internal void UpdateCurrentValues()
+		{
+			var allEntries = context.UsersInCompetition.ToList();
+
+
+
+			var activeUsers = allEntries
+				.GroupBy(s => new { s.CompId, s.UserId });
+				//.OrderBy(d => d.Key.CompId)				
+				///*.ToList()*/;
+
+			List<UsersInCompetition> latestEntries = new List<UsersInCompetition>();
+
+			foreach (var grouping in activeUsers)
+			{
+				var lastEntry = grouping.Last();
+				latestEntries.Add(lastEntry);
+			}
+
+
+
+			foreach (var item in latestEntries)
+			{
+				var holdings = GetHoldingsForUpdateCurrentValues(item.CompId, item.UserId);
+				var marketValueHoldings = holdings
+				.Select(m => m.MarketValue)
+				.Sum();
+
+				var entry = new UsersInCompetition
+				{
+					CurrentValue = marketValueHoldings + (decimal)item.AvailableForInvestment,
+					CompId = item.CompId,
+					AvailableForInvestment = item.AvailableForInvestment,
+					UserId = item.UserId,
+					LastUpdatedCurrentValue = DateTime.Now,
+					LastUpdatedAvailableForInvestment = item.LastUpdatedAvailableForInvestment
+				};
+
+
+				context.UsersInCompetition.Add(entry);
+			}
+
+			context.SaveChanges();
+		}
 
 		private static decimal? GetLatestAvailableForInvestment(List<UsersInCompetition> usersInCompetitionList, DateTime? lastupdatedAvailableForInvestment)
 		{
@@ -58,6 +103,28 @@ namespace SustainAndGain.Models
 				.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
 				.Select(v => v.AvailableForInvestment)
 				.FirstOrDefault();
+		}
+
+		internal decimal GetSustainablePercentage(int compId)
+		{
+			var holdings = GetHoldings(compId);
+			var marketValueInSustainableStocks = holdings
+				.Where(s => s.IsSustainable == true)
+				.Select(m => m.MarketValue)
+				.Sum();
+
+			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			var usersInCompetitionList = context.UsersInCompetition.ToList();
+
+			DateTime? lastupdatedCurrentValue = GetLatestCurrentValueDate(compId, userId, usersInCompetitionList);
+
+			Decimal? currentValue = GetLatestCurrentValue(usersInCompetitionList, lastupdatedCurrentValue);
+
+			var sustainablePercentage = marketValueInSustainableStocks / (decimal)currentValue;
+
+			return sustainablePercentage;
+
 		}
 
 		private static DateTime? GetLatestAvailableForInvestmenDate(int compId, string userId, List<UsersInCompetition> usersInCompetitionList)
@@ -81,11 +148,6 @@ namespace SustainAndGain.Models
 				.Where(o => ((o.CompId == compId) && (o.UserId == userId)))
 				.Max(o => o.LastUpdatedCurrentValue);
 		}
-
-		//internal object GetSustainProcent(int compId)
-		//{
-
-		//}
 
 		internal object GetHighScoreForCompetition(int compId)
 		{
@@ -534,6 +596,34 @@ namespace SustainAndGain.Models
 		internal List<HoldingsVM> GetHoldings(int compId)
 		{
 			string userId = user.GetUserId(accessor.HttpContext.User);
+
+			var holdings = context.UsersHistoricalTransactions
+				.Where(o => o.CompetitionId == compId && o.UserId == userId)
+				.Select(o => new HoldingsVM
+				{
+					Symbol = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.Symbol).SingleOrDefault(),
+					CompanyName = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.CompanyName).SingleOrDefault(),
+					IsSustainable = context.StaticStockData.Where(s => s.Id == o.StockId).Select(s => s.IsSustainable).SingleOrDefault(),
+					BuyOrSell = o.BuyOrSell,
+					TotalQuantity = o.Quantity
+				}).ToList();
+
+			foreach (var item in holdings)
+			{
+				var latestPriceDate = context.HistDataStocks
+						.Where(o => ((o.Symbol == item.Symbol))).Max(o => o.DateTime);
+
+				item.CurrentPrice = (decimal)context.HistDataStocks
+						.Where(o => ((o.Symbol == item.Symbol) && (o.DateTime == latestPriceDate)))
+						.Select(o => o.CurrentPrice)
+						.FirstOrDefault();
+			}
+
+			return holdings;
+		}
+
+		internal List<HoldingsVM> GetHoldingsForUpdateCurrentValues(int compId, string userId)
+		{
 
 			var holdings = context.UsersHistoricalTransactions
 				.Where(o => o.CompetitionId == compId && o.UserId == userId)

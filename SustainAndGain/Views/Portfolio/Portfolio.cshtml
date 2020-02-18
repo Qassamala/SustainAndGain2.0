@@ -230,40 +230,44 @@
 
 
 
-            <script>
+<script>
     window.onload = function callWindowOnloadfunctions() {
         console.log("runningwindowonload")
         this.getPendingOrders()
         this.getMyChart()
         this.getHoldings()
         this.getMyHighscore()
-        this.Sustain()
+        this.getPercentageSustainable()
+
     }
 
-                function Sustain() {
-                    setInterval(function() {
-    hand.showValue(36, 1000, am4core.ease.cubicOut);
-}, 2000);
-                }
 
                   
-    @*function getSustainProcent() {
-        console.log("running Sustain")
+    function getPercentageSustainable() {
+        console.log("running getsustainpercentage")
         //Get ID from competition
         var id = @Model.CompetitionId
             console.log(id);
         // Make AJAX call
-        var url = "/procent/" + id;
+        var url = "/percentage/" + id;
         $.ajax({
             url: url,
             type: "GET",
-            success: function (result) {*@
-//               setInterval(function(result) {
-//    hand.showValue(result, 1000, am4core.ease.cubicOut);
-//}, 2000);
-//            }
-//        });
+            success: function (result) {
+                SustainableIndicator(result)
+                console.log("finished ")
 
+            }
+        });
+
+    }
+    function SustainableIndicator(percentage) {
+        console.log("running Sustain")
+
+        setInterval(function () {
+            hand.showValue(percentage, 1000, am4core.ease.cubicOut);
+        }, 2000);
+    }
     
 
     function getMyHighscore() {
@@ -283,7 +287,7 @@
         });
 
     }
-        function getPendingOrders() {
+    function getPendingOrders() {
         console.log("runningorders")
         //Get ID from competition
         var id = @Model.CompetitionId;
@@ -300,7 +304,7 @@
         });
     }
 
-        function getMyChart() {
+    function getMyChart() {
         console.log("runningchart")
         //Get ID from competition
         var id = @Model.CompetitionId
@@ -318,7 +322,7 @@
         });
     }
 
-        function getHoldings() {
+    function getHoldings() {
         console.log("runningholdings")
         //Get ID from competition
         var id = @Model.CompetitionId;
@@ -333,10 +337,10 @@
                 console.log("finishedholdings");
             }
         });
-        }
+    }
 
 
-            </script>
+</script>
 
 
 

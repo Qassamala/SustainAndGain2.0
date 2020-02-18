@@ -42,10 +42,14 @@ namespace SustainAndGain
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(TriggerGetStockPricesJob),
                 cronExpression: "0 5 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run Monday through Friday, at 0905, 1305, and 1805
+            services.AddScoped<TriggerExecuteOrdersJob>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(TriggerExecuteOrdersJob),
+                cronExpression: "0 7 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run Monday through Friday, at 0905, 1305, and 1805
+
             services.AddHostedService<QuartzHostedService>();
 
             var connString = configuration.GetConnectionString("DefaultConnection");
-            //var secret = configuration["x-rapidapi-key"];
             services.AddControllersWithViews();
 
             services.AddDbContext<SustainGainContext>(o => o.UseSqlServer(connString));

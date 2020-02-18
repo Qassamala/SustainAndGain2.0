@@ -73,34 +73,6 @@ namespace SustainAndGain.Models
 			WriteStockInfoToHistoricalDataStocks(rootObject);
 		}
 
-
-		//internal bool AddUsersInComp(CompetitionVM data)
-		//{
-		//	UsersInCompetition stocks = new UsersInCompetition
-		//	{
-		//		UserId = data.UserId,
-		//		CurrentValue = 10000,
-		//		AvailableForInvestment = 10000,
-		//		LastUpdatedAvailableForInvestment = DateTime.Now,
-		//		LastUpdatedCurrentValue = DateTime.Now,
-		//		CompId = int.Parse(data.CompId),
-		//	};
-
-		//	BonusDeposit deposit = new BonusDeposit
-		//	{
-		//		UserId = data.UserId,
-		//		CompetitionId = int.Parse(data.CompId),
-		//		Bonus = 0,
-		//	};
-
-		//	context.BonusDeposit.Add(deposit);
-		//	context.UsersInCompetition.Add(stocks);
-		//	context.SaveChanges();
-
-		//	return true;
-		//}
-
-
 		public void AddSustainProp()
 		{
 			string sustainPath = @"C:\Users\Abdi G\source\repos\SustainAndGain\SustainAndGain\wwwroot\SustainBolag.txt";
@@ -122,26 +94,25 @@ namespace SustainAndGain.Models
 			context.SaveChanges();
 		}
 
+		public void AddStaticStockData()
+		{
+			string path = @"C:\Users\abdig\source\repos\SustainAndGain2.0\SustainAndGain\Models\yahoo.txt";
 
-			public void AddStaticStockData()
+			string[] inputFileStocks = File.ReadAllLines(path);
+
+			foreach (var item in inputFileStocks)
 			{
-				string path = @"C:\Users\abdig\source\repos\SustainAndGain2.0\SustainAndGain\Models\yahoo.txt";
+				string[] lines = item.Split('\t');
 
-				string[] inputFileStocks = File.ReadAllLines(path);
+				string symbol = lines[0];
+				string companyName = lines[1];
 
-				foreach (var item in inputFileStocks)
-				{
-					string[] lines = item.Split('\t');
+				StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName };					
 
-					string symbol = lines[0];
-					string companyName = lines[1];
-
-					StaticStockData staticStockData = new StaticStockData { Symbol = symbol, CompanyName = companyName };					
-
-					context.StaticStockData.Add(staticStockData);
-				}
-				context.SaveChanges();
-			}		
+				context.StaticStockData.Add(staticStockData);
+			}
+			context.SaveChanges();
+		}		
 
 
 		public void GetCompanyDescription()
