@@ -6,6 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Stocks\**" />
+    <Content Remove="Views\Stocks\**" />
+    <EmbeddedResource Remove="Views\Stocks\**" />
+    <None Remove="Views\Stocks\**" />
+    <TypeScriptCompile Remove="Views\Stocks\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Img\stockimg.jpg" />
   </ItemGroup>
 
@@ -35,10 +43,6 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="wwwroot\Js\file.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Views\Stocks\" />
   </ItemGroup>
 
 </Project>

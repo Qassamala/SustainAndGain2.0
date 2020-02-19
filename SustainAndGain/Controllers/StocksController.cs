@@ -28,11 +28,11 @@ namespace SustainAndGain.Controllers
        [Route("Admin")]
        public IActionResult Admin()
        {
+            service.AddHistDataStocks();
             pservice.UpdateCurrentValues();
            //competitionsService.DisplayCompetitions();
            //competitionsService.AddCompetition();
            //service.AddSustainProp();
-           //service.AddHistDataStocks();
            //service.AddStaticStockData();
            //service.GetCompanyDescription();
 
