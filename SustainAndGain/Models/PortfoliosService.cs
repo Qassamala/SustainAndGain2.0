@@ -151,9 +151,6 @@ namespace SustainAndGain.Models
 
 		internal HighscoreVM[] GetHighScoreForCompetition(int compId)
 		{
-			//string userId = user.GetUserId(accessor.HttpContext.User);
-
-
 			var maxHighScore = context.UsersInCompetition.ToList();
 
 			var listOfUsers = context.AspNetUsers.ToList();
@@ -184,7 +181,6 @@ namespace SustainAndGain.Models
 			}
 
 			return arrayOfHighScoreVM;
-
 		}
 
 		internal decimal CheckTotalAvailableToInvestForStockBuy(OrderVM order)
