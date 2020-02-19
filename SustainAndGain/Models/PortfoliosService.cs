@@ -60,8 +60,6 @@ namespace SustainAndGain.Models
 
 			var activeUsers = allEntries
 				.GroupBy(s => new { s.CompId, s.UserId });
-				//.OrderBy(d => d.Key.CompId)				
-				///*.ToList()*/;
 
 			List<UsersInCompetition> latestEntries = new List<UsersInCompetition>();
 
@@ -185,77 +183,77 @@ namespace SustainAndGain.Models
 			return (decimal)availableForInvestment;
 		}
 
-		internal void UpdateCurrentValue(int compId)
-		{
+		//internal void UpdateCurrentValue(int compId)
+		//{
 
-			var allStocks = context.HistDataStocks.ToList();
-			var userHistoricalTransaction = context.UsersHistoricalTransactions.ToList();
-			var usersInCompetition = context.UsersInCompetition.ToList();
+		//	var allStocks = context.HistDataStocks.ToList();
+		//	var userHistoricalTransaction = context.UsersHistoricalTransactions.ToList();
+		//	var usersInCompetition = context.UsersInCompetition.ToList();
 
-			string userId = user.GetUserId(accessor.HttpContext.User);
+		//	string userId = user.GetUserId(accessor.HttpContext.User);
 
-			List<decimal> Value = new List<decimal>();
-			List<HistDataStocks> newPricesList = new List<HistDataStocks>();
-
-
-			foreach (var item in allStocks)
-			{
-				var updatedPrice = allStocks
-				.Where(a => a.StockId == item.StockId).Last();
-
-				if (!newPricesList.Contains(updatedPrice))
-				{
-					newPricesList.Add(updatedPrice);
-				}
-			}
+		//	List<decimal> Value = new List<decimal>();
+		//	List<HistDataStocks> newPricesList = new List<HistDataStocks>();
 
 
-			var userInComp = usersInCompetition
-				.Where(a => a.UserId == userId && compId == a.CompId).Last();
+		//	foreach (var item in allStocks)
+		//	{
+		//		var updatedPrice = allStocks
+		//		.Where(a => a.StockId == item.StockId).Last();
+
+		//		if (!newPricesList.Contains(updatedPrice))
+		//		{
+		//			newPricesList.Add(updatedPrice);
+		//		}
+		//	}
 
 
-			var eachPrice = userHistoricalTransaction
-				.Where(a => a.UserId == userInComp.UserId && a.CompetitionId == compId).ToList();
+		//	var userInComp = usersInCompetition
+		//		.Where(a => a.UserId == userId && compId == a.CompId).Last();
+
+
+		//	var eachPrice = userHistoricalTransaction
+		//		.Where(a => a.UserId == userInComp.UserId && a.CompetitionId == compId).ToList();
 
 			
 
-			var newList = new List<UsersHistoricalTransactions>();
+		//	var newList = new List<UsersHistoricalTransactions>();
 
-				foreach (var price in eachPrice)
-				{
-					newList.Add(eachPrice.Where(s => s.StockId == price.StockId)
-						.Select(t => t).Last());
-				}
+		//		foreach (var price in eachPrice)
+		//		{
+		//			newList.Add(eachPrice.Where(s => s.StockId == price.StockId)
+		//				.Select(t => t).Last());
+		//		}
 
-			foreach (var transaction in newList)
-			{
-				var vs = newPricesList
-						.Where(a => a.StockId == transaction.StockId)
-						.Select(a => a.CurrentPrice * transaction.CurrentHoldingsAfterTransaction).Last();
-
-
-				Value.Add((decimal)vs);
-			}
+		//	foreach (var transaction in newList)
+		//	{
+		//		var vs = newPricesList
+		//				.Where(a => a.StockId == transaction.StockId)
+		//				.Select(a => a.CurrentPrice * transaction.CurrentHoldingsAfterTransaction).Last();
 
 
-			var CurrentValue = Value.Sum();
+		//		Value.Add((decimal)vs);
+		//	}
 
 
-			var newuserincomp = new UsersInCompetition
-			{
-				CurrentValue = CurrentValue + userInComp.AvailableForInvestment,
-				CompId = userInComp.CompId,
-				AvailableForInvestment = userInComp.AvailableForInvestment,
-				UserId = userInComp.UserId,
-				LastUpdatedCurrentValue = DateTime.Now,
-				LastUpdatedAvailableForInvestment = userInComp.LastUpdatedAvailableForInvestment
-			};
+		//	var CurrentValue = Value.Sum();
 
 
-			context.UsersInCompetition.Add(newuserincomp);
+		//	var newuserincomp = new UsersInCompetition
+		//	{
+		//		CurrentValue = CurrentValue + userInComp.AvailableForInvestment,
+		//		CompId = userInComp.CompId,
+		//		AvailableForInvestment = userInComp.AvailableForInvestment,
+		//		UserId = userInComp.UserId,
+		//		LastUpdatedCurrentValue = DateTime.Now,
+		//		LastUpdatedAvailableForInvestment = userInComp.LastUpdatedAvailableForInvestment
+		//	};
 
-			context.SaveChanges();
-		}
+
+		//	context.UsersInCompetition.Add(newuserincomp);
+
+		//	context.SaveChanges();
+		//}
 
 		internal int CheckTotalHoldingsForStockSell(SellOrderVM order)
 		{

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SustainAndGain.Models.Scheduling
 {
     [DisallowConcurrentExecution]
-    public class TriggerUpdateCurrentPortfolioValues
+    public class TriggerUpdateCurrentPortfolioValues : IJob
     {
         private readonly PortfoliosService service;
         private readonly SustainGainContext dbContext;

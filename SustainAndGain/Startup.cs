@@ -35,9 +35,9 @@ namespace SustainAndGain
             // Adding Quartz services
             services.AddSingleton<IJobFactory, SingletonJobFactory>();
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
-            // Adding QurtzJobrunner to be able to use scoped servicces(writing to db)
+            // Adding QurtzJobrunner to be able to use scoped services(writing to db)
             services.AddSingleton<QuartzJobRunner>();
-            //Adding our job
+            //Adding our jobs
             services.AddScoped<TriggerGetStockPricesJob>();
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(TriggerGetStockPricesJob),
@@ -45,11 +45,11 @@ namespace SustainAndGain
             services.AddScoped<TriggerExecuteOrdersJob>();
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(TriggerExecuteOrdersJob),
-                cronExpression: "0 7 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run Monday through Friday, at 0905, 1305, and 1805
+                cronExpression: "0 7 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run Monday through Friday, at 0907, 1307, and 1807
             services.AddScoped<TriggerUpdateCurrentPortfolioValues>();
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(TriggerUpdateCurrentPortfolioValues),
-                cronExpression: "0 8 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run Monday through Friday, at 0905, 1305, and 1805
+                cronExpression: "0 8 9,13,18 ? * MON,TUE,WED,THU,FRI *")); // run Monday through Friday, at 0908, 1308, and 1808
 
             services.AddHostedService<QuartzHostedService>();
 
