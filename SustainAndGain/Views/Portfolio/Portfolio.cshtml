@@ -107,18 +107,24 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-5">
+                    <div class="col-lg-3">
+                        <div id="divRanking">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
                         <div id="divChart"> </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="card">
-                            
+
                             <div class="card-img-top" id="chartdiv"></div>
                             <div class="card-body">
-                                <h4>  @Html.DisplayNameFor(model => model.SustainBonus):</h4>
+                                <h4>Portfolio percentage invested in sustainable stocks</h4>
+
+                                @*<h4>  @Html.DisplayNameFor(model => model.SustainBonus):</h4>
 
 
-                                @Html.DisplayFor(model => model.SustainBonus) kr
+                                @Html.DisplayFor(model => model.SustainBonus) kr*@
 
                             </div>
                         </div>
@@ -126,16 +132,6 @@
                 </div>
 
             </div>
-
-
-            @* COMMENT THAT ISNT THAT CLEAR *@
-            @* ¨BELOW IS OUTCOMMENTED *@
-
-
-
-
-
-
 
 
             <div class="container-table">
@@ -147,9 +143,6 @@
                     <img id="Plus" src='@Url.Content("~/Img/Plusprofile.png")' />
                 </a>
                 <div id="divPendingOrders"></div>
-
-
-
 
             </div>
 
@@ -244,7 +237,6 @@
 
                   
     function getPercentageSustainable() {
-        console.log("running getsustainpercentage")
         //Get ID from competition
         var id = @Model.CompetitionId
             console.log(id);
@@ -255,19 +247,14 @@
             type: "GET",
             success: function (result) {
                 SustainableIndicator(result)
-                console.log("finished susperce ")
-
             }
         });
 
     }
     function SustainableIndicator(percentage) {
-        console.log("running Sustain")
-
         setInterval(function () {
             hand.showValue(percentage, 1000, am4core.ease.cubicOut);
         }, 2000);
-                console.log("finished sus IND ")
 
     }
     
@@ -283,7 +270,9 @@
             url: url,
             type: "GET",
             success: function (result) {
-                $("#mySidebar").html(result);
+                $("#divRanking").html(result);
+                console.log(`${result}`)
+
                 console.log("Finished HighScores");
             }
         });
@@ -325,7 +314,6 @@
     }
 
     function getHoldings() {
-        console.log("runningholdings")
         //Get ID from competition
         var id = @Model.CompetitionId;
         console.log(id);
@@ -336,7 +324,6 @@
             type: "GET",
             success: function (result) {
                 $("#divHoldings").html(result);
-                console.log("finishedholdings");
             }
         });
     }

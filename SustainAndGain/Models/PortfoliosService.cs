@@ -149,25 +149,41 @@ namespace SustainAndGain.Models
 				
 		}
 
-		internal object GetHighScoreForCompetition(int compId)
+		internal HighscoreVM[] GetHighScoreForCompetition(int compId)
 		{
+			//string userId = user.GetUserId(accessor.HttpContext.User);
 
-			var MaxHighScore = context.UsersInCompetition
+
+			var maxHighScore = context.UsersInCompetition.ToList();
+
+			var listOfUsers = context.AspNetUsers.ToList();
+
+			var groupedHighScoreList = maxHighScore	
 				.Where(a => a.CurrentValue > 0 && a.CompId == compId)
-				.Select(n => new HighscoreVM
+				.GroupBy(u => u.UserId);
+
+			var listOfHighScores = new List<HighscoreVM>();
+
+			foreach (var item in groupedHighScoreList)
+			{
+				var score = item.Last();
+
+				listOfHighScores.Add(new HighscoreVM
 				{
-					CurrentValue = n.CurrentValue,
-					User = n.User,
-				})
-				.OrderByDescending(s => s.CurrentValue).Take(10).ToArray();
+					CurrentValue = score.CurrentValue,
+					User = score.User
+				});
+			
+			}			
+			var arrayOfHighScoreVM = listOfHighScores.OrderByDescending(s => s.CurrentValue).Take(10).ToArray();
 
 			int counter = 1;
-			for (int i = 0; i < MaxHighScore.Length; i++)
+			for (int i = 0; i < arrayOfHighScoreVM.Length; i++)
 			{
-				MaxHighScore[i].Nr = counter++;
+				arrayOfHighScoreVM[i].Nr = counter++;
 			}
 
-			return MaxHighScore;
+			return arrayOfHighScoreVM;
 
 		}
 
@@ -184,78 +200,6 @@ namespace SustainAndGain.Models
 
 			return (decimal)availableForInvestment;
 		}
-
-		//internal void UpdateCurrentValue(int compId)
-		//{
-
-		//	var allStocks = context.HistDataStocks.ToList();
-		//	var userHistoricalTransaction = context.UsersHistoricalTransactions.ToList();
-		//	var usersInCompetition = context.UsersInCompetition.ToList();
-
-		//	string userId = user.GetUserId(accessor.HttpContext.User);
-
-		//	List<decimal> Value = new List<decimal>();
-		//	List<HistDataStocks> newPricesList = new List<HistDataStocks>();
-
-
-		//	foreach (var item in allStocks)
-		//	{
-		//		var updatedPrice = allStocks
-		//		.Where(a => a.StockId == item.StockId).Last();
-
-		//		if (!newPricesList.Contains(updatedPrice))
-		//		{
-		//			newPricesList.Add(updatedPrice);
-		//		}
-		//	}
-
-
-		//	var userInComp = usersInCompetition
-		//		.Where(a => a.UserId == userId && compId == a.CompId).Last();
-
-
-		//	var eachPrice = userHistoricalTransaction
-		//		.Where(a => a.UserId == userInComp.UserId && a.CompetitionId == compId).ToList();
-
-			
-
-		//	var newList = new List<UsersHistoricalTransactions>();
-
-		//		foreach (var price in eachPrice)
-		//		{
-		//			newList.Add(eachPrice.Where(s => s.StockId == price.StockId)
-		//				.Select(t => t).Last());
-		//		}
-
-		//	foreach (var transaction in newList)
-		//	{
-		//		var vs = newPricesList
-		//				.Where(a => a.StockId == transaction.StockId)
-		//				.Select(a => a.CurrentPrice * transaction.CurrentHoldingsAfterTransaction).Last();
-
-
-		//		Value.Add((decimal)vs);
-		//	}
-
-
-		//	var CurrentValue = Value.Sum();
-
-
-		//	var newuserincomp = new UsersInCompetition
-		//	{
-		//		CurrentValue = CurrentValue + userInComp.AvailableForInvestment,
-		//		CompId = userInComp.CompId,
-		//		AvailableForInvestment = userInComp.AvailableForInvestment,
-		//		UserId = userInComp.UserId,
-		//		LastUpdatedCurrentValue = DateTime.Now,
-		//		LastUpdatedAvailableForInvestment = userInComp.LastUpdatedAvailableForInvestment
-		//	};
-
-
-		//	context.UsersInCompetition.Add(newuserincomp);
-
-		//	context.SaveChanges();
-		//}
 
 		internal int CheckTotalHoldingsForStockSell(SellOrderVM order)
 		{
@@ -423,15 +367,6 @@ namespace SustainAndGain.Models
 			DateTime? lastupdatedAvailableForInvestment = GetLatestAvailableForInvestmenDate(compId, userId, usersInCompetitionList);
 
 			decimal? availableForInvestment = GetLatestAvailableForInvestment(usersInCompetitionList, lastupdatedAvailableForInvestment);
-
-			//var lastupdatedAvailableForInvestment = context.UsersInCompetition.
-			//	Where(o => ((o.CompId == compId) && (o.UserId == userId)))
-			//	.Max(o => o.LastUpdatedAvailableForInvestment);
-
-			//var availableForInvestment = (decimal)context.UsersInCompetition
-			//	.Where(o => o.LastUpdatedAvailableForInvestment == lastupdatedAvailableForInvestment)
-			//	.Select(v => v.AvailableForInvestment)
-			//	.FirstOrDefault();
 
 			var latestPriceTime = context.HistDataStocks.Where(s => s.Symbol == symbol).Max(d => d.DateTime);
 			var lastPrice = (decimal)context.HistDataStocks.Where(o => ((o.Symbol == symbol) && (o.DateTime == latestPriceTime)))
